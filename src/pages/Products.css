@@ -7,12 +7,28 @@
 
 /* ===== 筛选器样式 ===== */
 .product-filters {
-  padding: 4rem 0 3rem;
+  position: relative;
+  padding: 2rem 0 3rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(135deg, 
-    rgba(26, 26, 26, 0.9) 0%, 
+  background: linear-gradient(180deg, 
+    rgba(26, 26, 26, 0.8) 0%,
+    rgba(26, 26, 26, 0.9) 30%,
     rgba(45, 45, 45, 0.9) 100%
   );
+}
+
+.product-filters::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(180deg, 
+    rgba(26, 26, 26, 0.5) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .filter-header {
@@ -23,12 +39,12 @@
 .filter-header h2 {
   font-size: 2.8rem;
   font-weight: 700;
-  color: var(--color-light);
+  color: var(--text-light);
   margin-bottom: 1rem;
   background: linear-gradient(135deg, 
-    var(--color-gold) 0%, 
-    var(--color-light) 50%,
-    var(--color-gold) 100%
+    var(--accent-gold) 0%, 
+    var(--text-light) 50%,
+    var(--accent-gold) 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -38,7 +54,7 @@
 
 .filter-header p {
   font-size: 1.2rem;
-  color: var(--color-light);
+  color: var(--text-light);
   opacity: 0.8;
   font-weight: 300;
   letter-spacing: 0.3px;
@@ -61,7 +77,7 @@
   background: rgba(255, 255, 255, 0.06);
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 60px;
-  color: var(--color-light);
+  color: var(--text-light);
   font-size: 1.1rem;
   font-weight: 500;
   cursor: pointer;
@@ -93,17 +109,17 @@
 
 .filter-tab:hover {
   transform: translateY(-3px) scale(1.02);
-  border-color: var(--color-gold);
+  border-color: var(--accent-gold);
   box-shadow: 0 12px 35px rgba(201, 169, 110, 0.25);
   background: rgba(255, 255, 255, 0.1);
 }
 
 .filter-tab.active {
   background: linear-gradient(135deg, 
-    var(--color-gold) 0%, 
-    var(--color-gold-light) 100%
+    var(--accent-gold) 0%, 
+    var(--accent-gold-light) 100%
   );
-  border-color: var(--color-gold);
+  border-color: var(--accent-gold);
   color: var(--color-dark-primary);
   box-shadow: 0 12px 35px rgba(201, 169, 110, 0.4);
   transform: translateY(-2px);
@@ -249,7 +265,7 @@
 }
 
 .product-badge[data-badge="LUXURY"] {
-  background: linear-gradient(135deg, var(--color-gold) 0%, #d4af37 100%);
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #d4af37 100%);
   color: var(--color-dark-primary);
 }
 
@@ -275,11 +291,11 @@
 .product-name {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--color-light);
+  color: var(--text-light);
   margin-bottom: 0.5rem;
   background: linear-gradient(135deg, 
-    var(--color-light) 0%, 
-    var(--color-gold) 100%
+    var(--text-light) 0%, 
+    var(--accent-gold) 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -289,7 +305,7 @@
 
 .product-subtitle {
   font-size: 1.1rem;
-  color: var(--color-gold);
+  color: var(--accent-gold);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -316,13 +332,13 @@
 .current-price {
   font-size: 2.2rem;
   font-weight: 800;
-  color: var(--color-gold);
+  color: var(--accent-gold);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .original-price {
   font-size: 1.2rem;
-  color: var(--color-light);
+  color: var(--text-light);
   opacity: 0.5;
   text-decoration: line-through;
   font-weight: 500;
@@ -344,7 +360,7 @@
   border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-gold);
+  color: var(--accent-gold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -352,7 +368,7 @@
 .product-description {
   font-size: 1.1rem;
   line-height: 1.7;
-  color: var(--color-light);
+  color: var(--text-light);
   opacity: 0.8;
   margin-bottom: 2.5rem;
   font-weight: 300;
@@ -368,7 +384,7 @@
 .product-specs h4 {
   font-size: 1.3rem;
   font-weight: 600;
-  color: var(--color-gold);
+  color: var(--accent-gold);
   margin-bottom: 1.5rem;
   letter-spacing: 0.5px;
 }
@@ -397,13 +413,13 @@
 }
 
 .feature-icon {
-  color: var(--color-gold);
+  color: var(--accent-gold);
   font-size: 1.1rem;
   font-weight: bold;
 }
 
 .feature-text {
-  color: var(--color-light);
+  color: var(--text-light);
   font-size: 0.95rem;
   font-weight: 500;
 }
@@ -444,7 +460,7 @@
 
 .spec-label {
   font-size: 0.9rem;
-  color: var(--color-light);
+  color: var(--text-light);
   opacity: 0.7;
   margin-bottom: 0.5rem;
   font-weight: 500;
@@ -453,7 +469,7 @@
 .spec-value {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-gold);
+  color: var(--accent-gold);
   letter-spacing: 0.3px;
 }
 
@@ -484,11 +500,11 @@
 .cta-content h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--color-light);
+  color: var(--text-light);
   margin-bottom: 1.5rem;
   background: linear-gradient(135deg, 
-    var(--color-gold) 0%, 
-    var(--color-light) 100%
+    var(--accent-gold) 0%, 
+    var(--text-light) 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -497,7 +513,7 @@
 
 .cta-content p {
   font-size: 1.2rem;
-  color: var(--color-light);
+  color: var(--text-light);
   opacity: 0.8;
   margin-bottom: 3rem;
   font-weight: 300;

@@ -1,0 +1,16 @@
+{
+  "extraction_date": "2025-08-07T17:49:34+08:00",
+  "source_website": "http://zhirui.newmwyun.com/",
+  "statistics": {
+    "images_downloaded": 46,
+    "videos_downloaded": 1
+  },
+  "directories": {
+    "images": "public/images/downloaded/",
+    "videos": "public/videos/"
+  },
+  "files": {
+    "content": "extracted_content.txt",
+    "inventory": "resource_inventory.json"
+  }
+}

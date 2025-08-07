@@ -1,6 +1,7 @@
 import React from 'react';
 import PageHeader from '../components/PageHeader';
 import Button from '../components/Button';
+import Icon from '../components/Icon';
 
 const Services = () => {
   const serviceStats = [
@@ -16,7 +17,7 @@ const Services = () => {
       subtitle: 'Customization',
       description: '根据您的具体需求，提供从内饰到外观的全方位定制服务',
       features: ['内饰定制', '外观改装', '功能配置', '专属标识'],
-      icon: '🎨'
+      icon: 'design'
     },
     {
       id: 2,
@@ -24,7 +25,7 @@ const Services = () => {
       subtitle: 'Maintenance',
       description: '由经过认证的技师团队，为您的爱车提供专业的维护保养服务',
       features: ['定期保养', '故障诊断', '零件更换', '性能优化'],
-      icon: '🔧'
+      icon: 'tool'
     },
     {
       id: 3,
@@ -48,7 +49,7 @@ const Services = () => {
       subtitle: 'Roadside Assistance',
       description: '24小时道路救援服务，让您的出行无后顾之忧',
       features: ['紧急救援', '现场维修', '拖车服务', '备用车辆'],
-      icon: '🚗'
+      icon: 'car'
     },
     {
       id: 6,
@@ -83,9 +84,9 @@ const Services = () => {
             <h2 style={{
               fontSize: '2.5rem',
               fontWeight: '600',
-              color: 'var(--color-light)',
+              color: 'var(--text-light)',
               marginBottom: '1rem',
-              background: 'linear-gradient(135deg, var(--color-gold) 0%, var(--color-light) 100%)',
+              background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--text-light) 100%)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
@@ -94,7 +95,7 @@ const Services = () => {
             </h2>
             <p style={{
               fontSize: '1.2rem',
-              color: 'var(--color-light)',
+              color: 'var(--text-light)',
               opacity: '0.8',
               lineHeight: '1.8',
               maxWidth: '600px',
@@ -125,7 +126,7 @@ const Services = () => {
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.transform = 'translateY(-10px)';
-                  e.target.style.borderColor = 'var(--color-gold)';
+                  e.target.style.borderColor = 'var(--accent-gold)';
                   e.target.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(201, 169, 110, 0.2)';
                 }}
                 onMouseLeave={(e) => {
@@ -137,21 +138,23 @@ const Services = () => {
                 <div style={{ marginBottom: '1.5rem' }}>
                   <div style={{
                     fontSize: '3rem',
-                    marginBottom: '1rem'
+                    marginBottom: '1rem',
+                    display: 'flex',
+                    justifyContent: 'center'
                   }}>
-                    {service.icon}
+                    <Icon type={service.icon} size="48px" color="var(--accent-gold)" />
                   </div>
                   <h3 style={{
                     fontSize: '1.8rem',
                     fontWeight: '600',
-                    color: 'var(--color-light)',
+                    color: 'var(--text-light)',
                     marginBottom: '0.5rem'
                   }}>
                     {service.title}
                   </h3>
                   <p style={{
                     fontSize: '1rem',
-                    color: 'var(--color-gold)',
+                    color: 'var(--accent-gold)',
                     textTransform: 'uppercase',
                     letterSpacing: '1px',
                     fontWeight: '400'
@@ -161,7 +164,7 @@ const Services = () => {
                 </div>
 
                 <p style={{
-                  color: 'var(--color-light)',
+                  color: 'var(--text-light)',
                   opacity: '0.8',
                   lineHeight: '1.6',
                   marginBottom: '2rem',
@@ -172,7 +175,7 @@ const Services = () => {
 
                 <div style={{ marginBottom: '2rem' }}>
                   <h4 style={{
-                    color: 'var(--color-light)',
+                    color: 'var(--text-light)',
                     fontSize: '1.1rem',
                     fontWeight: '600',
                     marginBottom: '1rem'
@@ -197,9 +200,11 @@ const Services = () => {
                           transition: 'all 0.3s ease'
                         }}
                       >
-                        <span style={{ color: 'var(--color-gold)', fontSize: '0.9rem' }}>✦</span>
+                        <span style={{ color: 'var(--accent-gold)', fontSize: '0.9rem' }}>
+                          <Icon type="star" size="14px" color="var(--accent-gold)" />
+                        </span>
                         <span style={{
-                          color: 'var(--color-light)',
+                          color: 'var(--text-light)',
                           fontSize: '0.9rem'
                         }}>
                           {feature}
@@ -229,9 +234,9 @@ const Services = () => {
           <h2 style={{
             fontSize: '2.5rem',
             fontWeight: '600',
-            color: 'var(--color-light)',
+            color: 'var(--text-light)',
             marginBottom: '2rem',
-            background: 'linear-gradient(135deg, var(--color-gold) 0%, var(--color-light) 100%)',
+            background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--text-light) 100%)',
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
@@ -240,7 +245,7 @@ const Services = () => {
           </h2>
           <p style={{
             fontSize: '1.2rem',
-            color: 'var(--color-light)',
+            color: 'var(--text-light)',
             opacity: '0.8',
             marginBottom: '3rem',
             maxWidth: '800px',

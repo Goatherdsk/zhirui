@@ -1,5 +1,7 @@
 import React from 'react';
 import PageHeader from '../components/PageHeader';
+import Button from '../components/Button';
+import Icon from '../components/Icon';
 
 const About = () => {
   const aboutStats = [
@@ -38,9 +40,9 @@ const About = () => {
               <h2 style={{
                 fontSize: '2.5rem',
                 fontWeight: '600',
-                color: 'var(--color-light)',
+                color: 'var(--text-light)',
                 marginBottom: '1rem',
-                background: 'linear-gradient(135deg, var(--color-gold) 0%, var(--color-light) 100%)',
+                background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--text-light) 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
@@ -49,7 +51,7 @@ const About = () => {
               </h2>
               <p style={{
                 fontSize: '1.2rem',
-                color: 'var(--color-light)',
+                color: 'var(--text-light)',
                 opacity: '0.8',
                 lineHeight: '1.8',
                 maxWidth: '800px',
@@ -74,15 +76,15 @@ const About = () => {
                 transition: 'all 0.3s ease'
               }}>
                 <h3 style={{ 
-                  color: 'var(--color-gold)', 
+                  color: 'var(--accent-gold)', 
                   fontSize: '1.5rem', 
                   marginBottom: '1rem',
                   fontWeight: '600'
                 }}>
-                  ✦ 品质承诺
+                  <Icon type="diamond" size="16px" color="var(--accent-gold)" /> 品质承诺
                 </h3>
                 <p style={{ 
-                  color: 'var(--color-light)', 
+                  color: 'var(--text-light)', 
                   opacity: '0.8', 
                   lineHeight: '1.6' 
                 }}>
@@ -99,15 +101,15 @@ const About = () => {
                 transition: 'all 0.3s ease'
               }}>
                 <h3 style={{ 
-                  color: 'var(--color-gold)', 
+                  color: 'var(--accent-gold)', 
                   fontSize: '1.5rem', 
                   marginBottom: '1rem',
                   fontWeight: '600'
                 }}>
-                  ✦ 创新驱动
+                  <Icon type="tech" size="16px" color="var(--accent-gold)" /> 创新驱动
                 </h3>
                 <p style={{ 
-                  color: 'var(--color-light)', 
+                  color: 'var(--text-light)', 
                   opacity: '0.8', 
                   lineHeight: '1.6' 
                 }}>
@@ -124,15 +126,15 @@ const About = () => {
                 transition: 'all 0.3s ease'
               }}>
                 <h3 style={{ 
-                  color: 'var(--color-gold)', 
+                  color: 'var(--accent-gold)', 
                   fontSize: '1.5rem', 
                   marginBottom: '1rem',
                   fontWeight: '600'
                 }}>
-                  ✦ 客户至上
+                  <Icon type="crown" size="16px" color="var(--accent-gold)" /> 客户至上
                 </h3>
                 <p style={{ 
-                  color: 'var(--color-light)', 
+                  color: 'var(--text-light)', 
                   opacity: '0.8', 
                   lineHeight: '1.6' 
                 }}>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from './Icon';
 import './BrandAdvantages.css';
 
 const BrandAdvantages = () => {
@@ -84,7 +85,9 @@ const BrandAdvantages = () => {
             <p>探索智睿商务车的发展历程和企业文化</p>
             <a href="/about" className="cta-link">
               品牌故事
-              <span className="link-arrow">→</span>
+              <span className="link-arrow">
+                <Icon type="arrow" size="16px" color="currentColor" />
+              </span>
             </a>
           </div>
         </div>

@@ -140,16 +140,9 @@
   font-size: 0.8rem;
   padding: 0.25rem 0;
   position: relative;
-  padding-left: 1rem;
-}
-
-.service-feature::before {
-  content: '●';
-  color: var(--accent-gold);
-  position: absolute;
-  left: 0;
-  top: 0.25rem;
-  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* 服务CTA */

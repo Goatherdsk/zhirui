@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Icon from './Icon';
 import './ServiceHighlights.css';
 
 const ServiceHighlights = () => {
   const services = [
     {
       id: 1,
-      icon: "🎨",
+      icon: "design",
       title: "个性化定制",
       subtitle: "PERSONALIZED CUSTOMIZATION",
       description: "根据您的需求和品味，提供从内饰到外观的全方位定制服务",
@@ -14,7 +15,7 @@ const ServiceHighlights = () => {
     },
     {
       id: 2,
-      icon: "🔧",
+      icon: "tool",
       title: "专业维护",
       subtitle: "PROFESSIONAL MAINTENANCE",
       description: "专业技师团队提供全生命周期的维护保养服务",
@@ -22,7 +23,7 @@ const ServiceHighlights = () => {
     },
     {
       id: 3,
-      icon: "👥",
+      icon: "business",
       title: "VIP服务",
       subtitle: "VIP CONCIERGE SERVICE",
       description: "专属客户经理为您提供一对一的贴心服务体验",
@@ -30,7 +31,7 @@ const ServiceHighlights = () => {
     },
     {
       id: 4,
-      icon: "📱",
+      icon: "mobile",
       title: "智能互联",
       subtitle: "SMART CONNECTIVITY",
       description: "通过智能应用实现车辆远程监控和智能化管理",
@@ -38,7 +39,7 @@ const ServiceHighlights = () => {
     },
     {
       id: 5,
-      icon: "🏆",
+      icon: "crown",
       title: "品质保障",
       subtitle: "QUALITY ASSURANCE",
       description: "严格的品质管控体系，确保每一处细节都达到最高标准",
@@ -46,7 +47,7 @@ const ServiceHighlights = () => {
     },
     {
       id: 6,
-      icon: "🌟",
+      icon: "star",
       title: "尊享礼遇",
       subtitle: "EXCLUSIVE PRIVILEGES",
       description: "为尊贵客户提供独特的专属权益和精英体验",
@@ -54,7 +55,7 @@ const ServiceHighlights = () => {
     },
     {
       id: 7,
-      icon: "🛡️",
+      icon: "check",
       title: "安全保障",
       subtitle: "SECURITY PROTECTION",
       description: "全方位安全防护体系，护航您的每一次出行",
@@ -62,7 +63,7 @@ const ServiceHighlights = () => {
     },
     {
       id: 8,
-      icon: "🚀",
+      icon: "tech",
       title: "创新体验",
       subtitle: "INNOVATION EXPERIENCE",
       description: "持续引入前沿科技，为您带来超越想象的驾乘体验",
@@ -85,7 +86,7 @@ const ServiceHighlights = () => {
           {services.map((service) => (
             <div key={service.id} className="service-card">
               <div className="service-icon">
-                <span>{service.icon}</span>
+                <Icon type={service.icon} size="32px" className="icon-gold" />
               </div>
               
               <div className="service-content">
@@ -96,7 +97,8 @@ const ServiceHighlights = () => {
                 <ul className="service-features">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="service-feature">
-                      {feature}
+                      <Icon type="check" size="12px" className="icon-gold" />
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>

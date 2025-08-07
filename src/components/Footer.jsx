@@ -1,49 +1,47 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Footer.css';
-
+import React from "react";
+import { Link } from "react-router-dom";
+import Icon from "./Icon";
+import "./Footer.css";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  
   const footerSections = [
     {
-      title: '产品中心',
+      title: "产品中心",
       links: [
-        { label: '智睿·行政版', path: '/products/executive' },
-        { label: '智睿·尊享版', path: '/products/premium' },
-        { label: '智睿·科技版', path: '/products/tech' },
-        { label: '产品对比', path: '/products/compare' }
-      ]
+        { label: "智睿·行政版", path: "/products/executive" },
+        { label: "智睿·尊享版", path: "/products/premium" },
+        { label: "智睿·科技版", path: "/products/tech" },
+        { label: "产品对比", path: "/products/compare" },
+      ],
     },
     {
-      title: '服务支持',
+      title: "服务支持",
       links: [
-        { label: '个性化定制', path: '/services/customization' },
-        { label: '专业维护', path: '/services/maintenance' },
-        { label: 'VIP服务', path: '/services/vip' },
-        { label: '智能互联', path: '/services/connectivity' }
-      ]
+        { label: "个性化定制", path: "/services/customization" },
+        { label: "专业维护", path: "/services/maintenance" },
+        { label: "VIP服务", path: "/services/vip" },
+        { label: "智能互联", path: "/services/connectivity" },
+      ],
     },
     {
-      title: '公司信息',
+      title: "公司信息",
       links: [
-        { label: '关于我们', path: '/about' },
-        { label: '品牌故事', path: '/about/story' },
-        { label: '新闻动态', path: '/news' },
-        { label: '招贤纳士', path: '/careers' }
-      ]
+        { label: "关于我们", path: "/about" },
+        { label: "品牌故事", path: "/about/story" },
+        { label: "新闻动态", path: "/news" },
+        { label: "招贤纳士", path: "/careers" },
+      ],
     },
     {
-      title: '联系我们',
+      title: "联系我们",
       links: [
-        { label: '联系方式', path: '/contact' },
-        { label: '经销商查询', path: '/dealers' },
-        { label: '预约试驾', path: '/test-drive' },
-        { label: '在线咨询', path: '/consultation' }
-      ]
-    }
+        { label: "联系方式", path: "/contact" },
+        { label: "经销商查询", path: "/dealers" },
+        { label: "预约试驾", path: "/test-drive" },
+        { label: "在线咨询", path: "/consultation" },
+      ],
+    },
   ];
-
   return (
     <footer className="footer">
       <div className="container">
@@ -52,29 +50,38 @@ const Footer = () => {
           <div className="footer-main">
             {/* 品牌信息 */}
             <div className="footer-brand">
-              <Link to="/" className="footer-logo">
+              <div className="footer-logo">
                 <h3>智睿商务车</h3>
-              </Link>
-              <p className="footer-tagline">
-                定义商务出行新标准，为精英人士打造的奢华移动空间
-              </p>
-              <div className="footer-contact">
-                <p>客服热线：400-888-6688</p>
-                <p>服务时间：周一至周日 8:00-22:00</p>
+                <p className="footer-tagline">ZHIRUI BUSINESS VEHICLES</p>
+                <p className="brand-description">
+                  定义商务出行新标准，为精英人士打造的奢华移动空间
+                </p>
               </div>
+              
+              <div className="footer-contact">
+                <p>
+                  <Icon type="phone" size="16px" color="var(--accent-gold)" />
+                  <span>客服热线：400-888-6688</span>
+                </p>
+                <p>
+                  <Icon type="mobile" size="16px" color="var(--accent-gold)" />
+                  <span>服务时间：周一至周日 8:00-22:00</span>
+                </p>
+              </div>
+              
               {/* 社交媒体 */}
               <div className="social-links">
                 <a href="#" className="social-link" aria-label="微信">
-                  <span>📱</span>
+                  <Icon type="social" size="20px" color="currentColor" />
                 </a>
                 <a href="#" className="social-link" aria-label="微博">
-                  <span>🐦</span>
+                  <Icon type="social" size="20px" color="currentColor" />
                 </a>
                 <a href="#" className="social-link" aria-label="抖音">
-                  <span>🎵</span>
+                  <Icon type="social" size="20px" color="currentColor" />
                 </a>
                 <a href="#" className="social-link" aria-label="LinkedIn">
-                  <span>💼</span>
+                  <Icon type="business" size="20px" color="currentColor" />
                 </a>
               </div>
             </div>
@@ -104,8 +111,8 @@ const Footer = () => {
               <h3>订阅资讯</h3>
               <p>获取最新产品信息和优惠活动</p>
               <form className="newsletter-form">
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   placeholder="请输入您的邮箱"
                   className="newsletter-input"
                 />
@@ -114,20 +121,21 @@ const Footer = () => {
                 </button>
               </form>
             </div>
+            
             <div className="footer-social">
               <h3>关注我们</h3>
               <div className="social-links">
                 <a href="#" className="social-link" aria-label="微信">
-                  <span>📱</span>
+                  <Icon type="social" size="20px" color="currentColor" />
                 </a>
                 <a href="#" className="social-link" aria-label="微博">
-                  <span>🐦</span>
+                  <Icon type="social" size="20px" color="currentColor" />
                 </a>
                 <a href="#" className="social-link" aria-label="抖音">
-                  <span>🎵</span>
+                  <Icon type="social" size="20px" color="currentColor" />
                 </a>
                 <a href="#" className="social-link" aria-label="LinkedIn">
-                  <span>💼</span>
+                  <Icon type="business" size="20px" color="currentColor" />
                 </a>
               </div>
             </div>
@@ -145,7 +153,9 @@ const Footer = () => {
                 </div>
               </div>
               <div className="footer-certifications">
-                <span className="certification">ICP备案号：京ICP备xxxxxxxx号</span>
+                <span className="certification">
+                  ICP备案号：京ICP备xxxxxxxx号
+                </span>
               </div>
             </div>
           </div>
@@ -154,5 +164,4 @@ const Footer = () => {
     </footer>
   );
 };
-
 export default Footer;

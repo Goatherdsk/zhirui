@@ -1,6 +1,7 @@
 import React from 'react';
 import PageHeader from '../components/PageHeader';
 import Button from '../components/Button';
+import Icon from '../components/Icon';
 
 const Contact = () => {
   const contactStats = [
@@ -16,7 +17,7 @@ const Contact = () => {
       subtitle: 'Service Hotline',
       content: '400-888-9999',
       description: '7×24小时专业客服，随时为您解答疑问',
-      icon: '📞',
+      icon: 'phone',
       type: 'phone'
     },
     {
@@ -25,7 +26,7 @@ const Contact = () => {
       subtitle: 'Official Email',
       content: 'service@zhirui.com',
       description: '专业客服团队，1个工作日内回复您的邮件',
-      icon: '📧',
+      icon: 'email',
       type: 'email'
     },
     {
@@ -34,7 +35,7 @@ const Contact = () => {
       subtitle: 'Online Chat',
       content: '即时沟通',
       description: '智能客服+人工客服，为您提供实时咨询服务',
-      icon: '💬',
+      icon: 'chat',
       type: 'chat'
     },
     {
@@ -43,7 +44,7 @@ const Contact = () => {
       subtitle: 'Headquarters',
       content: '上海市浦东新区陆家嘴环路1000号',
       description: '欢迎您莅临我们的总部参观交流',
-      icon: '📍',
+      icon: 'location',
       type: 'address'
     }
   ];
@@ -98,9 +99,9 @@ const Contact = () => {
             <h2 style={{
               fontSize: '2.5rem',
               fontWeight: '600',
-              color: 'var(--color-light)',
+              color: 'var(--accent-light-gold)',
               marginBottom: '1rem',
-              background: 'linear-gradient(135deg, var(--color-gold) 0%, var(--color-light) 100%)',
+              background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-light-gold) 100%)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
@@ -109,7 +110,7 @@ const Contact = () => {
             </h2>
             <p style={{
               fontSize: '1.2rem',
-              color: 'var(--color-light)',
+              color: 'var(--accent-light-gold)',
               opacity: '0.8',
               lineHeight: '1.8',
               maxWidth: '600px',
@@ -140,7 +141,7 @@ const Contact = () => {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-10px)';
-                  e.currentTarget.style.borderColor = 'var(--color-gold)';
+                  e.currentTarget.style.borderColor = 'var(--accent-gold)';
                   e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(201, 169, 110, 0.2)';
                 }}
                 onMouseLeave={(e) => {
@@ -151,15 +152,17 @@ const Contact = () => {
               >
                 <div style={{
                   fontSize: '3rem',
-                  marginBottom: '1.5rem'
+                  marginBottom: '1.5rem',
+                  display: 'flex',
+                  justifyContent: 'center'
                 }}>
-                  {method.icon}
+                  <Icon type={method.icon} size="48px" color="var(--accent-gold)" />
                 </div>
 
                 <h3 style={{
                   fontSize: '1.8rem',
                   fontWeight: '600',
-                  color: 'var(--color-light)',
+                  color: 'var(--accent-light-gold)',
                   marginBottom: '0.5rem'
                 }}>
                   {method.title}
@@ -167,7 +170,7 @@ const Contact = () => {
 
                 <p style={{
                   fontSize: '1rem',
-                  color: 'var(--color-gold)',
+                  color: 'var(--accent-gold)',
                   textTransform: 'uppercase',
                   letterSpacing: '1px',
                   marginBottom: '1.5rem',
@@ -179,7 +182,7 @@ const Contact = () => {
                 <div style={{
                   fontSize: '1.5rem',
                   fontWeight: '600',
-                  color: 'var(--color-gold)',
+                  color: 'var(--accent-gold)',
                   marginBottom: '1rem',
                   fontFamily: 'monospace'
                 }}>
@@ -187,7 +190,7 @@ const Contact = () => {
                 </div>
 
                 <p style={{
-                  color: 'var(--color-light)',
+                  color: 'var(--accent-light-gold)',
                   opacity: '0.8',
                   lineHeight: '1.6',
                   marginBottom: '2rem'
@@ -216,9 +219,9 @@ const Contact = () => {
             <h2 style={{
               fontSize: '2.5rem',
               fontWeight: '600',
-              color: 'var(--color-light)',
+              color: 'var(--accent-light-gold)',
               marginBottom: '1rem',
-              background: 'linear-gradient(135deg, var(--color-gold) 0%, var(--color-light) 100%)',
+              background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-light-gold) 100%)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
@@ -227,7 +230,7 @@ const Contact = () => {
             </h2>
             <p style={{
               fontSize: '1.2rem',
-              color: 'var(--color-light)',
+              color: 'var(--accent-light-gold)',
               opacity: '0.8',
               lineHeight: '1.8',
               maxWidth: '600px',
@@ -255,7 +258,7 @@ const Contact = () => {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                  e.currentTarget.style.borderColor = 'var(--color-gold)';
+                  e.currentTarget.style.borderColor = 'var(--accent-gold)';
                   e.currentTarget.style.transform = 'translateY(-5px)';
                 }}
                 onMouseLeave={(e) => {
@@ -267,7 +270,7 @@ const Contact = () => {
                 <h3 style={{
                   fontSize: '1.5rem',
                   fontWeight: '600',
-                  color: 'var(--color-gold)',
+                  color: 'var(--accent-gold)',
                   marginBottom: '1rem',
                   textAlign: 'center'
                 }}>
@@ -281,9 +284,11 @@ const Contact = () => {
                     gap: '0.5rem',
                     marginBottom: '0.8rem'
                   }}>
-                    <span style={{ color: 'var(--color-gold)', fontSize: '0.9rem' }}>📍</span>
+                    <span style={{ color: 'var(--accent-gold)', fontSize: '0.9rem' }}>
+                      <Icon type="location" size="16px" color="var(--accent-gold)" />
+                    </span>
                     <span style={{
-                      color: 'var(--color-light)',
+                      color: 'var(--accent-light-gold)',
                       fontSize: '0.9rem',
                       lineHeight: '1.4'
                     }}>
@@ -297,9 +302,11 @@ const Contact = () => {
                     gap: '0.5rem',
                     marginBottom: '0.8rem'
                   }}>
-                    <span style={{ color: 'var(--color-gold)', fontSize: '0.9rem' }}>📞</span>
+                    <span style={{ color: 'var(--accent-gold)', fontSize: '0.9rem' }}>
+                      <Icon type="phone" size="16px" color="var(--accent-gold)" />
+                    </span>
                     <span style={{
-                      color: 'var(--color-light)',
+                      color: 'var(--accent-light-gold)',
                       fontSize: '0.9rem',
                       fontFamily: 'monospace'
                     }}>
@@ -312,9 +319,9 @@ const Contact = () => {
                     alignItems: 'center',
                     gap: '0.5rem'
                   }}>
-                    <span style={{ color: 'var(--color-gold)', fontSize: '0.9rem' }}>👤</span>
+                    <Icon type="business" size="16px" color="var(--accent-gold)" />
                     <span style={{
-                      color: 'var(--color-light)',
+                      color: 'var(--accent-light-gold)',
                       fontSize: '0.9rem'
                     }}>
                       负责人：{office.manager}
@@ -338,9 +345,9 @@ const Contact = () => {
             <h2 style={{
               fontSize: '2.5rem',
               fontWeight: '600',
-              color: 'var(--color-light)',
+              color: 'var(--accent-light-gold)',
               marginBottom: '1rem',
-              background: 'linear-gradient(135deg, var(--color-gold) 0%, var(--color-light) 100%)',
+              background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-light-gold) 100%)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
@@ -349,7 +356,7 @@ const Contact = () => {
             </h2>
             <p style={{
               fontSize: '1.2rem',
-              color: 'var(--color-light)',
+              color: 'var(--accent-light-gold)',
               opacity: '0.8',
               maxWidth: '600px',
               margin: '0 auto'

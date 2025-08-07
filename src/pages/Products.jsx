@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../components/Button';
 import Loading from '../components/Loading';
 import PageHeader from '../components/PageHeader';
+import Icon from '../components/Icon';
 import './Products.css';
 
 const Products = () => {
@@ -9,10 +10,10 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const categories = [
-    { id: 'all', name: '全部车型', icon: '🚗' },
-    { id: 'executive', name: '行政商务', icon: '💼' },
-    { id: 'premium', name: '奢华尊享', icon: '👑' },
-    { id: 'tech', name: '科技智能', icon: '🔬' }
+    { id: 'all', name: '全部车型', icon: 'car' },
+    { id: 'executive', name: '行政商务', icon: 'business' },
+    { id: 'premium', name: '奢华尊享', icon: 'crown' },
+    { id: 'tech', name: '科技智能', icon: 'tech' }
   ];
 
   const products = [
@@ -148,7 +149,9 @@ const Products = () => {
                 className={`filter-tab ${selectedCategory === category.id ? 'active' : ''}`}
                 onClick={() => handleCategoryChange(category.id)}
               >
-                <span className="tab-icon">{category.icon}</span>
+                <span className="tab-icon">
+                  <Icon type={category.icon} size="20px" color="currentColor" />
+                </span>
                 <span className="tab-name">{category.name}</span>
                 <span className="tab-count">
                   {category.id === 'all' ? products.length : products.filter(p => p.category === category.id).length}
@@ -207,7 +210,9 @@ const Products = () => {
                       <div className="features-grid">
                         {product.features.map((feature, index) => (
                           <div key={index} className="feature-item">
-                            <span className="feature-icon">✦</span>
+                            <span className="feature-icon">
+                              <Icon type="star" size="14px" color="var(--accent-gold)" />
+                            </span>
                             <span className="feature-text">{feature}</span>
                           </div>
                         ))}
