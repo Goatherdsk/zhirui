@@ -1,0 +1,29 @@
+/* Home 页面样式 */
+.home {
+  width: 100%;
+  position: relative;
+}
+
+/* 页面之间的平滑过渡 */
+.home section {
+  margin-bottom: 0;
+  position: relative;
+}
+
+/* ServiceHighlights 到 Footer 的过渡区域 */
+.home .service-highlights {
+  position: relative;
+  margin-bottom: 0;
+}
+
+.home .service-highlights::after {
+  content: '';
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, var(--primary-dark) 0%, rgba(26, 26, 26, 0.8) 30%, rgba(10, 10, 10, 0.5) 70%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}

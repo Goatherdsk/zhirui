@@ -1,0 +1,107 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './ProductShowcase.css';
+
+const ProductShowcase = () => {
+  const products = [
+    {
+      id: 1,
+      name: "智睿·行政版",
+      subtitle: "Executive Series",
+      description: "为企业高管打造的移动办公空间，集商务、舒适、科技于一体",
+      features: ["独立办公区域", "商务级音响系统", "隐私玻璃", "无线充电"],
+      gradient: "linear-gradient(135deg, #c9a96e 0%, #f4e4bc 100%)",
+      category: "行政商务"
+    },
+    {
+      id: 2,
+      name: "智睿·尊享版",
+      subtitle: "Premium Series", 
+      description: "奢华内饰与先进科技的完美融合，为VIP客户提供至尊体验",
+      features: ["真皮座椅", "按摩功能", "恒温系统", "娱乐系统"],
+      gradient: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
+      category: "豪华定制"
+    },
+    {
+      id: 3,
+      name: "智睿·科技版",
+      subtitle: "Tech Series",
+      description: "搭载最新智能科技，实现车内设备无缝连接与智能控制",
+      features: ["AI语音助手", "智能互联", "自动驾驶辅助", "云端服务"],
+      gradient: "linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%)",
+      category: "智能科技"
+    },
+    {
+      id: 4,
+      name: "智睿·至尊版",
+      subtitle: "Ultimate Series",
+      description: "匠心工艺与顶级配置的巅峰之作，为追求极致的您量身定制",
+      features: ["手工真皮内饰", "钻石级音响", "星空顶棚", "专属定制"],
+      gradient: "linear-gradient(135deg, #8b5a3c 0%, #d4af37 100%)",
+      category: "限量典藏"
+    }
+  ];
+
+  return (
+    <section className="product-showcase">
+      <div className="container">
+        <div className="section-header">
+          <p className="section-subtitle">OUR PRODUCTS</p>
+          <h2 className="section-title">精品车型</h2>
+          <p className="section-description">
+            每一款车型都经过精心设计，满足不同商务场景的需求
+          </p>
+        </div>
+
+        <div className="products-grid">
+          {products.map((product) => (
+            <div key={product.id} className="product-card">
+              <div className="product-image">
+                <div 
+                  className="product-placeholder"
+                  style={{ background: product.gradient }}
+                >
+                  <span className="product-preview">产品预览</span>
+                </div>
+                <div className="product-overlay">
+                  <span className="product-category">{product.category}</span>
+                </div>
+              </div>
+              
+              <div className="product-content">
+                <div className="product-header">
+                  <p className="product-subtitle">{product.subtitle}</p>
+                  <h3 className="product-name">{product.name}</h3>
+                </div>
+                
+                <p className="product-description">{product.description}</p>
+                
+                <ul className="product-features">
+                  {product.features.map((feature, idx) => (
+                    <li key={idx} className="feature-item">
+                      <span className="feature-icon">✓</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                
+                <Link to={`/products/${product.id}`} className="product-link">
+                  了解更多
+                  <span className="link-arrow">→</span>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="showcase-footer">
+          <Link to="/products" className="view-all-btn">
+            查看全部产品
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ProductShowcase;
