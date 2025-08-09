@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import appStore from '../stores/AppStore';
-import './Header.css';
+import appStore from '../../stores/AppStore';
+import './index.css';
 
 const Header = observer(() => {
   const location = useLocation();
@@ -13,6 +13,7 @@ const Header = observer(() => {
     { path: '/products', label: '产品中心', key: 'products' },
     { path: '/services', label: '专属服务', key: 'services' },
     { path: '/about', label: '关于我们', key: 'about' },
+    { path: '/news', label: '公司动态', key: 'news' },
     { path: '/contact', label: '联系我们', key: 'contact' }
   ];
 

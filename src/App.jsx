@@ -9,6 +9,7 @@ import Products from './pages/Products';
 import Services from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import News from './pages/News';
 import './App.css';
 
 const App = observer(() => {
@@ -23,6 +24,7 @@ const App = observer(() => {
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/news" element={<News />} />
             <Route path="*" element={<div>页面未找到</div>} />
           </Routes>
         </main>

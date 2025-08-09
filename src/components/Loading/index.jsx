@@ -1,5 +1,5 @@
 import React from 'react';
-import './Loading.css';
+import './index.css';
 
 const Loading = ({ message = '加载中...' }) => {
   return (

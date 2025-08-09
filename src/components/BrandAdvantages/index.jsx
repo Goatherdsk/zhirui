@@ -1,6 +1,6 @@
 import React from 'react';
-import Icon from './Icon';
-import './BrandAdvantages.css';
+import Icon from '../Icon';
+import './index.css';
 
 const BrandAdvantages = () => {
   const advantages = [

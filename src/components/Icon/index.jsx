@@ -1,5 +1,5 @@
 import React from 'react';
-import './Icon.css';
+import './index.css';
 
 // 通用图标组件
 const Icon = ({ type, size = '16px', color = 'currentColor', className = '' }) => {

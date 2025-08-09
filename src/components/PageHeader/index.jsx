@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './PageHeader.css';
+import './index.css';
 
 const PageHeader = ({ 
   title, 

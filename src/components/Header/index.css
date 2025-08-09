@@ -33,6 +33,8 @@
   justify-content: space-between;
   padding: 1rem 0;
   transition: padding 0.3s ease;
+  flex-wrap: nowrap;
+  min-height: 60px;
 }
 
 /* Logo 样式 */
@@ -44,6 +46,8 @@
   font-size: 1.5rem;
   transition: all 0.3s ease;
   position: relative;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .logo h2::after {
@@ -76,7 +80,10 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 2rem;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .nav-link {
@@ -86,6 +93,8 @@
   padding: 0.5rem 0;
   position: relative;
   transition: color 0.3s ease;
+  white-space: nowrap;
+  font-size: 0.95rem;
 }
 
 .nav-link:hover,
@@ -114,12 +123,14 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-shrink: 0;
 }
 
 /* 语言切换 */
 .language-switcher {
   display: flex;
   gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .lang-btn {
@@ -244,15 +255,59 @@
   .logo h2 {
     font-size: 1.75rem;
   }
+  
+  .nav-list {
+    gap: 2rem;
+  }
+  
+  .nav-link {
+    font-size: 1rem;
+  }
+}
+
+/* 中等屏幕优化 */
+@media (min-width: 992px) {
+  .nav-list {
+    gap: 2.5rem;
+  }
+  
+  .nav-link {
+    font-size: 1.05rem;
+  }
 }
 
 /* 大屏幕优化 */
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .nav-list {
     gap: 3rem;
   }
   
   .nav-link {
     font-size: 1.125rem;
+  }
+}
+
+/* 超小桌面屏幕优化 - 防止换行 */
+@media (min-width: 768px) and (max-width: 991px) {
+  .nav-list {
+    gap: 1.2rem;
+  }
+  
+  .nav-link {
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+  }
+  
+  .logo h2 {
+    font-size: 1.5rem;
+  }
+  
+  .header-actions {
+    gap: 0.75rem;
+  }
+  
+  .lang-btn {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.8rem;
   }
 }

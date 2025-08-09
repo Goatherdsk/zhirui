@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { downloadedResources, getProductCarousel } from '../utils/downloadedResources';
-import Icon from './Icon';
-import './ProductShowcase.css';
+import { downloadedResources, getProductCarousel } from '../../utils/downloadedResources';
+import Icon from '../Icon';
+import './index.css';
 
 const ProductShowcase = () => {
   const productImages = getProductCarousel();

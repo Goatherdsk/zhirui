@@ -1,7 +1,7 @@
 import React from 'react';
-import PageHeader from '../components/PageHeader';
-import Button from '../components/Button';
-import Icon from '../components/Icon';
+import PageHeader from '../../components/PageHeader';
+import Button from '../../components/Button';
+import Icon from '../../components/Icon';
 
 const Contact = () => {
   const contactStats = [

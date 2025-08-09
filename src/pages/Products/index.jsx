@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Button from '../components/Button';
-import Loading from '../components/Loading';
-import PageHeader from '../components/PageHeader';
-import Icon from '../components/Icon';
-import './Products.css';
+import Button from '../../components/Button';
+import Loading from '../../components/Loading';
+import PageHeader from '../../components/PageHeader';
+import Icon from '../../components/Icon';
+import './index.css';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');

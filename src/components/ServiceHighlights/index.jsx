@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Icon from './Icon';
-import './ServiceHighlights.css';
+import Icon from '../Icon';
+import './index.css';
 
 const ServiceHighlights = () => {
   const services = [
