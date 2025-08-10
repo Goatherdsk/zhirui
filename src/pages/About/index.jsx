@@ -15,9 +15,9 @@ const About = () => {
       <PageHeader
         title="关于我们"
         englishTitle="About Us"
-        subtitle="智睿商务车 - 您的商务出行伙伴"
+        subtitle="智锐商务车 - 您的商务出行伙伴"
         description={[
-          "自2008年成立以来，智睿商务车始终致力于为企业客户提供高品质的商务出行解决方案",
+          "自2008年成立以来，智锐商务车始终致力于为企业客户提供高品质的商务出行解决方案",
           "我们以匠心精神打造每一款产品，用专业服务赢得客户信赖"
         ]}
         backgroundType="about"

@@ -1,7 +1,6 @@
 import React from 'react';
 import Icon from '../Icon';
-import './index.css';
-
+import styles from './index.module.less';
 const BrandAdvantages = () => {
   const advantages = [
     {
@@ -43,49 +42,49 @@ const BrandAdvantages = () => {
   ];
 
   return (
-    <section className="brand-advantages">
+    <section className={styles.brandAdvantages}>
       <div className="container">
-        <div className="section-header">
-          <p className="section-subtitle">WHY CHOOSE US</p>
-          <h2 className="section-title">品牌优势</h2>
-          <p className="section-description">
+        <div className={styles.sectionHeader}>
+          <p className={styles.sectionSubtitle}>WHY CHOOSE US</p>
+          <h2 className={styles.sectionTitle}>品牌优势</h2>
+          <p className={styles.sectionDescription}>
             凭借卓越的工艺、优质的材料和完善的服务，为您提供无与伦比的商务出行体验
           </p>
         </div>
 
-        <div className="advantages-grid">
+        <div className={styles.advantagesGrid}>
           {advantages.map((advantage, index) => (
-            <div key={advantage.id} className="advantage-card" data-index={index}>
-              <div className="advantage-number">
+            <div key={advantage.id} className={styles.advantageCard} data-index={index}>
+              <div className={styles.advantageNumber}>
                 {advantage.number}
               </div>
               
-              <div className="advantage-content">
-                <p className="advantage-subtitle">{advantage.subtitle}</p>
-                <h3 className="advantage-title">{advantage.title}</h3>
-                <p className="advantage-description">{advantage.description}</p>
+              <div className={styles.advantageContent}>
+                <p className={styles.advantageSubtitle}>{advantage.subtitle}</p>
+                <h3 className={styles.advantageTitle}>{advantage.title}</h3>
+                <p className={styles.advantageDescription}>{advantage.description}</p>
                 
-                <div className="advantage-stats">
-                  <span className="stats-number">{advantage.stats}</span>
-                  <span className="stats-label">{advantage.statsLabel}</span>
+                <div className={styles.advantageStats}>
+                  <span className={styles.statsNumber}>{advantage.stats}</span>
+                  <span className={styles.statsLabel}>{advantage.statsLabel}</span>
                 </div>
               </div>
 
-              <div className="advantage-decoration">
-                <div className="decoration-dot"></div>
-                <div className="decoration-line"></div>
+              <div className={styles.advantageDecoration}>
+                <div className={styles.decorationDot}></div>
+                <div className={styles.decorationLine}></div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="advantages-cta">
-          <div className="cta-content">
+        <div className={styles.advantagesCta}>
+          <div className={styles.ctaContent}>
             <h3>想了解更多品牌故事？</h3>
-            <p>探索智睿商务车的发展历程和企业文化</p>
-            <a href="/about" className="cta-link">
+            <p>探索智锐商务车的发展历程和企业文化</p>
+            <a href="/about" className={styles.ctaLink}>
               品牌故事
-              <span className="link-arrow">
+              <span className={styles.linkArrow}>
                 <Icon type="arrow" size="16px" color="currentColor" />
               </span>
             </a>

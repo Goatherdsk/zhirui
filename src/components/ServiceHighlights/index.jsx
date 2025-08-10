@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '../Icon';
-import './index.css';
-
+import styles from './index.module.less';
 const ServiceHighlights = () => {
   const services = [
     {
@@ -72,32 +71,32 @@ const ServiceHighlights = () => {
   ];
 
   return (
-    <section className="service-highlights">
+    <section className={styles.serviceHighlights}>
       <div className="container">
-        <div className="section-header">
-          <p className="section-subtitle">OUR SERVICES</p>
-          <h2 className="section-title">专属服务</h2>
-          <p className="section-description">
+        <div className={styles.sectionHeader}>
+          <p className={styles.sectionSubtitle}>OUR SERVICES</p>
+          <h2 className={styles.sectionTitle}>专属服务</h2>
+          <p className={styles.sectionDescription}>
             致力于为每一位客户提供超越期待的专业服务体验
           </p>
         </div>
 
-        <div className="services-grid">
+        <div className={styles.servicesGrid}>
           {services.map((service) => (
-            <div key={service.id} className="service-card">
-              <div className="service-icon">
-                <Icon type={service.icon} size="32px" className="icon-gold" />
+            <div key={service.id} className={styles.serviceCard}>
+              <div className={styles.serviceIcon}>
+                <Icon type={service.icon} size="32px" className={styles.iconGold} />
               </div>
               
-              <div className="service-content">
-                <p className="service-subtitle">{service.subtitle}</p>
-                <h3 className="service-title">{service.title}</h3>
-                <p className="service-description">{service.description}</p>
+              <div className={styles.serviceContent}>
+                <p className={styles.serviceSubtitle}>{service.subtitle}</p>
+                <h3 className={styles.serviceTitle}>{service.title}</h3>
+                <p className={styles.serviceDescription}>{service.description}</p>
                 
-                <ul className="service-features">
+                <ul className={styles.serviceFeatures}>
                   {service.features.map((feature, idx) => (
-                    <li key={idx} className="service-feature">
-                      <Icon type="check" size="12px" className="icon-gold" />
+                    <li key={idx} className={styles.serviceFeature}>
+                      <Icon type="check" size="12px" className={styles.iconGold} />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -107,15 +106,15 @@ const ServiceHighlights = () => {
           ))}
         </div>
 
-        <div className="service-cta">
-          <div className="cta-content">
+        <div className={styles.serviceCta}>
+          <div className={styles.ctaContent}>
             <h3>需要专属服务方案？</h3>
             <p>我们的专业顾问团队随时为您提供个性化的服务咨询</p>
-            <div className="cta-buttons">
-              <Link to="/contact" className="cta-primary">
+            <div className={styles.ctaButtons}>
+              <Link to="/contact" className={styles.ctaPrimary}>
                 联系我们
               </Link>
-              <Link to="/services" className="cta-secondary">
+              <Link to="/services" className={styles.ctaSecondary}>
                 了解更多服务
               </Link>
             </div>

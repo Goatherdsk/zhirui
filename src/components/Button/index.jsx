@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import styles from './index.module.less';
 
 const Button = ({ 
   children, 
@@ -10,11 +10,17 @@ const Button = ({
   className = '',
   ...props 
 }) => {
-  const buttonClass = `btn btn-${variant} btn-${size} ${className} ${disabled ? 'disabled' : ''}`.trim();
+  const buttonClasses = [
+    styles.btn,
+    styles[`btn${variant.charAt(0).toUpperCase() + variant.slice(1)}`],
+    styles[`btn${size.charAt(0).toUpperCase() + size.slice(1)}`],
+    disabled && styles.btnDisabled,
+    className
+  ].filter(Boolean).join(' ');
 
   return (
     <button 
-      className={buttonClass}
+      className={buttonClasses}
       onClick={onClick}
       disabled={disabled}
       {...props}

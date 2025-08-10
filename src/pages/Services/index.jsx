@@ -251,7 +251,7 @@ const Services = () => {
             maxWidth: '800px',
             margin: '0 auto 3rem'
           }}>
-            智睿商务车始终坚持以客户为中心，为您提供超越期待的服务体验
+            智锐商务车始终坚持以客户为中心，为您提供超越期待的服务体验
           </p>
           <div style={{
             display: 'flex',

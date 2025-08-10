@@ -3,8 +3,7 @@ import Button from '../../components/Button';
 import Loading from '../../components/Loading';
 import PageHeader from '../../components/PageHeader';
 import Icon from '../../components/Icon';
-import './index.css';
-
+import styles from './index.module.less';
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +18,7 @@ const Products = () => {
   const products = [
     {
       id: 1,
-      name: '智睿·行政版',
+      name: '智锐·行政版',
       subtitle: 'Executive Series',
       category: 'executive',
       price: '88.8万起',
@@ -40,7 +39,7 @@ const Products = () => {
     },
     {
       id: 2,
-      name: '智睿·尊享版',
+      name: '智锐·尊享版',
       subtitle: 'Premium Series',
       category: 'premium',
       price: '128.8万起',
@@ -61,7 +60,7 @@ const Products = () => {
     },
     {
       id: 3,
-      name: '智睿·科技版',
+      name: '智锐·科技版',
       subtitle: 'Tech Series',
       category: 'tech',
       price: '98.8万起',
@@ -82,7 +81,7 @@ const Products = () => {
     },
     {
       id: 4,
-      name: '智睿·至尊版',
+      name: '智锐·至尊版',
       subtitle: 'Ultimate Series',
       category: 'premium',
       price: '188.8万起',
@@ -116,7 +115,7 @@ const Products = () => {
   };
 
   return (
-    <div className="products-page">
+    <div className={styles.productsPage}>
             <PageHeader
         title="产品中心"
         subtitle="PRODUCT CENTER"
@@ -137,23 +136,23 @@ const Products = () => {
 
       <div className="container">
         {/* 产品分类筛选 */}
-        <div className="product-filters">
-          <div className="filter-header">
+        <div className={styles.productFilters}>
+          <div className={styles.filterHeader}>
             <h2>选择您的理想车型</h2>
             <p>根据用途和需求筛选最适合的产品</p>
           </div>
-          <div className="filter-tabs">
+          <div className={styles.filterTabs}>
             {categories.map(category => (
               <button
                 key={category.id}
                 className={`filter-tab ${selectedCategory === category.id ? 'active' : ''}`}
                 onClick={() => handleCategoryChange(category.id)}
               >
-                <span className="tab-icon">
+                <span className={styles.tabIcon}>
                   <Icon type={category.icon} size="20px" color="currentColor" />
                 </span>
-                <span className="tab-name">{category.name}</span>
-                <span className="tab-count">
+                <span className={styles.tabName}>{category.name}</span>
+                <span className={styles.tabCount}>
                   {category.id === 'all' ? products.length : products.filter(p => p.category === category.id).length}
                 </span>
               </button>
@@ -162,94 +161,94 @@ const Products = () => {
         </div>
 
         {/* 产品列表 */}
-        <div className="products-section">
+        <div className={styles.productsSection}>
           {isLoading ? (
             <Loading />
           ) : (
-            <div className="products-grid">
+            <div className={styles.productsGrid}>
               {filteredProducts.map(product => (
-                <div key={product.id} className="product-card">
-                  <div className="product-header">
-                    <div className="product-badge" data-badge={product.badge}>
+                <div key={product.id} className={styles.productCard}>
+                  <div className={styles.productHeader}>
+                    <div className={styles.productBadge} data-badge={product.badge}>
                       {product.badge}
                     </div>
                     <div 
-                      className="product-background"
+                      className={styles.productBackground}
                       style={{ background: product.gradient }}
                     >
-                      <div className="product-overlay"></div>
+                      <div className={styles.productOverlay}></div>
                     </div>
                   </div>
 
-                  <div className="product-content">
-                    <div className="product-title-section">
-                      <h3 className="product-name">{product.name}</h3>
-                      <p className="product-subtitle">{product.subtitle}</p>
+                  <div className={styles.productContent}>
+                    <div className={styles.productTitleSection}>
+                      <h3 className={styles.productName}>{product.name}</h3>
+                      <p className={styles.productSubtitle}>{product.subtitle}</p>
                     </div>
 
-                    <div className="product-price-section">
+                    <div className={styles.productPriceSection}>
                       <div className="price-container">
-                        <span className="current-price">{product.price}</span>
+                        <span className={styles.currentPrice}>{product.price}</span>
                         {product.originalPrice && (
-                          <span className="original-price">{product.originalPrice}</span>
+                          <span className={styles.originalPrice}>{product.originalPrice}</span>
                         )}
                       </div>
-                      <div className="product-highlights">
+                      <div className={styles.productHighlights}>
                         {product.highlights.map((highlight, index) => (
-                          <span key={index} className="highlight-tag">
+                          <span key={index} className={styles.highlightTag}>
                             {highlight}
                           </span>
                         ))}
                       </div>
                     </div>
 
-                    <p className="product-description">{product.description}</p>
+                    <p className={styles.productDescription}>{product.description}</p>
 
-                    <div className="product-features">
+                    <div className={styles.productFeatures}>
                       <h4>核心配置</h4>
-                      <div className="features-grid">
+                      <div className={styles.featuresGrid}>
                         {product.features.map((feature, index) => (
-                          <div key={index} className="feature-item">
-                            <span className="feature-icon">
+                          <div key={index} className={styles.featureItem}>
+                            <span className={styles.featureIcon}>
                               <Icon type="star" size="14px" color="var(--accent-gold)" />
                             </span>
-                            <span className="feature-text">{feature}</span>
+                            <span className={styles.featureText}>{feature}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="product-specs">
+                    <div className={styles.productSpecs}>
                       <h4>技术参数</h4>
-                      <div className="specs-grid">
-                        <div className="spec-item">
-                          <span className="spec-label">发动机</span>
-                          <span className="spec-value">{product.specs.engine}</span>
+                      <div className={styles.specsGrid}>
+                        <div className={styles.specItem}>
+                          <span className={styles.specLabel}>发动机</span>
+                          <span className={styles.specValue}>{product.specs.engine}</span>
                         </div>
-                        <div className="spec-item">
-                          <span className="spec-label">功率</span>
-                          <span className="spec-value">{product.specs.power}</span>
+                        <div className={styles.specItem}>
+                          <span className={styles.specLabel}>功率</span>
+                          <span className={styles.specValue}>{product.specs.power}</span>
                         </div>
-                        <div className="spec-item">
-                          <span className="spec-label">变速箱</span>
-                          <span className="spec-value">{product.specs.transmission}</span>
+                        <div className={styles.specItem}>
+                          <span className={styles.specLabel}>变速箱</span>
+                          <span className={styles.specValue}>{product.specs.transmission}</span>
                         </div>
-                        <div className="spec-item">
-                          <span className="spec-label">油耗</span>
-                          <span className="spec-value">{product.specs.fuel}</span>
+                        <div className={styles.specItem}>
+                          <span className={styles.specLabel}>油耗</span>
+                          <span className={styles.specValue}>{product.specs.fuel}</span>
                         </div>
-                        <div className="spec-item">
-                          <span className="spec-label">座位</span>
-                          <span className="spec-value">{product.specs.seats}</span>
+                        <div className={styles.specItem}>
+                          <span className={styles.specLabel}>座位</span>
+                          <span className={styles.specValue}>{product.specs.seats}</span>
                         </div>
-                        <div className="spec-item">
-                          <span className="spec-label">长度</span>
-                          <span className="spec-value">{product.specs.length}</span>
+                        <div className={styles.specItem}>
+                          <span className={styles.specLabel}>长度</span>
+                          <span className={styles.specValue}>{product.specs.length}</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="product-actions">
+                    <div className={styles.productActions}>
                       <Button variant="primary" size="large">
                         立即咨询
                       </Button>
@@ -265,11 +264,11 @@ const Products = () => {
         </div>
 
         {/* 底部行动号召 */}
-        <div className="products-cta">
-          <div className="cta-content">
+        <div className={styles.productsCta}>
+          <div className={styles.ctaContent}>
             <h2>找到心仪车型了吗？</h2>
             <p>我们的专业顾问将为您提供个性化建议</p>
-            <div className="cta-actions">
+            <div className={styles.ctaActions}>
               <Button variant="primary" size="large">
                 预约试驾
               </Button>

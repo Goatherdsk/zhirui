@@ -1,11 +1,11 @@
 {
   "name": "zhirui-business-vehicles",
-  "description": "智睿商务车官方网站 - 高端商务车展示平台",
+  "description": "智锐商务车官方网站 - 高端商务车展示平台",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "keywords": ["商务车", "高端车辆", "React", "Vite", "MobX"],
-  "author": "智睿商务车有限公司",
+  "author": "智锐商务车有限公司",
   "license": "MIT",
   "scripts": {
     "dev": "vite",

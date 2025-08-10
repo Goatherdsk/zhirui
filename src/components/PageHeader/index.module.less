@@ -1,6 +1,6 @@
-/* PageHeader.css - 页面头部通用样式 */
+/* PageHeader.module.less - 页面头部通用样式 */
 
-.page-header {
+.pageHeader {
   position: relative;
   min-height: 60vh;
   display: flex;
@@ -10,7 +10,7 @@
   background-attachment: fixed;
 }
 
-.header-overlay {
+.headerOverlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -33,10 +33,9 @@
   padding: 0 2rem;
 }
 
-.header-content {
+.headerContent {
   text-align: center;
   color: var(--text-light);
-  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -51,20 +50,20 @@
   flex-wrap: wrap;
 }
 
-.breadcrumb-item {
+.breadcrumbItem {
   color: var(--accent-gold);
   font-size: 0.9rem;
   font-weight: 400;
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--accent-light-gold);
+  }
 }
 
-.breadcrumb-item:hover {
-  color: var(--accent-light-gold);
-}
-
-.breadcrumb-separator {
+.breadcrumbSeparator {
   margin: 0 1rem;
   color: var(--text-light);
   opacity: 0.5;
@@ -72,12 +71,12 @@
 }
 
 /* ===== 标题区域 ===== */
-.header-text {
+.headerText {
   margin-bottom: 3rem;
 }
 
-.page-title {
-  font-size: clamp(2.5rem, 8vw, 4.5rem);
+.pageTitle {
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 700;
   margin-bottom: 1rem;
   background: linear-gradient(135deg, 
@@ -93,7 +92,7 @@
   animation: fadeInUp 1s ease-out 0.4s forwards, titleGlow 3s ease-in-out infinite alternate;
 }
 
-.page-english-title {
+.pageEnglishTitle {
   font-size: 1.3rem;
   font-weight: 300;
   color: var(--accent-gold);
@@ -105,7 +104,7 @@
   text-align: center;
 }
 
-.page-subtitle {
+.pageSubtitle {
   font-size: 1.4rem;
   font-weight: 400;
   color: var(--text-light);
@@ -117,7 +116,7 @@
   text-align: center;
 }
 
-.page-description {
+.pageDescription {
   font-size: 1.1rem;
   color: var(--text-light);
   opacity: 0.8;
@@ -127,14 +126,14 @@
   text-align: center;
   opacity: 0;
   animation: fadeInUp 1s ease-out 1s forwards;
-}
 
-.page-description p {
-  margin: 0.5rem 0;
+  p {
+    margin: 0.5rem 0;
+  }
 }
 
 /* ===== 统计数据区域 ===== */
-.header-stats {
+.headerStats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 2rem;
@@ -144,7 +143,7 @@
   animation: fadeInUp 1s ease-out 1.2s forwards;
 }
 
-.stat-item {
+.statItem {
   text-align: center;
   padding: 2rem 1.5rem;
   background: rgba(255, 255, 255, 0.05);
@@ -152,16 +151,16 @@
   border-radius: 12px;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-gold);
+    box-shadow: 0 10px 30px rgba(201, 169, 110, 0.2);
+  }
 }
 
-.stat-item:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--accent-gold);
-  box-shadow: 0 10px 30px rgba(201, 169, 110, 0.2);
-}
-
-.stat-number {
+.statNumber {
   font-size: 2.8rem;
   font-weight: 700;
   color: var(--accent-gold);
@@ -170,7 +169,7 @@
   line-height: 1;
 }
 
-.stat-label {
+.statLabel {
   font-size: 1rem;
   color: var(--text-light);
   opacity: 0.9;
@@ -179,7 +178,7 @@
 }
 
 /* ===== 装饰性元素 ===== */
-.header-decoration {
+.headerDecoration {
   position: absolute;
   top: 0;
   left: 0;
@@ -189,7 +188,7 @@
   z-index: 1;
 }
 
-.decoration-line {
+.decorationLine {
   position: absolute;
   background: linear-gradient(90deg, 
     transparent 0%, 
@@ -199,93 +198,103 @@
   height: 1px;
   width: 100%;
   animation: decorationSlide 8s ease-in-out infinite;
+
+  &.decorationLine1 {
+    top: 30%;
+    animation-delay: 0s;
+  }
+
+  &.decorationLine2 {
+    bottom: 30%;
+    animation-delay: 4s;
+  }
 }
 
-.decoration-line-1 {
-  top: 30%;
-  animation-delay: 0s;
-}
-
-.decoration-line-2 {
-  bottom: 30%;
-  animation-delay: 4s;
-}
-
-.decoration-circle {
+.decorationCircle {
   position: absolute;
   border: 1px solid rgba(201, 169, 110, 0.2);
   border-radius: 50%;
   animation: decorationFloat 6s ease-in-out infinite;
-}
 
-.decoration-circle-1 {
-  width: 100px;
-  height: 100px;
-  top: 20%;
-  right: 10%;
-  animation-delay: 0s;
-}
+  &.decorationCircle1 {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    right: 10%;
+    animation-delay: 0s;
+  }
 
-.decoration-circle-2 {
-  width: 60px;
-  height: 60px;
-  bottom: 20%;
-  left: 10%;
-  animation-delay: 3s;
+  &.decorationCircle2 {
+    width: 60px;
+    height: 60px;
+    bottom: 20%;
+    left: 10%;
+    animation-delay: 3s;
+  }
 }
 
 /* ===== 不同页面的背景样式 ===== */
-.page-header-default {
-  background: linear-gradient(135deg, 
-    rgba(26, 26, 26, 0.95) 0%, 
-    rgba(45, 45, 45, 0.9) 50%, 
-    rgba(201, 169, 110, 0.1) 100%
-  ),
-  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23000"/><g fill="none" stroke="%23333" stroke-width="1" opacity="0.3"><path d="M0 300L300 150L600 300L900 150L1200 300v300H0z"/></g></svg>');
+@defaultBackground: linear-gradient(135deg, 
+  rgba(26, 26, 26, 0.95) 0%, 
+  rgba(45, 45, 45, 0.9) 50%, 
+  rgba(201, 169, 110, 0.1) 100%
+),
+url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23000"/><g fill="none" stroke="%23333" stroke-width="1" opacity="0.3"><path d="M0 300L300 150L600 300L900 150L1200 300v300H0z"/></g></svg>');
+
+@productsBackground: linear-gradient(135deg, 
+  rgba(30, 58, 138, 0.9) 0%, 
+  rgba(26, 26, 26, 0.95) 50%, 
+  rgba(201, 169, 110, 0.2) 100%
+),
+url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23000"/><g fill="none" stroke="%23444" stroke-width="1" opacity="0.4"><circle cx="200" cy="200" r="100"/><circle cx="800" cy="400" r="150"/><circle cx="1000" cy="150" r="80"/></g></svg>');
+
+@servicesBackground: linear-gradient(135deg, 
+  rgba(45, 45, 45, 0.95) 0%, 
+  rgba(26, 26, 26, 0.9) 50%, 
+  rgba(201, 169, 110, 0.15) 100%
+),
+url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23111"/><g fill="none" stroke="%23555" stroke-width="2" opacity="0.3"><path d="M0 0L1200 600M0 600L1200 0"/><path d="M600 0L600 600M0 300L1200 300"/></g></svg>');
+
+@aboutBackground: linear-gradient(135deg, 
+  rgba(139, 90, 60, 0.8) 0%, 
+  rgba(26, 26, 26, 0.95) 50%, 
+  rgba(201, 169, 110, 0.2) 100%
+),
+url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23000"/><g fill="none" stroke="%23666" stroke-width="1" opacity="0.3"><polygon points="600,50 850,500 350,500"/><polygon points="200,100 400,100 300,300"/><polygon points="800,100 1000,100 900,300"/></g></svg>');
+
+@contactBackground: linear-gradient(135deg, 
+  rgba(26, 26, 26, 0.95) 0%, 
+  rgba(45, 45, 45, 0.9) 50%, 
+  rgba(201, 169, 110, 0.25) 100%
+),
+url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23000"/><g fill="none" stroke="%23777" stroke-width="1" opacity="0.4"><rect x="100" y="100" width="200" height="150" rx="10"/><rect x="500" y="200" width="200" height="150" rx="10"/><rect x="900" y="100" width="200" height="150" rx="10"/></g></svg>');
+
+.pageHeaderDefault {
+  background: @defaultBackground;
   background-size: cover;
   background-position: center;
 }
 
-.page-header-products {
-  background: linear-gradient(135deg, 
-    rgba(30, 58, 138, 0.9) 0%, 
-    rgba(26, 26, 26, 0.95) 50%, 
-    rgba(201, 169, 110, 0.2) 100%
-  ),
-  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23000"/><g fill="none" stroke="%23444" stroke-width="1" opacity="0.4"><circle cx="200" cy="200" r="100"/><circle cx="800" cy="400" r="150"/><circle cx="1000" cy="150" r="80"/></g></svg>');
+.pageHeaderProducts {
+  background: @productsBackground;
   background-size: cover;
   background-position: center;
 }
 
-.page-header-services {
-  background: linear-gradient(135deg, 
-    rgba(45, 45, 45, 0.95) 0%, 
-    rgba(26, 26, 26, 0.9) 50%, 
-    rgba(201, 169, 110, 0.15) 100%
-  ),
-  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23111"/><g fill="none" stroke="%23555" stroke-width="2" opacity="0.3"><path d="M0 0L1200 600M0 600L1200 0"/><path d="M600 0L600 600M0 300L1200 300"/></g></svg>');
+.pageHeaderServices {
+  background: @servicesBackground;
   background-size: cover;
   background-position: center;
 }
 
-.page-header-about {
-  background: linear-gradient(135deg, 
-    rgba(139, 90, 60, 0.8) 0%, 
-    rgba(26, 26, 26, 0.95) 50%, 
-    rgba(201, 169, 110, 0.2) 100%
-  ),
-  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23000"/><g fill="none" stroke="%23666" stroke-width="1" opacity="0.3"><polygon points="600,50 850,500 350,500"/><polygon points="200,100 400,100 300,300"/><polygon points="800,100 1000,100 900,300"/></g></svg>');
+.pageHeaderAbout {
+  background: @aboutBackground;
   background-size: cover;
   background-position: center;
 }
 
-.page-header-contact {
-  background: linear-gradient(135deg, 
-    rgba(26, 26, 26, 0.95) 0%, 
-    rgba(45, 45, 45, 0.9) 50%, 
-    rgba(201, 169, 110, 0.25) 100%
-  ),
-  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23000"/><g fill="none" stroke="%23777" stroke-width="1" opacity="0.4"><rect x="100" y="100" width="200" height="150" rx="10"/><rect x="500" y="200" width="200" height="150" rx="10"/><rect x="900" y="100" width="200" height="150" rx="10"/></g></svg>');
+.pageHeaderContact {
+  background: @contactBackground;
   background-size: cover;
   background-position: center;
 }
@@ -335,7 +344,7 @@
 
 /* ===== 响应式设计 ===== */
 @media (max-width: 768px) {
-  .page-header {
+  .pageHeader {
     min-height: 50vh;
     background-attachment: scroll;
   }
@@ -344,91 +353,91 @@
     padding: 0 1rem;
   }
   
-  .page-title {
+  .pageTitle {
     font-size: 2.5rem;
   }
   
-  .page-english-title {
+  .pageEnglishTitle {
     font-size: 1rem;
     letter-spacing: 2px;
   }
   
-  .page-subtitle {
+  .pageSubtitle {
     font-size: 1.2rem;
   }
   
-  .page-description {
+  .pageDescription {
     font-size: 1rem;
     padding: 0 1rem;
   }
   
-  .header-stats {
+  .headerStats {
     grid-template-columns: 1fr;
     gap: 1.5rem;
     max-width: 400px;
   }
   
-  .stat-item {
+  .statItem {
     padding: 1.5rem 1rem;
   }
   
-  .stat-number {
+  .statNumber {
     font-size: 2.2rem;
   }
   
-  .stat-label {
+  .statLabel {
     font-size: 0.9rem;
   }
   
-  .decoration-circle-1,
-  .decoration-circle-2 {
+  .decorationCircle1,
+  .decorationCircle2 {
     display: none;
   }
   
-  .breadcrumb-item {
+  .breadcrumbItem {
     font-size: 0.8rem;
   }
   
-  .breadcrumb-separator {
+  .breadcrumbSeparator {
     margin: 0 0.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .page-header {
+  .pageHeader {
     min-height: 45vh;
   }
   
-  .header-content {
+  .headerContent {
     padding: 0 1rem;
   }
   
-  .page-title {
+  .pageTitle {
     font-size: 2rem;
   }
   
-  .page-english-title {
+  .pageEnglishTitle {
     font-size: 0.9rem;
     letter-spacing: 1px;
   }
   
-  .page-subtitle {
+  .pageSubtitle {
     font-size: 1rem;
   }
   
-  .page-description {
+  .pageDescription {
     font-size: 0.9rem;
   }
   
-  .header-stats {
+  .headerStats {
     gap: 1rem;
   }
   
-  .stat-item {
+  .statItem {
     padding: 1rem;
   }
   
-  .stat-number {
+  .statNumber {
     font-size: 1.8rem;
   }
 }

@@ -1,14 +1,14 @@
 /* App 组件样式 */
-.App {
+.app {
   width: 100%;
   min-height: 100vh;
-  background-color: var(--background-black);
+  background-color: @background-black;
 }
 
-.main-content {
-  padding-top: 80px; /* 为固定导航留出空间 */
+.mainContent {
+  padding-top: 100px; /* 为固定导航留出空间 */
   width: 100%;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 100px);
 }
 
 /* 页面容器通用样式 */
@@ -18,22 +18,22 @@
   padding: 2rem 0;
 }
 
-.page-header {
+.pageHeader {
   text-align: center;
   padding: 4rem 0;
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+  background: linear-gradient(135deg, @primary-dark 0%, @secondary-dark 100%);
 }
 
-.page-title {
+.pageTitle {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 200;
-  color: var(--text-white);
+  color: @text-white;
   margin-bottom: 1rem;
 }
 
-.page-subtitle {
+.pageSubtitle {
   font-size: 1.125rem;
-  color: var(--text-gray);
+  color: @text-gray;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -45,12 +45,12 @@
   align-items: center;
   height: 200px;
   font-size: 1.125rem;
-  color: var(--accent-gold);
+  color: @accent-gold;
 }
 
 /* 响应式调整 */
 @media (max-width: 768px) {
-  .main-content {
+  .mainContent {
     padding-top: 70px;
   }
   
@@ -58,7 +58,7 @@
     padding: 1rem 0;
   }
   
-  .page-header {
+  .pageHeader {
     padding: 3rem 0;
   }
 }

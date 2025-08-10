@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import appStore from '../../stores/AppStore';
-import './index.css';
+import styles from './index.module.less';
 
 const Header = observer(() => {
   const location = useLocation();
@@ -29,22 +29,22 @@ const Header = observer(() => {
   }, []);
 
   return (
-    <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
+    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       <div className="container">
-        <div className="header-content">
+        <div className={styles.headerContent}>
           {/* Logo */}
-          <Link to="/" className="logo">
-            <h2>智睿商务车</h2>
+          <Link to="/" className={styles.logo}>
+            <h2>智锐商务车</h2>
           </Link>
 
           {/* 桌面端导航 */}
-          <nav className="desktop-nav">
-            <ul className="nav-list">
+          <nav className={styles.desktopNav}>
+            <ul className={styles.navList}>
               {navigation.map(item => (
                 <li key={item.key} className="nav-item">
                   <Link 
                     to={item.path}
-                    className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                    className={`${styles.navLink} ${location.pathname === item.path ? styles.active : ''}`}
                   >
                     {item.label}
                   </Link>
@@ -54,17 +54,17 @@ const Header = observer(() => {
           </nav>
 
           {/* 语言切换和移动端菜单按钮 */}
-          <div className="header-actions">
+          <div className={styles.headerActions}>
             {/* 语言切换 */}
-            <div className="language-switcher">
+            <div className={styles.languageSwitcher}>
               <button 
-                className={`lang-btn ${appStore.currentLanguage === 'zh' ? 'active' : ''}`}
+                className={`${styles.langBtn} ${appStore.currentLanguage === 'zh' ? styles.active : ''}`}
                 onClick={() => appStore.setLanguage('zh')}
               >
                 中文
               </button>
               <button 
-                className={`lang-btn ${appStore.currentLanguage === 'en' ? 'active' : ''}`}
+                className={`${styles.langBtn} ${appStore.currentLanguage === 'en' ? styles.active : ''}`}
                 onClick={() => appStore.setLanguage('en')}
               >
                 EN
@@ -73,7 +73,7 @@ const Header = observer(() => {
 
             {/* 移动端菜单按钮 */}
             <button 
-              className={`mobile-menu-btn ${appStore.isMobileMenuOpen ? 'active' : ''}`}
+              className={`${styles.mobileMenuBtn} ${appStore.isMobileMenuOpen ? styles.active : ''}`}
               onClick={() => appStore.toggleMobileMenu()}
             >
               <span></span>
@@ -85,14 +85,14 @@ const Header = observer(() => {
       </div>
 
       {/* 移动端菜单 */}
-      <div className={`mobile-menu ${appStore.isMobileMenuOpen ? 'open' : ''}`}>
+      <div className={`${styles.mobileMenu} ${appStore.isMobileMenuOpen ? styles.open : ''}`}>
         <nav className="mobile-nav">
-          <ul className="mobile-nav-list">
+          <ul className={styles.mobileNavList}>
             {navigation.map(item => (
-              <li key={item.key} className="mobile-nav-item">
+              <li key={item.key} className={styles.mobileNavItem}>
                 <Link 
                   to={item.path}
-                  className={`mobile-nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                  className={`${styles.mobileNavLink} ${location.pathname === item.path ? styles.active : ''}`}
                   onClick={() => appStore.closeMobileMenu()}
                 >
                   {item.label}

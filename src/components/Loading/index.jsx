@@ -1,15 +1,14 @@
 import React from 'react';
-import './index.css';
-
+import styles from './index.module.less';
 const Loading = ({ message = '加载中...' }) => {
   return (
     <div className="loading-container">
-      <div className="loading-spinner">
-        <div className="spinner-ring"></div>
-        <div className="spinner-ring"></div>
-        <div className="spinner-ring"></div>
+      <div className={styles.loadingSpinner}>
+        <div className={styles.spinnerRing}></div>
+        <div className={styles.spinnerRing}></div>
+        <div className={styles.spinnerRing}></div>
       </div>
-      <p className="loading-message">{message}</p>
+      <p className={styles.loadingMessage}>{message}</p>
     </div>
   );
 };

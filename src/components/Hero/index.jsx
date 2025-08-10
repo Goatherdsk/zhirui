@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './index.css';
+import styles from './index.module.less';
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -45,50 +45,49 @@ const Hero = () => {
   }, [slides.length]);
 
   return (
-    <section className="hero">
-      <div className="hero-slider">
+    <section className={styles.hero}>
+      {/* 视频背景 */}
+      <video 
+        className={styles.videoBackground}
+        autoPlay 
+        muted 
+        loop 
+        playsInline
+      >
+        <source src="/videos/7.mp4" type="video/mp4" />
+      </video>
+      
+      {/* 高端遮罩层 */}
+      <div className={styles.heroOverlay}></div>
+      
+      <div className={styles.heroSlider}>
         {slides.map((slide, index) => (
           <div 
             key={index}
-            className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
-            style={{ 
-              background: slide.backgroundGradient
-            }}
+            className={`${styles.heroSlide} ${index === currentSlide ? styles.active : ''}`}
           >
-            <div className="container">
-              <div className="hero-content">
-                <div className="hero-text">
-                  <p className="hero-subtitle">{slide.subtitle}</p>
-                  <h1 className="hero-title">{slide.title}</h1>
-                  <p className="hero-description">{slide.description}</p>
-                  
-                  {/* 特性标签 */}
-                  <div className="hero-features">
-                    {slide.features.map((feature, idx) => (
-                      <span key={idx} className="feature-tag">
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="hero-actions">
-                    <Link to={slide.buttonLink} className="hero-button primary">
-                      {slide.buttonText}
-                    </Link>
-                    <Link to="/test-drive" className="hero-button secondary">
-                      预约试驾
-                    </Link>
-                  </div>
+            <div className={styles.heroContent}>
+              <div className={styles.heroText}>
+                <p className={styles.subtitle}>{slide.subtitle}</p>
+                <h1 className={styles.title}>{slide.title}</h1>
+                <p className={styles.description}>{slide.description}</p>
+                
+                <div className={styles.heroActions}>
+                  <Link to={slide.buttonLink} className={`${styles.heroButton} ${styles.primary}`}>
+                    <span>{slide.buttonText}</span>
+                  </Link>
+                  <Link to="/test-drive" className={`${styles.heroButton} ${styles.secondary}`}>
+                    <span>预约试驾</span>
+                  </Link>
                 </div>
                 
-                {/* 装饰元素 */}
-                <div className="hero-decoration">
-                  <div className="decoration-circle"></div>
-                  <div className="decoration-lines">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
+                {/* 特色标签 */}
+                <div className={styles.heroFeatures}>
+                  {slide.features.map((feature, idx) => (
+                    <span key={idx} className={styles.featureTag}>
+                      {feature}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -97,11 +96,11 @@ const Hero = () => {
       </div>
 
       {/* 轮播指示器 */}
-      <div className="hero-indicators">
+      <div className={styles.heroIndicators}>
         {slides.map((_, index) => (
           <button
             key={index}
-            className={`indicator ${index === currentSlide ? 'active' : ''}`}
+            className={`${styles.indicator} ${index === currentSlide ? styles.active : ''}`}
             onClick={() => setCurrentSlide(index)}
             aria-label={`切换到第 ${index + 1} 张幻灯片`}
           />
@@ -109,9 +108,9 @@ const Hero = () => {
       </div>
 
       {/* 滚动提示 */}
-      <div className="scroll-indicator">
+      <div className={styles.scrollIndicator}>
         <span>SCROLL</span>
-        <div className="scroll-line"></div>
+        <div className={styles.scrollLine}></div>
       </div>
     </section>
   );

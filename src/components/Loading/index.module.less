@@ -1,5 +1,5 @@
 /* Loading 组件样式 */
-.loading-container {
+.loadingContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,36 +8,36 @@
   min-height: 200px;
 }
 
-.loading-spinner {
+.loadingSpinner {
   position: relative;
   width: 60px;
   height: 60px;
   margin-bottom: 1.5rem;
 }
 
-.spinner-ring {
+.spinnerRing {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   border: 3px solid transparent;
-  border-top-color: var(--accent-gold);
+  border-top-color: @accent-gold;
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }
 
-.spinner-ring:nth-child(2) {
+.spinnerRing:nth-child(2) {
   width: 75%;
   height: 75%;
   top: 12.5%;
   left: 12.5%;
-  border-top-color: var(--accent-light-gold);
+  border-top-color: @accent-light-gold;
   animation-duration: 1.8s;
   animation-direction: reverse;
 }
 
-.spinner-ring:nth-child(3) {
+.spinnerRing:nth-child(3) {
   width: 50%;
   height: 50%;
   top: 25%;
@@ -46,8 +46,8 @@
   animation-duration: 2.4s;
 }
 
-.loading-message {
-  color: var(--text-gray);
+.loadingMessage {
+  color: @text-gray;
   font-size: 1rem;
   font-weight: 300;
   letter-spacing: 0.05em;
@@ -65,7 +65,7 @@
 }
 
 /* 全屏加载样式 */
-.loading-container.fullscreen {
+.loadingContainer.fullscreen {
   position: fixed;
   top: 0;
   left: 0;
@@ -77,11 +77,11 @@
   min-height: 100vh;
 }
 
-.loading-container.fullscreen .loading-spinner {
+.loadingContainer.fullscreen .loadingSpinner {
   width: 80px;
   height: 80px;
 }
 
-.loading-container.fullscreen .loading-message {
+.loadingContainer.fullscreen .loadingMessage {
   font-size: 1.125rem;
 }

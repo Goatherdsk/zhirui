@@ -1,12 +1,12 @@
 /* BrandAdvantages 组件样式 */
-.brand-advantages {
+.brandAdvantages {
   padding: 8rem 0;
   background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 50%, #1a1a1a 100%);
   position: relative;
   overflow: hidden;
 }
 
-.brand-advantages::before {
+.brandAdvantages::before {
   content: '';
   position: absolute;
   top: 0;
@@ -19,39 +19,39 @@
   pointer-events: none;
 }
 
-.section-header {
+.sectionHeader {
   text-align: center;
   margin-bottom: 6rem;
   position: relative;
   z-index: 2;
 }
 
-.section-subtitle {
+.sectionSubtitle {
   font-size: 0.875rem;
-  color: var(--accent-gold);
+  color: @accent-gold;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin-bottom: 1rem;
   font-weight: 300;
 }
 
-.section-title {
+.sectionTitle {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 200;
   margin-bottom: 1.5rem;
-  color: var(--text-white);
+  color: @text-white;
 }
 
-.section-description {
+.sectionDescription {
   font-size: 1.125rem;
-  color: var(--text-gray);
+  color: @text-gray;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
 }
 
 /* 优势网格 */
-.advantages-grid {
+.advantagesGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 3rem;
@@ -60,7 +60,7 @@
   z-index: 2;
 }
 
-.advantage-card {
+.advantageCard {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(201, 169, 110, 0.1);
   border-radius: 20px;
@@ -73,7 +73,7 @@
   min-height: 300px;
 }
 
-.advantage-card::before {
+.advantageCard::before {
   content: '';
   position: absolute;
   top: 0;
@@ -85,21 +85,23 @@
   transition: opacity 0.4s ease;
 }
 
-.advantage-card:hover::before {
+.advantageCard:hover::before {
   opacity: 1;
 }
 
-.advantage-card:hover {
+.advantageCard {
+  &:hover {
   transform: translateY(-10px);
   border-color: rgba(201, 169, 110, 0.3);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
+}
 
 /* 卡片编号 */
-.advantage-number {
+.advantageNumber {
   font-size: 4rem;
   font-weight: 100;
-  color: var(--accent-gold);
+  color: @accent-gold;
   opacity: 0.3;
   line-height: 1;
   margin-bottom: 1rem;
@@ -108,83 +110,83 @@
 }
 
 /* 卡片内容 */
-.advantage-content {
+.advantageContent {
   flex: 1;
   position: relative;
   z-index: 3;
 }
 
-.advantage-subtitle {
+.advantageSubtitle {
   font-size: 0.75rem;
-  color: var(--accent-gold);
+  color: @accent-gold;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
   font-weight: 300;
 }
 
-.advantage-title {
+.advantageTitle {
   font-size: 1.75rem;
   font-weight: 300;
-  color: var(--text-white);
+  color: @text-white;
   margin-bottom: 1.5rem;
   line-height: 1.2;
 }
 
-.advantage-description {
+.advantageDescription {
   font-size: 1rem;
-  color: var(--text-gray);
+  color: @text-gray;
   line-height: 1.6;
   margin-bottom: 2rem;
 }
 
 /* 统计数据 */
-.advantage-stats {
+.advantageStats {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
   margin-top: auto;
 }
 
-.stats-number {
+.statsNumber {
   font-size: 2.5rem;
   font-weight: 200;
-  color: var(--accent-gold);
+  color: @accent-gold;
   line-height: 1;
 }
 
-.stats-label {
+.statsLabel {
   font-size: 0.875rem;
-  color: var(--text-light);
+  color: @text-light;
   font-weight: 300;
 }
 
 /* 装饰元素 */
-.advantage-decoration {
+.advantageDecoration {
   position: absolute;
   top: 2rem;
   right: 2rem;
   z-index: 2;
 }
 
-.decoration-dot {
+.decorationDot {
   width: 8px;
   height: 8px;
-  background: var(--accent-gold);
+  background: @accent-gold;
   border-radius: 50%;
   margin-bottom: 1rem;
   opacity: 0.6;
 }
 
-.decoration-line {
+.decorationLine {
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--accent-gold), transparent);
+  background: linear-gradient(to bottom, @accent-gold, transparent);
   opacity: 0.4;
 }
 
 /* CTA区域 */
-.advantages-cta {
+.advantagesCta {
   text-align: center;
   padding: 4rem 0;
   background: rgba(255, 255, 255, 0.02);
@@ -197,21 +199,21 @@
 .cta-content h3 {
   font-size: 1.75rem;
   font-weight: 300;
-  color: var(--text-white);
+  color: @text-white;
   margin-bottom: 1rem;
 }
 
 .cta-content p {
   font-size: 1rem;
-  color: var(--text-gray);
+  color: @text-gray;
   margin-bottom: 2rem;
 }
 
-.cta-link {
+.ctaLink {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--accent-gold);
+  color: @accent-gold;
   text-decoration: none;
   font-size: 1.125rem;
   font-weight: 300;
@@ -221,55 +223,57 @@
   padding-bottom: 0.25rem;
 }
 
-.cta-link:hover {
-  color: var(--accent-light-gold);
-  border-bottom-color: var(--accent-light-gold);
+.ctaLink {
+  &:hover {
+  color: @accent-light-gold;
+  border-bottom-color: @accent-light-gold;
   transform: translateX(5px);
 }
+}
 
-.link-arrow {
+.linkArrow {
   transition: transform 0.3s ease;
   font-size: 1.25rem;
 }
 
-.cta-link:hover .link-arrow {
+.ctaLink:hover .linkArrow {
   transform: translateX(5px);
 }
 
 /* 移动端适配 */
 @media (max-width: 768px) {
-  .brand-advantages {
+  .brandAdvantages {
     padding: 5rem 0;
   }
   
-  .section-header {
+  .sectionHeader {
     margin-bottom: 4rem;
   }
   
-  .advantages-grid {
+  .advantagesGrid {
     grid-template-columns: 1fr;
     gap: 2rem;
     margin-bottom: 4rem;
   }
   
-  .advantage-card {
+  .advantageCard {
     padding: 2rem;
     min-height: 250px;
   }
   
-  .advantage-number {
+  .advantageNumber {
     font-size: 3rem;
   }
   
-  .advantage-title {
+  .advantageTitle {
     font-size: 1.5rem;
   }
   
-  .stats-number {
+  .statsNumber {
     font-size: 2rem;
   }
   
-  .advantages-cta {
+  .advantagesCta {
     padding: 3rem 1.5rem;
   }
   
@@ -280,15 +284,15 @@
 
 /* 平板适配 */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .advantage-card {
+  .advantageCard {
     padding: 2.5rem;
   }
   
-  .advantage-title {
+  .advantageTitle {
     font-size: 1.5rem;
   }
   
-  .stats-number {
+  .statsNumber {
     font-size: 2.25rem;
   }
 }

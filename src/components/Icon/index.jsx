@@ -1,6 +1,5 @@
 import React from 'react';
-import './index.css';
-
+import styles from './index.module.less';
 // 通用图标组件
 const Icon = ({ type, size = '16px', color = 'currentColor', className = '' }) => {
   const iconStyles = {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { downloadedResources, getProductCarousel } from '../../utils/downloadedResources';
 import Icon from '../Icon';
-import './index.css';
+import styles from './index.module.less';
 
 const ProductShowcase = () => {
   const productImages = getProductCarousel();
@@ -10,7 +10,7 @@ const ProductShowcase = () => {
   const products = [
     {
       id: 1,
-      name: "智睿·行政版",
+      name: "智锐·行政版",
       subtitle: "Executive Series",
       description: "为企业高管打造的移动办公空间，集商务、舒适、科技于一体",
       features: ["独立办公区域", "商务级音响系统", "隐私玻璃", "无线充电"],
@@ -20,7 +20,7 @@ const ProductShowcase = () => {
     },
     {
       id: 2,
-      name: "智睿·尊享版",
+      name: "智锐·尊享版",
       subtitle: "Premium Series", 
       description: "奢华内饰与先进科技的完美融合，为VIP客户提供至尊体验",
       features: ["真皮座椅", "按摩功能", "恒温系统", "娱乐系统"],
@@ -30,7 +30,7 @@ const ProductShowcase = () => {
     },
     {
       id: 3,
-      name: "智睿·科技版",
+      name: "智锐·科技版",
       subtitle: "Tech Series",
       description: "搭载最新智能科技，实现车内设备无缝连接与智能控制",
       features: ["AI语音助手", "智能互联", "自动驾驶辅助", "云端服务"],
@@ -40,7 +40,7 @@ const ProductShowcase = () => {
     },
     {
       id: 4,
-      name: "智睿·至尊版",
+      name: "智锐·至尊版",
       subtitle: "Ultimate Series",
       description: "匠心工艺与顶级配置的巅峰之作，为追求极致的您量身定制",
       features: ["手工真皮内饰", "钻石级音响", "星空顶棚", "专属定制"],
@@ -51,20 +51,20 @@ const ProductShowcase = () => {
   ];
 
   return (
-    <section className="product-showcase">
+    <section className={styles.productShowcase}>
       <div className="container">
-        <div className="section-header">
-          <p className="section-subtitle">OUR PRODUCTS</p>
-          <h2 className="section-title">精品车型</h2>
-          <p className="section-description">
+        <div className={styles.sectionHeader}>
+          <p className={styles.sectionSubtitle}>OUR PRODUCTS</p>
+          <h2 className={styles.sectionTitle}>精品车型</h2>
+          <p className={styles.sectionDescription}>
             每一款车型都经过精心设计，满足不同商务场景的需求
           </p>
         </div>
 
-        <div className="products-grid">
+        <div className={styles.productsGrid}>
           {products.map((product) => (
-            <div key={product.id} className="product-card">
-              <div className="product-image">
+            <div key={product.id} className={styles.productCard}>
+              <div className={styles.productImage}>
                 <img 
                   src={product.image}
                   alt={product.name}
@@ -75,28 +75,28 @@ const ProductShowcase = () => {
                   }}
                 />
                 <div 
-                  className="product-placeholder"
+                  className={styles.productPlaceholder}
                   style={{ background: product.gradient, display: 'none' }}
                 >
                   <span className="product-preview">产品预览</span>
                 </div>
-                <div className="product-overlay">
-                  <span className="product-category">{product.category}</span>
+                <div className={styles.productOverlay}>
+                  <span className={styles.productCategory}>{product.category}</span>
                 </div>
               </div>
               
-              <div className="product-content">
-                <div className="product-header">
-                  <p className="product-subtitle">{product.subtitle}</p>
-                  <h3 className="product-name">{product.name}</h3>
+              <div className={styles.productContent}>
+                <div className={styles.productHeader}>
+                  <p className={styles.productSubtitle}>{product.subtitle}</p>
+                  <h3 className={styles.productName}>{product.name}</h3>
                 </div>
                 
-                <p className="product-description">{product.description}</p>
+                <p className={styles.productDescription}>{product.description}</p>
                 
-                <ul className="product-features">
+                <ul className={styles.productFeatures}>
                   {product.features.map((feature, idx) => (
-                    <li key={idx} className="feature-item">
-                      <span className="feature-icon">
+                    <li key={idx} className={styles.featureItem}>
+                      <span className={styles.featureIcon}>
                         <Icon type="check" size="14px" color="var(--accent-gold)" />
                       </span>
                       {feature}
@@ -104,9 +104,9 @@ const ProductShowcase = () => {
                   ))}
                 </ul>
                 
-                <Link to={`/products/${product.id}`} className="product-link">
+                <Link to={`/products/${product.id}`} className={styles.productLink}>
                   了解更多
-                  <span className="link-arrow">
+                  <span className={styles.linkArrow}>
                     <Icon type="arrow" size="16px" color="currentColor" />
                   </span>
                 </Link>
@@ -115,8 +115,8 @@ const ProductShowcase = () => {
           ))}
         </div>
 
-        <div className="showcase-footer">
-          <Link to="/products" className="view-all-btn">
+        <div className={styles.showcaseFooter}>
+          <Link to="/products" className={styles.viewAllBtn}>
             查看全部产品
           </Link>
         </div>

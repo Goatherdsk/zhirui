@@ -1,24 +1,54 @@
 /* 全局样式重置和变量定义 */
+
+// 全局变量定义（在vite.config.js中已定义，这里作为备用）
+@primary-dark: #1a1a1a;
+@secondary-dark: #2d2d2d;
+@accent-gold: #c9a96e;
+@accent-light-gold: #f4e4bc;
+@gold-light: #f4e4bc;
+@text-white: #ffffff;
+@text-light: #f5f5f5;
+@text-gray: #cccccc;
+@accent-blue: #1e3a8a;
+@background-black: #000000;
+@border-color: rgba(201, 169, 110, 0.2);
+
+// Mixins
+.transition(@property: all, @duration: 0.3s, @timing: ease) {
+  transition: @property @duration @timing;
+}
+
+.flex-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-hover-effect() {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 :root {
   /* 颜色变量 */
-  --primary-dark: #1a1a1a;
-  --secondary-dark: #2d2d2d;
-  --accent-gold: #c9a96e;
-  --accent-light-gold: #f4e4bc;
-  --gold-light: #f4e4bc;
-  --text-white: #ffffff;
-  --text-light: #f5f5f5;
-  --text-gray: #cccccc;
-  --accent-blue: #1e3a8a;
-  --background-black: #000000;
-  --border-color: rgba(201, 169, 110, 0.2);
+  --primary-dark: @primary-dark;
+  --secondary-dark: @secondary-dark;
+  --accent-gold: @accent-gold;
+  --accent-light-gold: @accent-light-gold;
+  --gold-light: @gold-light;
+  --text-white: @text-white;
+  --text-light: @text-light;
+  --text-gray: @text-gray;
+  --accent-blue: @accent-blue;
+  --background-black: @background-black;
+  --border-color: @border-color;
   
   /* 字体设置 */
   font-family: 'Helvetica Neue', Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
   line-height: 1.6;
   font-weight: 400;
-  color: var(--text-white);
-  background-color: var(--background-black);
+  color: @text-white;
+  background-color: @background-black;
   
   /* 字体渲染优化 */
   font-synthesis: none;
@@ -41,8 +71,8 @@ html, body {
 
 body {
   margin: 0;
-  background-color: var(--background-black);
-  color: var(--text-white);
+  background-color: @background-black;
+  color: @text-white;
 }
 
 #root {
@@ -52,13 +82,13 @@ body {
 
 /* 链接样式 */
 a {
-  color: var(--accent-gold);
+  color: @accent-gold;
   text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: var(--accent-light-gold);
+  .transition(color);
+  
+  &:hover {
+    color: @accent-light-gold;
+  }
 }
 
 /* 标题样式 */
@@ -91,36 +121,36 @@ p {
 
 /* 按钮样式 */
 button {
-  border: 2px solid var(--accent-gold);
+  border: 2px solid @accent-gold;
   background-color: transparent;
-  color: var(--accent-gold);
+  color: @accent-gold;
   padding: 12px 24px;
   font-size: 1rem;
   font-weight: 400;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.3s ease;
+  .transition();
   letter-spacing: 0.05em;
   text-transform: uppercase;
-}
-
-button:hover {
-  background-color: var(--accent-gold);
-  color: var(--background-black);
-  transform: translateY(-2px);
-}
-
-button:active {
-  transform: translateY(0);
-}
-
-button.primary {
-  background-color: var(--accent-gold);
-  color: var(--background-black);
-}
-
-button.primary:hover {
-  background-color: var(--accent-light-gold);
+  
+  &:hover {
+    background-color: @accent-gold;
+    color: @background-black;
+    .button-hover-effect();
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &.primary {
+    background-color: @accent-gold;
+    color: @background-black;
+    
+    &:hover {
+      background-color: @accent-light-gold;
+    }
+  }
 }
 
 /* 图片样式 */
@@ -169,16 +199,16 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--primary-dark);
+  background: @primary-dark;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-gold);
+  background: @accent-gold;
   border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-light-gold);
+  
+  &:hover {
+    background: @accent-light-gold;
+  }
 }
 
 /* 加载动画 */
@@ -206,7 +236,7 @@ img {
 .page-transition-enter-active {
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
+  .transition(opacity 300ms, transform 300ms);
 }
 
 .page-transition-exit {
@@ -216,5 +246,5 @@ img {
 .page-transition-exit-active {
   opacity: 0;
   transform: translateX(-100px);
-  transition: opacity 300ms, transform 300ms;
+  .transition(opacity 300ms, transform 300ms);
 }

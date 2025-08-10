@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './index.css';
+import styles from './index.module.less';
 
 const PageHeader = ({ 
   title, 
@@ -15,27 +15,27 @@ const PageHeader = ({
   const getBackgroundClass = () => {
     switch (backgroundType) {
       case 'products':
-        return 'page-header-products';
+        return styles.pageHeaderProducts;
       case 'services':
-        return 'page-header-services';
+        return styles.pageHeaderServices;
       case 'about':
-        return 'page-header-about';
+        return styles.pageHeaderAbout;
       case 'contact':
-        return 'page-header-contact';
+        return styles.pageHeaderContact;
       default:
-        return 'page-header-default';
+        return styles.pageHeaderDefault;
     }
   };
 
   return (
-    <div className={`page-header ${getBackgroundClass()}`}>
-      <div className="header-overlay"></div>
-      <div className="container">
-        <div className="header-content">
+    <div className={`${styles.pageHeader} ${getBackgroundClass()}`}>
+      <div className={styles.headerOverlay}></div>
+      <div className={styles.container}>
+        <div className={styles.headerContent}>
           {breadcrumbs.length > 0 && (
-            <nav className="breadcrumb">
+            <nav className={styles.breadcrumb}>
               {breadcrumbs.map((crumb, index) => (
-                <span key={index} className="breadcrumb-item">
+                <span key={index} className={styles.breadcrumbItem}>
                   {typeof crumb === 'string' ? crumb : (
                     crumb.path ? (
                       <Link to={crumb.path}>{crumb.name}</Link>
@@ -44,23 +44,23 @@ const PageHeader = ({
                     )
                   )}
                   {index < breadcrumbs.length - 1 && (
-                    <span className="breadcrumb-separator">/</span>
+                    <span className={styles.breadcrumbSeparator}>/</span>
                   )}
                 </span>
               ))}
             </nav>
           )}
           
-          <div className="header-text">
-            <h1 className="page-title">{title}</h1>
+          <div className={styles.headerText}>
+            <h1 className={styles.pageTitle}>{title}</h1>
             {englishTitle && (
-              <p className="page-english-title">{englishTitle}</p>
+              <p className={styles.pageEnglishTitle}>{englishTitle}</p>
             )}
             {subtitle && (
-              <p className="page-subtitle">{subtitle}</p>
+              <p className={styles.pageSubtitle}>{subtitle}</p>
             )}
             {description && (
-              <div className="page-description">
+              <div className={styles.pageDescription}>
                 {Array.isArray(description) ? (
                   description.map((desc, index) => (
                     <p key={index}>{desc}</p>
@@ -73,11 +73,11 @@ const PageHeader = ({
           </div>
 
           {showStats && stats.length > 0 && (
-            <div className="header-stats">
+            <div className={styles.headerStats}>
               {stats.map((stat, index) => (
-                <div key={index} className="stat-item">
-                  <div className="stat-number">{stat.number}</div>
-                  <div className="stat-label">{stat.label}</div>
+                <div key={index} className={styles.statItem}>
+                  <div className={styles.statNumber}>{stat.number}</div>
+                  <div className={styles.statLabel}>{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -85,11 +85,11 @@ const PageHeader = ({
         </div>
 
         {/* 装饰性元素 */}
-        <div className="header-decoration">
-          <div className="decoration-line decoration-line-1"></div>
-          <div className="decoration-line decoration-line-2"></div>
-          <div className="decoration-circle decoration-circle-1"></div>
-          <div className="decoration-circle decoration-circle-2"></div>
+        <div className={styles.headerDecoration}>
+          <div className={`${styles.decorationLine} ${styles.decorationLine1}`}></div>
+          <div className={`${styles.decorationLine} ${styles.decorationLine2}`}></div>
+          <div className={`${styles.decorationCircle} ${styles.decorationCircle1}`}></div>
+          <div className={`${styles.decorationCircle} ${styles.decorationCircle2}`}></div>
         </div>
       </div>
     </div>

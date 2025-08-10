@@ -1,0 +1,195 @@
+/* Button 组件样式 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  text-decoration: none;
+  font-family: inherit;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+
+  &:focus {
+    outline: 2px solid @accent-gold;
+    outline-offset: 2px;
+  }
+}
+
+/* 按钮变体 */
+.btnPrimary {
+  background-color: @accent-gold;
+  color: @background-black;
+  border: 2px solid @accent-gold;
+
+  &:hover {
+    background-color: @accent-light-gold;
+    border-color: @accent-light-gold;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
+  }
+}
+
+.btnSecondary {
+  background-color: transparent;
+  color: @accent-gold;
+  border: 2px solid @accent-gold;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: @accent-gold;
+    transition: left 0.4s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    color: @background-black;
+    transform: translateY(-2px);
+
+    &::before {
+      left: 0;
+    }
+  }
+}
+
+.btnOutline {
+  background-color: transparent;
+  color: @text-white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: @accent-gold;
+    color: @accent-gold;
+  }
+}
+
+.btnGhost {
+  background-color: transparent;
+  color: @text-gray;
+  border: none;
+  text-transform: none;
+  letter-spacing: normal;
+
+  &:hover {
+    color: @accent-gold;
+    background-color: rgba(201, 169, 110, 0.1);
+  }
+}
+
+/* 按钮尺寸 */
+.btnSmall {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  border-radius: 4px;
+}
+
+.btnMedium {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+
+.btnLarge {
+  padding: 16px 32px;
+  font-size: 1.125rem;
+  border-radius: 8px;
+}
+
+.btnExtraLarge {
+  padding: 20px 40px;
+  font-size: 1.25rem;
+  border-radius: 10px;
+}
+
+/* 按钮状态 */
+.btnDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btnLoading {
+  cursor: wait;
+  
+  .btnIcon {
+    animation: spin 1s linear infinite;
+  }
+}
+
+/* 按钮图标 */
+.btnIcon {
+  display: inline-flex;
+  align-items: center;
+  
+  &.iconLeft {
+    margin-right: 8px;
+  }
+  
+  &.iconRight {
+    margin-left: 8px;
+  }
+  
+  &.iconOnly {
+    margin: 0;
+  }
+}
+
+/* 按钮组 */
+.btnGroup {
+  display: inline-flex;
+  
+  .btn {
+    border-radius: 0;
+    border-right-width: 0;
+    
+    &:first-child {
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+    
+    &:last-child {
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+      border-right-width: 2px;
+    }
+    
+    &:hover {
+      z-index: 1;
+      border-right-width: 2px;
+    }
+  }
+}
+
+/* 动画 */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .btnLarge {
+    padding: 14px 28px;
+    font-size: 1rem;
+  }
+  
+  .btnExtraLarge {
+    padding: 16px 32px;
+    font-size: 1.125rem;
+  }
+}

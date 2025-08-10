@@ -1,0 +1,643 @@
+/* News 页面样式 - 重新设计版本 */
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, 
+    #0a0a0a 0%, 
+    #1a1a1a 50%, 
+    #0f0f0f 100%
+  );
+  position: relative;
+  overflow-x: hidden;
+}
+
+.page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(201, 169, 110, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(30, 58, 138, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(139, 90, 60, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.latestNews {
+  position: relative;
+  z-index: 1;
+}
+
+// 新闻卡片布局 - 错位网格设计
+.newsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 3rem 2rem;
+  padding: 2rem 0;
+  position: relative;
+}
+
+.newsArticle {
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.08) 0%, 
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(201, 169, 110, 0.05) 100%
+  );
+  border-radius: 28px;
+  padding: 0;
+  border: 1px solid rgba(201, 169, 110, 0.2);
+  backdrop-filter: blur(25px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  height: auto;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  
+  // 3D 悬浮效果
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(201, 169, 110, 0.2);
+    
+  // 错位效果
+  &:nth-child(even) {
+    transform: translateY(2rem);
+  }
+  
+  &:nth-child(3n) {
+    transform: translateY(-1rem);
+  }
+}
+
+// 新闻卡片悬停效果 - 优化版
+.newsArticle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(201, 169, 110, 0.08) 0%, 
+    transparent 50%, 
+    rgba(201, 169, 110, 0.04) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.newsArticle:hover {
+  border-color: rgba(201, 169, 110, 0.6);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(201, 169, 110, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    
+  &::before {
+    opacity: 1;
+  }
+}
+
+// 新闻图片容器 - 优化版
+.newsImageContainer {
+  position: relative;
+  height: 280px;
+  border-radius: 24px 24px 0 0;
+  overflow: hidden;
+  background: linear-gradient(135deg, 
+    rgba(201, 169, 110, 0.15) 0%, 
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+.newsImageContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(0, 0, 0, 0.2) 70%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  z-index: 3;
+}
+
+.newsImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.newsArticle:hover .newsImage {
+  opacity: 0.95;
+}
+
+// 新闻内容区域
+.newsContent {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+// 新闻元数据行（分类和日期）
+.newsMetadata {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+// 重新设计的分类标签 - 金色系优化
+.newsCategory {
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(15px);
+  
+  // 统一金色系背景
+  background: linear-gradient(135deg, 
+    rgba(201, 169, 110, 0.2) 0%, 
+    rgba(201, 169, 110, 0.1) 100%
+  );
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  color: rgba(201, 169, 110, 1);
+  
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(201, 169, 110, 0.3);
+}
+
+.newsCategory:hover {
+  background: linear-gradient(135deg, 
+    rgba(201, 169, 110, 0.3) 0%, 
+    rgba(201, 169, 110, 0.15) 100%
+  );
+  border-color: rgba(201, 169, 110, 0.6);
+  color: rgba(201, 169, 110, 1);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.3),
+    0 3px 10px rgba(201, 169, 110, 0.2),
+    inset 0 1px 0 rgba(201, 169, 110, 0.4);
+}
+
+// 日期样式
+.newsDate {
+  color: rgba(201, 169, 110, 0.8);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &::before {
+    content: '📅';
+    font-size: 0.9rem;
+  }
+}
+
+// 新闻标题 - 金色系优化
+.newsTitle {
+  font-size: 1.6rem;
+  color: #ffffff;
+  margin-bottom: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  position: relative;
+  
+  // 金色渐变文字效果
+  background: linear-gradient(135deg, 
+    #ffffff 0%, 
+    rgba(201, 169, 110, 0.9) 30%, 
+    rgba(212, 175, 55, 0.8) 70%,
+    #ffffff 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  // 简化的底部装饰线
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      rgba(201, 169, 110, 1) 0%, 
+      rgba(201, 169, 110, 0.3) 100%
+    );
+    transition: width 0.4s ease;
+    border-radius: 1px;
+  }
+}
+
+.newsArticle:hover .newsTitle::after {
+  width: 60%;
+}
+
+// 新闻摘要 - 金色系优化
+.newsSummary {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  position: relative;
+  
+  // 金色左侧装饰线
+  &::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, 
+      rgba(201, 169, 110, 0.7) 0%, 
+      rgba(201, 169, 110, 0.3) 100%
+    );
+    border-radius: 1px;
+  }
+}
+
+// 高亮标签容器 - 重新设计
+.newsHighlights {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+// 高亮标签 - 金色系优化
+.newsHighlight {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  position: relative;
+  transition: all 0.3s ease;
+  
+  // 统一金色系样式
+  background: rgba(201, 169, 110, 0.15);
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  color: rgba(201, 169, 110, 0.9);
+  
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(201, 169, 110, 0.2);
+}
+
+.newsHighlight:hover {
+  background: rgba(201, 169, 110, 0.25);
+  border-color: rgba(201, 169, 110, 0.5);
+  color: rgba(201, 169, 110, 1);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(201, 169, 110, 0.3),
+    inset 0 1px 0 rgba(201, 169, 110, 0.3);
+}
+
+// 阅读按钮容器
+.newsActions {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+// 自定义按钮样式 - 金色系优化
+.readMoreButton {
+  background: linear-gradient(135deg, 
+    rgba(201, 169, 110, 0.15) 0%, 
+    rgba(201, 169, 110, 0.08) 100%
+  );
+  border: 2px solid rgba(201, 169, 110, 0.4);
+  color: rgba(201, 169, 110, 0.9);
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(15px);
+  position: relative;
+  cursor: pointer;
+  
+  box-shadow: 
+    0 4px 15px rgba(201, 169, 110, 0.2),
+    inset 0 1px 0 rgba(201, 169, 110, 0.2);
+    
+  span {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.readMoreButton:hover {
+  background: linear-gradient(135deg, 
+    rgba(201, 169, 110, 0.25) 0%, 
+    rgba(201, 169, 110, 0.15) 100%
+  );
+  border-color: rgba(201, 169, 110, 0.7);
+  color: rgba(201, 169, 110, 1);
+  box-shadow: 
+    0 6px 20px rgba(201, 169, 110, 0.3),
+    0 3px 10px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(201, 169, 110, 0.3);
+}
+
+// 动画效果 - 简化版
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 新闻卡片动画 - 简化版
+.newsArticle {
+  animation: fadeInUp 0.6s ease-out;
+  animation-fill-mode: both;
+  
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.15s; }
+  &:nth-child(3) { animation-delay: 0.2s; }
+  &:nth-child(4) { animation-delay: 0.25s; }
+  &:nth-child(5) { animation-delay: 0.3s; }
+  &:nth-child(6) { animation-delay: 0.35s; }
+}
+
+// 页面加载时的标题动画
+.sectionTitle {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+// 统计数据样式更新 - 金色系优化
+.newsStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.newsStatItem {
+  background: linear-gradient(145deg, 
+    rgba(201, 169, 110, 0.08) 0%, 
+    rgba(201, 169, 110, 0.03) 100%
+  );
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  backdrop-filter: blur(15px);
+  
+  &:hover {
+    background: linear-gradient(145deg, 
+      rgba(201, 169, 110, 0.12) 0%, 
+      rgba(201, 169, 110, 0.06) 100%
+    );
+    border-color: rgba(201, 169, 110, 0.5);
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.2),
+      0 4px 12px rgba(201, 169, 110, 0.3);
+  }
+}
+
+.newsStatNumber {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, 
+    rgba(201, 169, 110, 1) 0%, 
+    rgba(212, 175, 55, 0.9) 50%,
+    rgba(201, 169, 110, 0.8) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.newsStatLabel {
+  font-size: 0.9rem;
+  color: rgba(201, 169, 110, 0.8);
+  opacity: 0.9;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+/* ===== 响应式设计 - 优化版 ===== */
+@media (max-width: 768px) {
+  .newsGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1rem 0;
+  }
+  
+  .newsArticle {
+    min-height: auto;
+    
+    // 移除错位效果
+    &:nth-child(even),
+    &:nth-child(3n) {
+      transform: none;
+    }
+    
+    &:hover {
+      // 简化移动端hover效果
+      border-color: rgba(201, 169, 110, 0.5);
+    }
+  }
+  
+  .newsImageContainer {
+    height: 220px;
+  }
+  
+  .newsContent {
+    padding: 1.5rem;
+  }
+  
+  .newsTitle {
+    font-size: 1.3rem;
+  }
+  
+  .newsSummary {
+    font-size: 0.9rem;
+    
+    &::before {
+      left: -0.5rem;
+    }
+  }
+  
+  .newsMetadata {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  
+  .newsCategory {
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
+  }
+  
+  .newsHighlights {
+    gap: 0.5rem;
+  }
+  
+  .newsHighlight {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.75rem;
+  }
+  
+  .newsStats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .newsStatItem {
+    padding: 1.5rem 1rem;
+    
+    &:hover {
+      // 移动端不使用复杂动画
+      border-color: rgba(201, 169, 110, 0.4);
+    }
+  }
+  
+  .newsStatNumber {
+    font-size: 2rem;
+  }
+  
+  .readMoreButton {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page::before {
+    display: none; // 移除复杂背景以提升性能
+  }
+  
+  .newsGrid {
+    gap: 1.5rem;
+  }
+  
+  .newsArticle {
+    border-radius: 20px;
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.3),
+      0 1px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .newsImageContainer {
+    height: 180px;
+    border-radius: 20px 20px 0 0;
+  }
+  
+  .newsContent {
+    padding: 1rem;
+  }
+  
+  .newsTitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .newsSummary {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  
+  .newsCategory {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+  }
+  
+  .newsDate {
+    font-size: 0.75rem;
+  }
+  
+  .newsHighlight {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
+  }
+  
+  .newsStats {
+    gap: 0.8rem;
+  }
+  
+  .newsStatItem {
+    padding: 1rem;
+  }
+  
+  .newsStatNumber {
+    font-size: 1.8rem;
+  }
+  
+  .newsStatLabel {
+    font-size: 0.8rem;
+  }
+  
+  .readMoreButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.75rem;
+    border-radius: 30px;
+  }
+}
+
+/* ===== 特殊效果增强 ===== */
+// 滚动时的视差效果类
+.parallax-element {
+  transition: transform 0.1s ease-out;
+}
+
+// 加载状态
+.loading {
+  .newsArticle {
+    opacity: 0.5;
+    filter: blur(2px);
+    pointer-events: none;
+  }
+}
+
+// 文本选择样式
+::selection {
+  background: rgba(201, 169, 110, 0.3);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background: rgba(201, 169, 110, 0.3);
+  color: #ffffff;
+}
