@@ -116,7 +116,7 @@ const Products = () => {
 
   return (
     <div className={styles.productsPage}>
-            <PageHeader
+      <PageHeader
         title="产品中心"
         subtitle="PRODUCT CENTER"
         englishTitle="Luxury Business Vehicles"
@@ -133,7 +133,7 @@ const Products = () => {
           { name: '产品中心', path: '/products' }
         ]}
       />
-
+      
       <div className="container">
         {/* 产品分类筛选 */}
         <div className={styles.productFilters}>
