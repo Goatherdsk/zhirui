@@ -7,6 +7,7 @@ import BackToTop from './components/BackToTop';
 import Home from './pages/Home';
 // 暂时创建占位页面组件
 import Products from './pages/Products';
+import ProductDetail from './pages/ProductDetail';
 import Services from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -55,6 +56,7 @@ const App = observer(() => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />

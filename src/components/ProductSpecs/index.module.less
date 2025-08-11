@@ -1,0 +1,177 @@
+/* 产品规格组件样式 */
+.productSpecs {
+  padding: 2rem 0;
+  
+  .specSection {
+    margin-bottom: 3rem;
+    
+    .specTitle {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #c9a96e;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(201, 169, 110, 0.3);
+      display: flex;
+      align-items: center;
+      
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 1.2em;
+        background: linear-gradient(135deg, #c9a96e 0%, #f4e4bc 100%);
+        margin-right: 0.75rem;
+        border-radius: 2px;
+      }
+    }
+    
+    .specGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      
+      .specItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        background: rgba(45, 45, 45, 0.3);
+        border-radius: 8px;
+        border-left: 3px solid #c9a96e;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background: rgba(45, 45, 45, 0.5);
+          transform: translateX(5px);
+        }
+        
+        .specLabel {
+          font-size: 0.9rem;
+          color: #cccccc;
+          font-weight: 500;
+        }
+        
+        .specValue {
+          font-size: 1rem;
+          color: #ffffff;
+          font-weight: 600;
+        }
+      }
+    }
+    
+    .configList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+      
+      .configItem {
+        display: flex;
+        align-items: flex-start;
+        padding: 0.75rem;
+        background: rgba(45, 45, 45, 0.2);
+        border-radius: 6px;
+        border: 1px solid rgba(201, 169, 110, 0.1);
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background: rgba(45, 45, 45, 0.4);
+          border-color: rgba(201, 169, 110, 0.3);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .configIcon {
+          color: #c9a96e;
+          font-size: 0.8rem;
+          margin-right: 0.5rem;
+          margin-top: 0.1rem;
+          flex-shrink: 0;
+        }
+        
+        .configText {
+          font-size: 0.9rem;
+          color: #e5e5e5;
+          line-height: 1.4;
+        }
+      }
+    }
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .productSpecs {
+    padding: 1.5rem 0;
+    
+    .specSection {
+      margin-bottom: 2rem;
+      
+      .specTitle {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+      
+      .specGrid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        
+        .specItem {
+          padding: 0.6rem 0.8rem;
+          
+          .specLabel {
+            font-size: 0.85rem;
+          }
+          
+          .specValue {
+            font-size: 0.9rem;
+          }
+        }
+      }
+      
+      .configList {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        
+        .configItem {
+          padding: 0.6rem;
+          
+          .configText {
+            font-size: 0.85rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .productSpecs {
+    .specSection {
+      .specTitle {
+        font-size: 1.1rem;
+        
+        &::before {
+          width: 3px;
+          margin-right: 0.5rem;
+        }
+      }
+      
+      .specGrid .specItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        
+        .specLabel {
+          font-size: 0.8rem;
+        }
+        
+        .specValue {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+}

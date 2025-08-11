@@ -1,0 +1,31 @@
+{
+  "totalProducts": 21,
+  "categories": {
+    "executive": 14,
+    "premium": 7
+  },
+  "series": {
+    "标准版": 14,
+    "尊行版": 7
+  },
+  "colors": {
+    "exterior": {
+      "曜影黑": 14,
+      "幻影白": 7
+    },
+    "interior": {
+      "琥珀棕": 3,
+      "帕米尔黄": 3,
+      "爱马仕橙": 3,
+      "凡戴克咖": 3,
+      "牡蛎白": 3,
+      "凡戴克棕": 3,
+      "勃艮第红": 3
+    }
+  },
+  "priceRange": {
+    "min": null,
+    "max": null
+  },
+  "lastUpdated": "2024-01-01"
+}

@@ -1,107 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Loading from '../../components/Loading';
 import PageHeader from '../../components/PageHeader';
 import Icon from '../../components/Icon';
+import { productManager, categoryConfig, badgeConfig } from '../../utils/productManager';
 import styles from './index.module.less';
 const Products = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState([]);
 
-  const categories = [
-    { id: 'all', name: '全部车型', icon: 'car' },
-    { id: 'executive', name: '行政商务', icon: 'business' },
-    { id: 'premium', name: '奢华尊享', icon: 'crown' },
-    { id: 'tech', name: '科技智能', icon: 'tech' }
-  ];
+  // 加载产品数据
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setIsLoading(true);
+        const allProducts = await productManager.loadData();
+        setProducts(allProducts);
+      } catch (error) {
+        console.error('加载产品数据失败:', error);
+        setProducts([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const products = [
-    {
-      id: 1,
-      name: '智锐·行政版',
-      subtitle: 'Executive Series',
-      category: 'executive',
-      price: '88.8万起',
-      originalPrice: '98.8万',
-      description: '为企业高管打造的移动办公空间，集商务、舒适、科技于一体',
-      features: ['独立办公区域', '商务级音响系统', '隐私玻璃', '无线充电', '空气净化', '智能座椅'],
-      specs: {
-        engine: '2.0T 涡轮增压',
-        power: '245马力',
-        transmission: '8速自动',
-        fuel: '7.8L/100km',
-        seats: '4-7座可选',
-        length: '5.2米'
-      },
-      highlights: ['畅销款', '高性价比'],
-      gradient: 'linear-gradient(135deg, #c9a96e 0%, #f4e4bc 100%)',
-      badge: 'HOT'
-    },
-    {
-      id: 2,
-      name: '智锐·尊享版',
-      subtitle: 'Premium Series',
-      category: 'premium',
-      price: '128.8万起',
-      originalPrice: '148.8万',
-      description: '奢华内饰与先进科技的完美融合，为VIP客户提供至尊体验',
-      features: ['真皮座椅', '按摩功能', '恒温系统', '娱乐系统', '星空顶棚', '香氛系统'],
-      specs: {
-        engine: '3.0T V6',
-        power: '340马力',
-        transmission: '10速自动',
-        fuel: '8.5L/100km',
-        seats: '4座豪华版',
-        length: '5.5米'
-      },
-      highlights: ['限量版', '顶级配置'],
-      gradient: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
-      badge: 'LUXURY'
-    },
-    {
-      id: 3,
-      name: '智锐·科技版',
-      subtitle: 'Tech Series',
-      category: 'tech',
-      price: '98.8万起',
-      originalPrice: '108.8万',
-      description: '搭载最新智能科技，实现车内设备无缝连接与智能控制',
-      features: ['AI语音助手', '智能互联', '自动驾驶辅助', '云端服务', '人脸识别', '5G网络'],
-      specs: {
-        engine: '2.0T 混动',
-        power: '280马力',
-        transmission: 'E-CVT',
-        fuel: '5.8L/100km',
-        seats: '5-6座可选',
-        length: '5.3米'
-      },
-      highlights: ['新能源', '智能化'],
-      gradient: 'linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%)',
-      badge: 'NEW'
-    },
-    {
-      id: 4,
-      name: '智锐·至尊版',
-      subtitle: 'Ultimate Series',
-      category: 'premium',
-      price: '188.8万起',
-      originalPrice: '218.8万',
-      description: '匠心工艺与顶级配置的巅峰之作，为追求极致的您量身定制',
-      features: ['手工真皮内饰', '钻石级音响', '星空顶棚', '专属定制', '贵金属装饰', '私人管家'],
-      specs: {
-        engine: '4.0T V8',
-        power: '500马力',
-        transmission: '10速自动',
-        fuel: '9.8L/100km',
-        seats: '4座至尊版',
-        length: '5.8米'
-      },
-      highlights: ['限量收藏', '手工定制'],
-      gradient: 'linear-gradient(135deg, #8b5a3c 0%, #d4af37 100%)',
-      badge: 'EXCLUSIVE'
-    }
-  ];
+    loadProducts();
+  }, []);
 
+  // 获取筛选后的产品
   const filteredProducts = selectedCategory === 'all' 
     ? products 
     : products.filter(product => product.category === selectedCategory);
@@ -142,10 +71,10 @@ const Products = () => {
             <p>根据用途和需求筛选最适合的产品</p>
           </div>
           <div className={styles.filterTabs}>
-            {categories.map(category => (
+            {categoryConfig.map(category => (
               <button
                 key={category.id}
-                className={`filter-tab ${selectedCategory === category.id ? 'active' : ''}`}
+                className={`${styles.filterTab} ${selectedCategory === category.id ? styles.active : ''}`}
                 onClick={() => handleCategoryChange(category.id)}
               >
                 <span className={styles.tabIcon}>
@@ -170,13 +99,22 @@ const Products = () => {
                 <div key={product.id} className={styles.productCard}>
                   <div className={styles.productHeader}>
                     <div className={styles.productBadge} data-badge={product.badge}>
-                      {product.badge}
+                      {badgeConfig[product.badge]?.label || product.badge}
                     </div>
                     <div 
                       className={styles.productBackground}
                       style={{ background: product.gradient }}
                     >
                       <div className={styles.productOverlay}></div>
+                      {/* 显示第一张外观图片作为背景 */}
+                      {product.images.exterior[0] && (
+                        <img 
+                          src={product.images.exterior[0]} 
+                          alt={product.name}
+                          className={styles.productImage}
+                          loading="lazy"
+                        />
+                      )}
                     </div>
                   </div>
 
@@ -207,7 +145,7 @@ const Products = () => {
                     <div className={styles.productFeatures}>
                       <h4>核心配置</h4>
                       <div className={styles.featuresGrid}>
-                        {product.features.map((feature, index) => (
+                        {product.features.slice(0, 4).map((feature, index) => (
                           <div key={index} className={styles.featureItem}>
                             <span className={styles.featureIcon}>
                               <Icon type="star" size="14px" color="var(--accent-gold)" />
@@ -218,42 +156,16 @@ const Products = () => {
                       </div>
                     </div>
 
-                    <div className={styles.productSpecs}>
-                      <h4>技术参数</h4>
-                      <div className={styles.specsGrid}>
-                        <div className={styles.specItem}>
-                          <span className={styles.specLabel}>发动机</span>
-                          <span className={styles.specValue}>{product.specs.engine}</span>
-                        </div>
-                        <div className={styles.specItem}>
-                          <span className={styles.specLabel}>功率</span>
-                          <span className={styles.specValue}>{product.specs.power}</span>
-                        </div>
-                        <div className={styles.specItem}>
-                          <span className={styles.specLabel}>变速箱</span>
-                          <span className={styles.specValue}>{product.specs.transmission}</span>
-                        </div>
-                        <div className={styles.specItem}>
-                          <span className={styles.specLabel}>油耗</span>
-                          <span className={styles.specValue}>{product.specs.fuel}</span>
-                        </div>
-                        <div className={styles.specItem}>
-                          <span className={styles.specLabel}>座位</span>
-                          <span className={styles.specValue}>{product.specs.seats}</span>
-                        </div>
-                        <div className={styles.specItem}>
-                          <span className={styles.specLabel}>长度</span>
-                          <span className={styles.specValue}>{product.specs.length}</span>
-                        </div>
-                      </div>
-                    </div>
-
                     <div className={styles.productActions}>
-                      <Button variant="primary" size="large">
-                        立即咨询
+                      <Button 
+                        variant="primary" 
+                        size="large"
+                        onClick={() => navigate(`/products/${product.id}`)}
+                      >
+                        查看详情
                       </Button>
                       <Button variant="secondary" size="large">
-                        查看详情
+                        立即咨询
                       </Button>
                     </div>
                   </div>
