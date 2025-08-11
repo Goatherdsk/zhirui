@@ -253,47 +253,91 @@ class ProductDataManager {
    * 获取产品的图片分类
    */
   getProductImages(product) {
-    if (!product || !product.images) return { exterior: [], interior: [], details: [] };
-
-    const images = {
-      exterior: [],
-      interior: [],
-      details: []
-    };
-
-    product.images.forEach(imagePath => {
-      const fileName = imagePath.toLowerCase();
-      if (fileName.includes('exterior') || fileName.includes('外观')) {
-        images.exterior.push(imagePath);
-      } else if (fileName.includes('interior') || fileName.includes('内饰')) {
-        images.interior.push(imagePath);
-      } else {
-        images.details.push(imagePath);
-      }
-    });
-
-    // 如果没有明确分类，按顺序分配
-    if (images.exterior.length === 0 && images.interior.length === 0 && images.details.length > 0) {
-      const totalImages = images.details.length;
-      const exteriorCount = Math.ceil(totalImages * 0.4);
-      const interiorCount = Math.ceil(totalImages * 0.3);
-      
-      images.exterior = images.details.slice(0, exteriorCount);
-      images.interior = images.details.slice(exteriorCount, exteriorCount + interiorCount);
-      images.details = images.details.slice(exteriorCount + interiorCount);
+    if (!product || !product.images) {
+      return { exterior: [], interior: [], details: [] };
     }
 
-    return images;
+    // 如果images已经是分类格式
+    if (typeof product.images === 'object' && !Array.isArray(product.images)) {
+      return {
+        exterior: product.images.exterior || [],
+        interior: product.images.interior || [],
+        details: product.images.details || []
+      };
+    }
+
+    // 如果images是数组格式，按名称分类
+    if (Array.isArray(product.images)) {
+      const images = {
+        exterior: [],
+        interior: [],
+        details: []
+      };
+
+      product.images.forEach(imagePath => {
+        const fileName = imagePath.toLowerCase();
+        if (fileName.includes('exterior') || fileName.includes('外观')) {
+          images.exterior.push(imagePath);
+        } else if (fileName.includes('interior') || fileName.includes('内饰')) {
+          images.interior.push(imagePath);
+        } else {
+          images.details.push(imagePath);
+        }
+      });
+
+      // 如果没有明确分类，按顺序分配
+      if (images.exterior.length === 0 && images.interior.length === 0 && images.details.length > 0) {
+        const totalImages = images.details.length;
+        const exteriorCount = Math.ceil(totalImages * 0.4);
+        const interiorCount = Math.ceil(totalImages * 0.3);
+        
+        images.exterior = images.details.slice(0, exteriorCount);
+        images.interior = images.details.slice(exteriorCount, exteriorCount + interiorCount);
+        images.details = images.details.slice(exteriorCount + interiorCount);
+      }
+
+      return images;
+    }
+
+    return { exterior: [], interior: [], details: [] };
   }
 
   /**
    * 获取产品的主图
    */
   getProductMainImage(product) {
-    if (!product || !product.images || product.images.length === 0) {
+    if (!product || !product.images) {
       return '/images/placeholder.jpg';
     }
-    return product.images[0];
+    
+    // 如果images是对象格式（包含exterior, interior, details）
+    if (typeof product.images === 'object' && !Array.isArray(product.images)) {
+      const { exterior, interior, details } = product.images;
+      
+      // 优先使用exterior图片
+      if (exterior && exterior.length > 0) {
+        return exterior[0];
+      }
+      
+      // 其次使用interior图片
+      if (interior && interior.length > 0) {
+        return interior[0];
+      }
+      
+      // 最后使用details图片
+      if (details && details.length > 0) {
+        return details[0];
+      }
+      
+      return '/images/placeholder.jpg';
+    }
+    
+    // 如果images是数组格式
+    if (Array.isArray(product.images) && product.images.length > 0) {
+      return product.images[0];
+    }
+    
+    return '/images/placeholder.jpg';
   }
 
   /**

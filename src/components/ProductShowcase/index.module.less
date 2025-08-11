@@ -38,10 +38,10 @@
 .productsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 3rem;
-  max-width: 700px;
+  gap: 2rem;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 2rem;
 }
 
 .productCard {
@@ -156,6 +156,18 @@
   color: @text-gray;
   line-height: 1.5;
   margin-bottom: 1.5rem;
+}
+
+/* 产品价格 */
+.productPrice {
+  margin-bottom: 1.5rem;
+}
+
+.price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: @accent-gold;
+  letter-spacing: 0.5px;
 }
 
 /* 产品特性 */
@@ -328,4 +340,25 @@
   .productFeatures {
     grid-template-columns: 1fr;
   }
+}
+
+/* 加载状态 */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+.loadingSpinner {
+  color: @accent-gold;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
