@@ -26,22 +26,82 @@ RUN ls -la dist/ && test -f dist/index.html && echo "✅ 构建验证成功"
 FROM nginx:alpine
 
 # 安装 curl 用于健康检查
-RUN apk add --no-cache curl
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+    apk add --no-cache curl
+
+# 创建 nginx 用户可写的目录
+RUN mkdir -p /tmp/nginx /var/cache/nginx/client_temp \
+             /var/cache/nginx/proxy_temp \
+             /var/cache/nginx/fastcgi_temp \
+             /var/cache/nginx/uwsgi_temp \
+             /var/cache/nginx/scgi_temp \
+             /var/log/nginx && \
+    chown -R nginx:nginx /tmp/nginx \
+                         /var/cache/nginx \
+                         /var/log/nginx && \
+    chmod -R 755 /tmp/nginx \
+                 /var/cache/nginx \
+                 /var/log/nginx
+
+# 创建自定义的 nginx 主配置文件
+RUN cat > /etc/nginx/nginx.conf << 'EOF'
+# 运行用户
+worker_processes auto;
+
+# PID 文件位置（nginx 用户可写）
+pid /tmp/nginx/nginx.pid;
+
+# 错误日志
+error_log /var/log/nginx/error.log warn;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    # 日志格式
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log /var/log/nginx/access.log main;
+
+    # 基本设置
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
+
+    # 客户端请求缓冲区（使用 nginx 用户可写的目录）
+    client_body_temp_path /tmp/nginx/client_temp;
+    proxy_temp_path /tmp/nginx/proxy_temp;
+    fastcgi_temp_path /tmp/nginx/fastcgi_temp;
+    uwsgi_temp_path /tmp/nginx/uwsgi_temp;
+    scgi_temp_path /tmp/nginx/scgi_temp;
+
+    # 包含站点配置
+    include /etc/nginx/conf.d/*.conf;
+}
+EOF
 
 # 删除默认的 nginx 配置
-RUN rm /etc/nginx/conf.d/default.conf
+RUN rm -f /etc/nginx/conf.d/default.conf
 
-# 复制自定义 nginx 配置
+# 复制自定义 nginx 站点配置
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # 从构建阶段复制构建产物
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# 设置正确的文件权限
+# 设置 html 目录权限
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
     chmod -R 755 /usr/share/nginx/html
 
-# 创建非 root 用户（安全最佳实践）
+# 切换到 nginx 用户
 USER nginx
 
 # 暴露端口
