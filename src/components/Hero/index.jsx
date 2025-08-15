@@ -53,8 +53,11 @@ const Hero = () => {
         muted 
         loop 
         playsInline
+        preload="metadata"
+        poster="/images/hero-poster.jpg"
       >
         <source src="/videos/7.mp4" type="video/mp4" />
+        您的浏览器不支持视频播放。
       </video>
       
       {/* 高端遮罩层 */}
@@ -108,7 +111,7 @@ const Hero = () => {
       </div>
 
       {/* 滚动提示 */}
-      <div className={styles.scrollIndicator}>
+      <div className={styles.scrollIndicator} role="presentation" aria-hidden="true">
         <span>SCROLL</span>
         <div className={styles.scrollLine}></div>
       </div>

@@ -110,13 +110,19 @@ const Footer = () => {
             <div className={styles.footerNewsletter}>
               <h3>订阅资讯</h3>
               <p>获取最新产品信息和优惠活动</p>
-              <form className={styles.newsletterForm}>
+              <form className={styles.newsletterForm} noValidate>
                 <input
                   type="email"
                   placeholder="请输入您的邮箱"
                   className={styles.newsletterInput}
+                  required
+                  aria-label="邮箱地址"
                 />
-                <button type="submit" className={styles.newsletterButton}>
+                <button 
+                  type="submit" 
+                  className={styles.newsletterButton}
+                  aria-label="订阅邮件资讯"
+                >
                   订阅
                 </button>
               </form>

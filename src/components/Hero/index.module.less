@@ -359,7 +359,6 @@
     }
 
     &:hover {
-      transform: translateY(-4px);
       box-shadow: 
         0 0 60px rgba(201, 169, 110, 0.6),
         0 16px 48px rgba(0, 0, 0, 0.4),
@@ -386,7 +385,6 @@
       background: rgba(201, 169, 110, 0.15);
       color: rgba(201, 169, 110, 1);
       border-color: rgba(201, 169, 110, 0.5);
-      transform: translateY(-4px);
       box-shadow: 
         0 0 40px rgba(201, 169, 110, 0.3),
         0 8px 32px rgba(0, 0, 0, 0.3);
@@ -1071,47 +1069,265 @@
   }
 }
 
-/* 移动端适配 */
+/* 移动端优化 - 主要改进 */
 @media (max-width: 768px) {
   .hero {
-    height: 90vh;
+    height: 100vh; // 保持全屏高度
+    min-height: 600px; // 确保最小高度
   }
 
   .heroContent {
-    min-height: 60vh;
-    padding: 0 1rem;
+    min-height: 100vh;
+    padding: 0 1.5rem;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 80px; // 为导航栏预留空间
   }
 
   .heroText {
     max-width: 100%;
     text-align: center;
+    
+    // 移动端文字前置装饰优化
+    &::before {
+      display: none; // 移动端隐藏侧边装饰线
+    }
+    
+    // 移动端环境光效果调整
+    &::after {
+      top: -10%;
+      left: -5%;
+      width: 110%;
+      height: 120%;
+    }
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 1.5rem;
+    
+    // 移动端下划线优化
+    &::after {
+      width: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 
   .title {
-    font-size: clamp(2rem, 8vw, 3rem);
-    margin-bottom: 1rem;
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    
+    // 移动端减少文字阴影
+    text-shadow: 
+      0 0 30px rgba(201, 169, 110, 0.2),
+      0 0 60px rgba(255, 255, 255, 0.05);
+      
+    // 移动端hover效果简化
+    &:hover {
+      letter-spacing: -0.01em;
+    }
   }
 
   .description {
     font-size: 1rem;
-    margin-bottom: 2rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    // 移动端隐藏装饰引号
+    &::before {
+      display: none;
+    }
   }
 
   .heroActions {
     justify-content: center;
     gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
   }
 
-  .ctaBtn,
-  .secondaryBtn {
-    padding: 12px 24px;
-    font-size: 0.875rem;
+  .heroButton {
+    width: 100%;
+    max-width: 280px;
+    padding: 16px 32px;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
   }
 
+  .heroFeatures {
+    gap: 0.8rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .featureTag {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  // 移动端导航箭头
+  .slideNav {
+    width: 45px;
+    height: 45px;
+    backdrop-filter: blur(10px);
+
+    &.prev {
+      left: 20px;
+    }
+
+    &.next {
+      right: 20px;
+    }
+    
+    // 移动端简化hover效果
+    &:hover {
+      transform: translateY(-50%) scale(1.02);
+    }
+  }
+
+  .slideIndicators {
+    bottom: 30px;
+    
+    .indicator {
+      width: 10px;
+      height: 10px;
+      margin: 0 5px;
+      
+      // 增加触摸目标大小
+      &::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        background: transparent;
+      }
+    }
+  }
+
+  .scrollHint {
+    display: none; // 移动端隐藏滚动提示
+  }
+
+  // 移动端视频背景优化
+  .videoBackground {
+    object-position: center;
+    filter: grayscale(0.4) contrast(1.0) brightness(0.3);
+    // 移动端性能优化
+    will-change: auto;
+    transform: scale(1.01); // 减少缩放以提升性能
+  }
+
+  // 移动端遮罩优化
+  .heroOverlay {
+    background: 
+      linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.92) 0%, 
+        rgba(15, 15, 15, 0.75) 30%,
+        rgba(26, 26, 26, 0.6) 60%,
+        rgba(10, 10, 10, 0.8) 100%);
+        
+    // 移动端简化纹理效果
+    &::before {
+      opacity: 0.2;
+    }
+    
+    // 移动端光影效果调整
+    &::after {
+      animation: none; // 移动端禁用复杂光影动画
+      opacity: 0.5;
+    }
+  }
+}
+
+/* 平板适配 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .heroContent {
+    padding: 0 3rem;
+  }
+  
+  .heroText {
+    max-width: 600px;
+  }
+
+  .title {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+  }
+
+  .description {
+    font-size: 1.1rem;
+    max-width: 500px;
+  }
+  
+  .heroActions {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+/* 超小屏幕设备优化 (iPhone SE等) */
+@media (max-width: 480px) {
+  .hero {
+    min-height: 580px;
+  }
+  
+  .heroContent {
+    padding: 0 1rem;
+    padding-top: 70px;
+  }
+  
+  .subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+  
+  .title {
+    font-size: clamp(1.8rem, 12vw, 2.8rem);
+    margin-bottom: 1rem;
+  }
+  
+  .description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    max-width: 260px;
+  }
+  
+  .heroActions {
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .heroButton {
+    max-width: 240px;
+    padding: 14px 28px;
+    font-size: 0.85rem;
+  }
+  
+  .heroFeatures {
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  
+  .featureTag {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+  
   .slideNav {
     width: 40px;
     height: 40px;
-
+    
     &.prev {
       left: 15px;
     }
@@ -1120,27 +1336,65 @@
       right: 15px;
     }
   }
-
+  
   .slideIndicators {
-    bottom: 20px;
-  }
-
-  .scrollHint {
-    display: none;
+    bottom: 25px;
+    
+    .indicator {
+      width: 8px;
+      height: 8px;
+      margin: 0 4px;
+      
+      // 超小屏幕触摸目标优化
+      &::before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: -12px;
+        right: -12px;
+        bottom: -12px;
+        background: transparent;
+      }
+    }
   }
 }
 
-/* 平板适配 */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .heroText {
-    max-width: 500px;
+/* 横屏模式优化 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    height: 100vh;
+    min-height: 500px;
   }
-
+  
+  .heroContent {
+    padding-top: 60px;
+    min-height: 90vh;
+  }
+  
   .title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+    margin-bottom: 1rem;
   }
-
+  
   .description {
-    font-size: 1.125rem;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    max-width: 400px;
+  }
+  
+  .heroActions {
+    flex-direction: row;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .heroButton {
+    max-width: 200px;
+    padding: 12px 24px;
+    font-size: 0.8rem;
+  }
+  
+  .heroFeatures {
+    margin-bottom: 1rem;
   }
 }
