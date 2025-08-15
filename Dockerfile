@@ -1,5 +1,5 @@
 # 使用官方 Node.js 镜像进行构建，通过阿里云加速
-FROM registry.cn-hangzhou.aliyuncs.com/library/node:18-alpine AS build
+FROM registry.cn-hangzhou.aliyuncs.com/library/node:18 AS build
 
 # 设置工作目录
 WORKDIR /app
@@ -20,7 +20,7 @@ COPY . .
 RUN npm run build
 
 # 使用官方 Nginx 镜像作为生产环境
-FROM registry.cn-hangzhou.aliyuncs.com/library/nginx:1.21-alpine
+FROM registry.cn-hangzhou.aliyuncs.com/library/nginx:1.21
 
 # 删除默认的 nginx 配置文件
 RUN rm /etc/nginx/conf.d/default.conf
