@@ -2,24 +2,21 @@ version: '3.8'
 
 services:
   zhirui-website:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    container_name: ${CONTAINER_NAME:-zhirui-business-website}
+    build: .
+    container_name: zhirui-business-website-prod
     ports:
-      - "${HOST_PORT:-80}:80"
-      - "${HTTPS_PORT:-443}:443"
-    restart: unless-stopped
+      - "${HTTP_PORT:-80}:80"  # 生产环境使用80端口
     environment:
       - NODE_ENV=production
-      - TZ=${TZ:-Asia/Shanghai}
-    volumes:
-      # Nginx 配置
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      # SSL 证书（生产环境）
-      - ./ssl:/etc/nginx/ssl:ro
-      # 日志持久化
-      - nginx-logs:/var/log/nginx
+      - VITE_APP_ENV=production
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          memory: 512M
     networks:
       - zhirui-network
     healthcheck:
@@ -28,27 +25,11 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-    deploy:
-      resources:
-        limits:
-          memory: ${MAX_MEMORY:-512m}
-          cpus: '${MAX_CPU:-1.0}'
-        reservations:
-          memory: 256m
-          cpus: '0.5'
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.zhirui-prod.rule=Host(`${DOMAIN:-localhost}`)"
-      - "traefik.http.routers.zhirui-prod.tls=true"
-      - "com.docker.compose.project=zhirui-prod"
+      - "traefik.http.routers.zhirui.rule=Host(`yourdomain.com`)"
+      - "traefik.http.services.zhirui.loadbalancer.server.port=80"
 
 networks:
   zhirui-network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16
-
-volumes:
-  nginx-logs:
-    driver: local
