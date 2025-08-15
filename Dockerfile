@@ -1,5 +1,5 @@
-# 使用阿里云 Node.js 镜像进行构建
-FROM registry.cn-hangzhou.aliyuncs.com/acs/node:18-alpine AS build
+# 使用官方 Node.js 镜像进行构建，通过阿里云加速
+FROM node:18-alpine AS build
 
 # 设置工作目录
 WORKDIR /app
@@ -10,8 +10,8 @@ COPY package*.json ./
 # 设置 npm 镜像为阿里云镜像
 RUN npm config set registry https://registry.npmmirror.com/
 
-# 安装依赖
-RUN npm ci --only=production
+# 安装依赖（包括 devDependencies，因为需要构建工具）
+RUN npm ci
 
 # 复制源代码
 COPY . .
@@ -19,8 +19,8 @@ COPY . .
 # 构建应用
 RUN npm run build
 
-# 使用阿里云 Nginx 镜像作为生产环境
-FROM registry.cn-hangzhou.aliyuncs.com/acs/nginx:1.21-alpine
+# 使用官方 Nginx 镜像作为生产环境
+FROM nginx:1.21-alpine
 
 # 删除默认的 nginx 配置文件
 RUN rm /etc/nginx/conf.d/default.conf

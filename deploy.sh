@@ -7,12 +7,21 @@ echo "🚀 开始部署智睿商务车网站..."
 # 检查 Docker 是否安装
 if ! command -v docker &> /dev/null; then
     echo "❌ Docker 未安装，请先安装 Docker"
+    echo "📖 安装指南: https://docs.docker.com/get-docker/"
+    exit 1
+fi
+
+# 检查 Docker daemon 是否运行
+if ! docker info &> /dev/null; then
+    echo "❌ Docker daemon 未运行"
+    echo "🔧 请启动 Docker Desktop 或运行: sudo systemctl start docker"
     exit 1
 fi
 
 # 检查 Docker Compose 是否安装
 if ! command -v docker-compose &> /dev/null; then
     echo "❌ Docker Compose 未安装，请先安装 Docker Compose"
+    echo "📖 安装指南: https://docs.docker.com/compose/install/"
     exit 1
 fi
 

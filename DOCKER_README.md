@@ -3,9 +3,10 @@
 ## 文件说明
 
 ### Dockerfile
-- 使用阿里云镜像源进行构建
+- 使用官方镜像，通过 Docker 镜像加速器提升下载速度
 - 采用多阶段构建，优化镜像大小
 - 生产环境使用 Nginx 提供静态文件服务
+- 配置了 npm 阿里云镜像源
 
 ### nginx.conf
 - 配置了 Gzip 压缩，提升传输效率
@@ -22,6 +23,41 @@
 ### .dockerignore
 - 排除不需要的文件，减少构建上下文
 - 提升构建速度
+
+### daemon.json
+- Docker 镜像加速器配置
+- 使用国内镜像源提升下载速度
+
+## 前置要求
+
+1. **安装 Docker Desktop**
+   - macOS: 下载 [Docker Desktop for Mac](https://docs.docker.com/desktop/mac/install/)
+   - Windows: 下载 [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/install/)
+   - Linux: 安装 [Docker Engine](https://docs.docker.com/engine/install/)
+
+2. **启动 Docker**
+   - macOS/Windows: 启动 Docker Desktop 应用
+   - Linux: `sudo systemctl start docker`
+
+3. **配置镜像加速器**（可选，但推荐）
+   - 参考下面的 "Docker 镜像加速配置" 部分
+
+## Docker 镜像加速配置
+
+### macOS 用户
+1. 打开 Docker Desktop
+2. 进入 Settings → Docker Engine
+3. 将 `daemon.json` 的内容添加到配置中
+4. 点击 "Apply & Restart"
+
+### Linux 用户
+```bash
+# 复制配置文件
+sudo cp daemon.json /etc/docker/daemon.json
+
+# 重启 Docker 服务
+sudo systemctl restart docker
+```
 
 ## 使用方法
 
