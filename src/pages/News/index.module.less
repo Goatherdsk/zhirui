@@ -64,15 +64,6 @@
     0 2px 8px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
     inset 0 -1px 0 rgba(201, 169, 110, 0.2);
-    
-  // 错位效果
-  &:nth-child(even) {
-    transform: translateY(2rem);
-  }
-  
-  &:nth-child(3n) {
-    transform: translateY(-1rem);
-  }
 }
 
 // 新闻卡片悬停效果 - 优化版
@@ -370,21 +361,19 @@
     inset 0 1px 0 rgba(201, 169, 110, 0.3);
 }
 
-// 动画效果 - 简化版
-@keyframes fadeInUp {
+// 优化动画效果
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
 // 新闻卡片动画 - 简化版
 .newsArticle {
-  animation: fadeInUp 0.6s ease-out;
+  animation: fadeIn 0.6s ease-out;
   animation-fill-mode: both;
   
   &:nth-child(1) { animation-delay: 0.1s; }
@@ -397,7 +386,7 @@
 
 // 页面加载时的标题动画
 .sectionTitle {
-  animation: fadeInUp 0.8s ease-out;
+  animation: fadeIn 0.8s ease-out;
 }
 
 // 统计数据样式更新 - 金色系优化
