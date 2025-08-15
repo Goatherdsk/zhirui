@@ -1,18 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './index.module.less';
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   
-  const slides = [
+  // 检测移动端和动画偏好设置
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    const checkMotionPreference = () => {
+      setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    };
+    
+    checkMobile();
+    checkMotionPreference();
+    
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // 视频加载处理
+  const handleVideoLoad = useCallback(() => {
+    setVideoLoaded(true);
+  }, []);
+
+  const slides = useMemo(() => [
     {
       title: "定义商务出行新标准",
       subtitle: "REDEFINING BUSINESS TRAVEL",
       description: "为精英人士打造的奢华移动空间，融合尖端科技与匠心工艺",
       buttonText: "探索产品",
       buttonLink: "/products",
-      backgroundGradient: "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%)",
       features: ["尊贵内饰", "智能科技", "专属定制"]
     },
     {
@@ -21,7 +43,6 @@ const Hero = () => {
       description: "每一处细节都彰显品质，每一次出行都是尊贵体验",
       buttonText: "定制服务",
       buttonLink: "/services",
-      backgroundGradient: "linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 50%, #2d2d2d 100%)",
       features: ["手工工艺", "个性化", "VIP服务"]
     },
     {
@@ -30,37 +51,47 @@ const Hero = () => {
       description: "先进的智能系统与豪华内饰完美结合，开启未来出行方式",
       buttonText: "联系我们",
       buttonLink: "/contact",
-      backgroundGradient: "linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 50%, #0a0a0a 100%)",
       features: ["AI智能", "云端互联", "安全保障"]
     }
-  ];
+  ], []);
 
-  // 自动轮播
+  // 优化的轮播控制
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, [slides.length]);
+
+  // 自动轮播（移动端减慢频率以提升性能）
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 6000);
+    if (prefersReducedMotion) return;
+    
+    const interval = isMobile ? 8000 : 6000;
+    const timer = setInterval(nextSlide, interval);
 
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [nextSlide, isMobile, prefersReducedMotion]);
 
   return (
     <section className={styles.hero}>
-      {/* 视频背景 */}
+      {/* 优化的视频背景 - 全设备支持 */}
       <video 
         className={styles.videoBackground}
         autoPlay 
         muted 
         loop 
         playsInline
-        preload="metadata"
+        preload={isMobile ? "none" : "metadata"}
         poster="/images/hero-poster.jpg"
+        onLoadedData={handleVideoLoad}
+        style={{
+          filter: isMobile ? 'brightness(0.3) contrast(1.2)' : 'grayscale(0.3) contrast(1.1) brightness(0.4)',
+          opacity: videoLoaded ? 1 : 0.8
+        }}
       >
         <source src="/videos/7.mp4" type="video/mp4" />
         您的浏览器不支持视频播放。
       </video>
       
-      {/* 高端遮罩层 */}
+      {/* 简化的遮罩层 */}
       <div className={styles.heroOverlay}></div>
       
       <div className={styles.heroSlider}>
@@ -110,11 +141,13 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* 滚动提示 */}
-      <div className={styles.scrollIndicator} role="presentation" aria-hidden="true">
-        <span>SCROLL</span>
-        <div className={styles.scrollLine}></div>
-      </div>
+      {/* 简化的滚动提示 */}
+      {!isMobile && (
+        <div className={styles.scrollIndicator} role="presentation" aria-hidden="true">
+          <span>SCROLL</span>
+          <div className={styles.scrollLine}></div>
+        </div>
+      )}
     </section>
   );
 };
