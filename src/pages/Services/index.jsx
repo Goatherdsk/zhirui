@@ -2,6 +2,7 @@ import React from 'react';
 import PageHeader from '../../components/PageHeader';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
+import styles from './index.module.less';
 
 const Services = () => {
   const serviceStats = [
@@ -15,54 +16,54 @@ const Services = () => {
       id: 1,
       title: '个性化定制',
       subtitle: 'Customization',
-      description: '根据您的具体需求，提供从内饰到外观的全方位定制服务',
+      description: '根据您的商务需求，提供从内饰到外观的全方位专属定制服务',
       features: ['内饰定制', '外观改装', '功能配置', '专属标识'],
       icon: 'design'
     },
     {
       id: 2,
-      title: '专业维护',
-      subtitle: 'Maintenance',
-      description: '由经过认证的技师团队，为您的爱车提供专业的维护保养服务',
+      title: '专业维护保养',
+      subtitle: 'Professional Maintenance',
+      description: '由认证技师团队提供专业维护，确保您的商务车始终保持最佳状态',
       features: ['定期保养', '故障诊断', '零件更换', '性能优化'],
       icon: 'tool'
     },
     {
       id: 3,
-      title: '金融服务',
-      subtitle: 'Finance',
-      description: '灵活的金融解决方案，让您轻松拥有心仪的商务车',
+      title: '金融解决方案',
+      subtitle: 'Financial Solutions',
+      description: '灵活多样的金融服务，让您轻松拥有心仪的高端商务车',
       features: ['分期付款', '融资租赁', '保险服务', '置换升级'],
-      icon: '💰'
+      icon: 'business'
     },
     {
       id: 4,
-      title: '司机培训',
-      subtitle: 'Training',
-      description: '专业的司机培训课程，确保安全、舒适的驾驶体验',
-      features: ['安全驾驶', '礼仪培训', '车辆操作', '应急处理'],
-      icon: '🎓'
+      title: 'VIP专享服务',
+      subtitle: 'VIP Exclusive',
+      description: '专为VIP客户打造的尊享服务体验，享受专属礼遇',
+      features: ['专属顾问', '优先服务', '贵宾通道', '增值服务'],
+      icon: 'star'
     },
     {
       id: 5,
-      title: '道路救援',
-      subtitle: 'Roadside Assistance',
-      description: '24小时道路救援服务，让您的出行无后顾之忧',
-      features: ['紧急救援', '现场维修', '拖车服务', '备用车辆'],
-      icon: 'car'
+      title: '智能互联支持',
+      subtitle: 'Smart Connectivity',
+      description: '先进的车载智能系统技术支持，让您的商务出行更智能便捷',
+      features: ['系统升级', '功能培训', '远程诊断', '技术咨询'],
+      icon: 'mobile'
     },
     {
       id: 6,
-      title: '管家服务',
-      subtitle: 'Concierge',
-      description: '专属管家服务，为您提供全方位的商务出行支持',
-      features: ['行程规划', '预约服务', '24小时热线', '贵宾接待'],
-      icon: '👔'
+      title: '企业服务方案',
+      subtitle: 'Corporate Solutions',
+      description: '针对企业客户的一站式商务用车解决方案，提升企业形象',
+      features: ['fleet管理', '批量采购', '企业定制', '运营支持'],
+      icon: 'tool'
     }
   ];
 
   return (
-    <div className="page">
+    <div className={styles.servicesPage}>
       <PageHeader
         title="专属服务"
         englishTitle="Exclusive Services"
@@ -79,142 +80,44 @@ const Services = () => {
       
       <div className="container">
         {/* 服务介绍区域 */}
-        <section className="services-intro" style={{ padding: '6rem 0 4rem' }}>
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 style={{
-              fontSize: '2.5rem',
-              fontWeight: '600',
-              color: 'var(--text-light)',
-              marginBottom: '1rem',
-              background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--text-light) 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
+        <section className={styles.servicesIntro}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>
               专业服务体系
             </h2>
-            <p style={{
-              fontSize: '1.2rem',
-              color: 'var(--text-light)',
-              opacity: '0.8',
-              lineHeight: '1.8',
-              maxWidth: '600px',
-              margin: '0 auto'
-            }}>
+            <p className={styles.sectionDescription}>
               六大核心服务模块，为您打造全方位的商务出行解决方案
             </p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-            gap: '2rem',
-            marginBottom: '4rem'
-          }}>
+          <div className={styles.servicesGrid}>
             {services.map((service) => (
-              <div
-                key={service.id}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '20px',
-                  padding: '2.5rem',
-                  backdropFilter: 'blur(10px)',
-                  transition: 'all 0.4s ease',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-10px)';
-                  e.target.style.borderColor = 'var(--accent-gold)';
-                  e.target.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(201, 169, 110, 0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                  e.target.style.boxShadow = 'none';
-                }}
-              >
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <div style={{
-                    fontSize: '3rem',
-                    marginBottom: '1rem',
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}>
+              <div key={service.id} className={styles.serviceCard}>
+                <div className={styles.serviceHeader}>
+                  <div className={styles.serviceIcon}>
                     <Icon type={service.icon} size="48px" color="var(--accent-gold)" />
                   </div>
-                  <h3 style={{
-                    fontSize: '1.8rem',
-                    fontWeight: '600',
-                    color: 'var(--text-light)',
-                    marginBottom: '0.5rem'
-                  }}>
-                    {service.title}
-                  </h3>
-                  <p style={{
-                    fontSize: '1rem',
-                    color: 'var(--accent-gold)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    fontWeight: '400'
-                  }}>
-                    {service.subtitle}
-                  </p>
+                  <h3 className={styles.serviceTitle}>{service.title}</h3>
+                  <p className={styles.serviceSubtitle}>{service.subtitle}</p>
                 </div>
 
-                <p style={{
-                  color: 'var(--text-light)',
-                  opacity: '0.8',
-                  lineHeight: '1.6',
-                  marginBottom: '2rem',
-                  fontSize: '1rem'
-                }}>
+                <p className={styles.serviceDescription}>
                   {service.description}
                 </p>
 
-                <div style={{ marginBottom: '2rem' }}>
-                  <h4 style={{
-                    color: 'var(--text-light)',
-                    fontSize: '1.1rem',
-                    fontWeight: '600',
-                    marginBottom: '1rem'
-                  }}>
-                    服务内容
-                  </h4>
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                    gap: '0.8rem'
-                  }}>
+                <div className={styles.serviceFeatures}>
+                  <h4 className={styles.featuresTitle}>服务内容</h4>
+                  <div className={styles.featuresGrid}>
                     {service.features.map((feature, featureIndex) => (
-                      <div
-                        key={featureIndex}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          padding: '0.5rem',
-                          background: 'rgba(255, 255, 255, 0.03)',
-                          borderRadius: '8px',
-                          transition: 'all 0.3s ease'
-                        }}
-                      >
-                        <span style={{ color: 'var(--accent-gold)', fontSize: '0.9rem' }}>
-                          <Icon type="star" size="14px" color="var(--accent-gold)" />
-                        </span>
-                        <span style={{
-                          color: 'var(--text-light)',
-                          fontSize: '0.9rem'
-                        }}>
-                          {feature}
-                        </span>
+                      <div key={featureIndex} className={styles.featureItem}>
+                        <Icon type="star" size="14px" color="var(--accent-gold)" />
+                        <span>{feature}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <Button variant="outline" size="medium" style={{ width: '100%' }}>
+                <Button variant="outline" size="medium" className={styles.serviceButton}>
                   了解详情
                 </Button>
               </div>
@@ -223,42 +126,12 @@ const Services = () => {
         </section>
 
         {/* 服务承诺区域 */}
-        <section className="service-promise" style={{
-          background: 'linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(45, 45, 45, 0.9) 100%)',
-          padding: '4rem',
-          borderRadius: '20px',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          textAlign: 'center',
-          marginBottom: '4rem'
-        }}>
-          <h2 style={{
-            fontSize: '2.5rem',
-            fontWeight: '600',
-            color: 'var(--text-light)',
-            marginBottom: '2rem',
-            background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--text-light) 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
-            我们的服务承诺
-          </h2>
-          <p style={{
-            fontSize: '1.2rem',
-            color: 'var(--text-light)',
-            opacity: '0.8',
-            marginBottom: '3rem',
-            maxWidth: '800px',
-            margin: '0 auto 3rem'
-          }}>
+        <section className={styles.servicePromise}>
+          <h2 className={styles.promiseTitle}>我们的服务承诺</h2>
+          <p className={styles.promiseDescription}>
             智锐商务车始终坚持以客户为中心，为您提供超越期待的服务体验
           </p>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '2rem',
-            flexWrap: 'wrap'
-          }}>
+          <div className={styles.promiseActions}>
             <Button variant="primary" size="large">
               预约服务
             </Button>
