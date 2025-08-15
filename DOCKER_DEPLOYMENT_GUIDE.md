@@ -75,7 +75,7 @@ nano .env
 
 | 变量名 | 默认值 | 说明 |
 |--------|--------|------|
-| `HOST_PORT` | 8080 | 主机端口 |
+| `HOST_PORT` | 80 | 主机端口 |
 | `HTTPS_PORT` | 8443 | HTTPS 端口 |
 | `NODE_ENV` | production | 环境模式 |
 | `CONTAINER_NAME` | zhirui-business-website | 容器名称 |

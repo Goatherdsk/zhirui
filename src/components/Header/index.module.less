@@ -27,6 +27,12 @@
   }
 }
 
+.container {
+  position: relative;
+  padding: 0 1rem;
+  z-index: 1000;
+}
+
 .headerContent {
   display: flex;
   align-items: center;
@@ -158,35 +164,105 @@
 .mobileMenuBtn {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
   background: none;
   border: none;
-  padding: 0;
+  padding: 8px;
   cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background-color: rgba(201, 169, 110, 0.1);
+    transform: scale(1.05);
+  }
+
+  &:focus {
+    outline: none;
+    background-color: rgba(201, 169, 110, 0.08);
+  }
 
   span {
     display: block;
-    width: 100%;
-    height: 2px;
-    background-color: @accent-gold;
-    transition: all 0.3s ease;
-    transform-origin: center;
+    width: 24px;
+    height: 3px;
+    background: linear-gradient(90deg, @accent-gold 0%, @accent-light-gold 100%);
+    border-radius: 1.5px;
+    margin: 2.5px 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
+    position: relative;
+    box-shadow: 0 1px 2px rgba(201, 169, 110, 0.2);
+
+    &:nth-child(1) {
+      transform: translateY(0) rotate(0deg);
+      width: 24px;
+    }
+
+    &:nth-child(2) {
+      transform: scaleX(0.8);
+      width: 19px;
+    }
+
+    &:nth-child(3) {
+      transform: translateY(0) rotate(0deg);
+      width: 24px;
+    }
   }
 
   &.active {
+    background-color: rgba(201, 169, 110, 0.12);
+    
     span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
+      transform: rotate(45deg);
+      width: 24px;
+      margin: 2.5px 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -1.5px;
+      margin-left: -12px;
     }
 
     span:nth-child(2) {
       opacity: 0;
+      transform: scaleX(0);
     }
 
     span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
+      transform: rotate(-45deg);
+      width: 24px;
+      margin: 2.5px 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -1.5px;
+      margin-left: -12px;
     }
+  }
+
+  /* 添加点击波纹效果 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(201, 169, 110, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+  }
+
+  &:active::before {
+    width: 48px;
+    height: 48px;
   }
 }
 
@@ -196,45 +272,181 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.98);
-  backdrop-filter: blur(10px);
+  cursor: pointer;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.98) 0%,
+    rgba(26, 26, 26, 0.98) 50%,
+    rgba(0, 0, 0, 0.98) 100%
+  );
+  backdrop-filter: blur(20px);
+  // border-top: 1px solid rgba(201, 169, 110, 0.2);
   transform: translateY(-100%);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
-  padding: 2rem 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  min-height: 100vh;
+  overflow-y: auto;
+  z-index: 999;
+
+  /* 添加装饰性背景元素 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      @accent-gold 50%, 
+      transparent 100%
+    );
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(201, 169, 110, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+  }
 
   &.open {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
+
+    .mobileNavList {
+      .mobileNavItem {
+        &:nth-child(1) { animation-delay: 0.1s; }
+        &:nth-child(2) { animation-delay: 0.2s; }
+        &:nth-child(3) { animation-delay: 0.3s; }
+        &:nth-child(4) { animation-delay: 0.4s; }
+        &:nth-child(5) { animation-delay: 0.5s; }
+        &:nth-child(6) { animation-delay: 0.6s; }
+        
+        opacity: 1;
+        transform: translateX(0);
+        animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+    }
   }
 }
 
 .mobileNavList {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 2rem 0;
+  position: relative;
+  z-index: 2;
 }
 
 .mobileNavItem {
   border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg, 
+      rgba(201, 169, 110, 0.1) 0%, 
+      rgba(201, 169, 110, 0.05) 100%
+    );
+    transition: width 0.4s ease;
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .mobileNavLink {
-  display: block;
-  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  padding: 1.8rem 2rem;
   color: @text-light;
-  font-size: 1.125rem;
+  font-size: 1.2rem;
   font-weight: 300;
   letter-spacing: 0.05em;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  /* 添加图标 */
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: @accent-gold;
+    border-radius: 50%;
+    margin-right: 1rem;
+    transition: all 0.4s ease;
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  /* 添加右侧箭头 */
+  &::after {
+    content: '→';
+    position: absolute;
+    right: 2rem;
+    font-size: 1.2rem;
+    color: @accent-gold;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s ease;
+  }
 
   &:hover,
   &.active {
     color: @accent-gold;
-    background-color: rgba(201, 169, 110, 0.05);
-    transform: translateX(10px);
+    background-color: rgba(201, 169, 110, 0.08);
+    transform: translateX(8px);
+    padding-left: 2.5rem;
+    text-shadow: 0 0 10px rgba(201, 169, 110, 0.3);
+
+    &::before {
+      transform: scale(1);
+      opacity: 1;
+      box-shadow: 0 0 8px @accent-gold;
+    }
+
+    &::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  &.active {
+    font-weight: 400;
+    background: linear-gradient(90deg, 
+      rgba(201, 169, 110, 0.15) 0%, 
+      rgba(201, 169, 110, 0.05) 100%
+    );
+
+    &::before {
+      background: linear-gradient(45deg, @accent-gold, @accent-light-gold);
+      animation: pulse 2s ease-in-out infinite;
+    }
   }
 }
 
@@ -313,5 +525,70 @@
   .langBtn {
     padding: 0.2rem 0.6rem;
     font-size: 0.8rem;
+  }
+}
+
+/* 动画关键帧 */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* 减少动画的用户偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .mobileMenuBtn span,
+  .mobileMenu,
+  .mobileNavItem,
+  .mobileNavLink {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .mobileMenu::before,
+  .mobileMenu::after {
+    animation: none !important;
+  }
+
+  .mobileNavLink::before {
+    animation: none !important;
   }
 }

@@ -144,10 +144,10 @@
   position: relative;
   z-index: 4;
   
-  // 优化入场动画 - 仅使用淡入和轻微缩放
+  // 高端入场动画
   opacity: 0;
-  transform: scale(0.95);
-  animation: premiumFadeIn 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s forwards;
+  transform: translateX(-80px) translateY(40px);
+  animation: premiumSlideIn 2s cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s forwards;
   
   // 精致边框装饰
   &::before {
@@ -197,7 +197,8 @@
   font-weight: 200;
   position: relative;
   opacity: 0;
-  animation: fadeIn 1.2s ease-out 0.5s forwards;
+  transform: translateY(30px);
+  animation: textSlideIn 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) 0.8s forwards;
   
   // 精致下划线
   &::after {
@@ -221,7 +222,8 @@
   margin-bottom: 2.5rem;
   position: relative;
   opacity: 0;
-  animation: fadeIn 1.5s ease-out 0.8s forwards;
+  transform: translateY(40px);
+  animation: textSlideIn 1.8s cubic-bezier(0.165, 0.84, 0.44, 1) 1s forwards;
   
   // 高端渐变文字
   background: linear-gradient(135deg, 
@@ -240,12 +242,13 @@
     0 0 60px rgba(201, 169, 110, 0.3),
     0 0 100px rgba(255, 255, 255, 0.1);
   
-  // 字间距效果
+  // 字间距动效
   letter-spacing: -0.02em;
-  transition: letter-spacing 0.3s ease;
+  transition: all 0.4s ease;
   
   &:hover {
     letter-spacing: 0.01em;
+    transform: translateY(-2px);
   }
 }
 
@@ -258,19 +261,20 @@
   max-width: 650px;
   position: relative;
   opacity: 0;
-  animation: fadeIn 1.2s ease-out 1s forwards;
+  transform: translateY(30px);
+  animation: textSlideIn 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) 1.3s forwards;
   
   // 段落装饰
-  &::before {
-    content: '"';
-    position: absolute;
-    left: -30px;
-    top: -10px;
-    font-size: 4rem;
-    color: rgba(201, 169, 110, 0.3);
-    font-family: serif;
-    line-height: 1;
-  }
+  // &::before {
+  //   content: '"';
+  //   position: absolute;
+  //   left: -30px;
+  //   top: -10px;
+  //   font-size: 4rem;
+  //   color: rgba(201, 169, 110, 0.3);
+  //   font-family: serif;
+  //   line-height: 1;
+  // }
 }
 
 // 极致按钮设计
@@ -280,7 +284,8 @@
   align-items: center;
   margin-bottom: 4rem;
   opacity: 0;
-  animation: fadeIn 1.2s ease-out 1.2s forwards;
+  transform: translateY(40px);
+  animation: textSlideIn 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) 1.6s forwards;
 }
 
 .heroButton {
@@ -349,7 +354,7 @@
       rgba(201, 169, 110, 0.9) 100%);
     color: #000000;
     box-shadow: 
-      0 0 40px rgba(201, 169, 110, 0.4),
+      0 0 15px rgba(201, 169, 110, 0.4),
       0 8px 32px rgba(0, 0, 0, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.3);
 
@@ -359,6 +364,7 @@
     }
 
     &:hover {
+      transform: translateY(-4px);
       box-shadow: 
         0 0 60px rgba(201, 169, 110, 0.6),
         0 16px 48px rgba(0, 0, 0, 0.4),
@@ -385,6 +391,7 @@
       background: rgba(201, 169, 110, 0.15);
       color: rgba(201, 169, 110, 1);
       border-color: rgba(201, 169, 110, 0.5);
+      transform: translateY(-4px);
       box-shadow: 
         0 0 40px rgba(201, 169, 110, 0.3),
         0 8px 32px rgba(0, 0, 0, 0.3);
@@ -403,7 +410,8 @@
   gap: 2rem;
   flex-wrap: wrap;
   opacity: 0;
-  animation: fadeIn 1.2s ease-out 1.5s forwards;
+  transform: translateY(30px);
+  animation: textSlideIn 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) 1.9s forwards;
 }
 
 .featureTag {
@@ -600,7 +608,7 @@
   align-items: center;
   gap: 0.8rem;
   opacity: 0;
-  animation: fadeIn 1.2s ease-out 1.8s forwards;
+  animation: textSlideIn 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) 2.2s forwards;
   
   &::after {
     content: '';
@@ -765,27 +773,29 @@
   }
 }
 
-/* 优化的动画效果 - 减少位移，保持高级感 */
-@keyframes premiumFadeIn {
+/* 高级动画效果 */
+@keyframes premiumSlideIn {
   0% {
     opacity: 0;
-    transform: scale(0.95);
-    filter: blur(8px);
+    transform: translateX(-80px) translateY(40px);
+    filter: blur(10px);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: translateX(0) translateY(0);
     filter: blur(0);
   }
 }
 
-@keyframes fadeIn {
+@keyframes textSlideIn {
   0% {
     opacity: 0;
-    filter: blur(3px);
+    transform: translateY(40px);
+    filter: blur(5px);
   }
   100% {
     opacity: 1;
+    transform: translateY(0);
     filter: blur(0);
   }
 }
@@ -841,7 +851,6 @@
   }
 }
 
-// 保留必要的光效和透明度动画
 @keyframes scrollPulse {
   0%, 100% {
     opacity: 0.4;
@@ -853,12 +862,29 @@
   }
 }
 
-@keyframes opacityPulse {
-  0%, 100% {
-    opacity: 0.6;
+@keyframes luxurySlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px) translateY(30px);
+    filter: blur(10px);
   }
-  50% {
+  100% {
     opacity: 1;
+    transform: translateX(0) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes luxuryFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -870,6 +896,64 @@
   50% {
     opacity: 1;
     box-shadow: 0 0 40px rgba(201, 169, 110, 0.6);
+  }
+}
+
+@keyframes underlineGrow {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(60px, 60px);
+  }
+}
+
+@keyframes slowRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slowRotateReverse {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes lineGlow {
+  0%, 100% {
+    opacity: 0.3;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.8;
+    filter: brightness(1.5);
+  }
+}
+
+@keyframes elegantBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-8px);
+    opacity: 1;
   }
 }
 
@@ -892,12 +976,11 @@
   z-index: 10;
   backdrop-filter: blur(15px);
 
-  // 移除复杂位移动画，保留缩放效果
   &:hover {
     background: rgba(201, 169, 110, 0.2);
     border-color: rgba(201, 169, 110, 0.8);
     color: rgba(201, 169, 110, 1);
-    transform: translateY(-50%) scale(1.05);
+    transform: translateY(-50%) scale(1.1);
     box-shadow: 0 8px 32px rgba(201, 169, 110, 0.3);
   }
 
@@ -922,8 +1005,7 @@
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.85rem;
   z-index: 10;
-  // 使用简单的透明度脉冲替代复杂bounce
-  animation: opacityPulse 3s ease-in-out infinite;
+  animation: elegantBounce 3s ease-in-out infinite;
 }
 
 .scrollText {
@@ -956,81 +1038,6 @@
   
   .heroActions {
     gap: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero {
-    height: 90vh;
-  }
-  
-  .heroContent {
-    min-height: 60vh;
-    padding: 0 1rem;
-  }
-  
-  .heroText {
-    max-width: 100%;
-    text-align: center;
-    
-    &::before {
-      display: none;
-    }
-  }
-  
-  .title {
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    margin-bottom: 1.5rem;
-  }
-  
-  .description {
-    font-size: clamp(1.1rem, 4vw, 1.3rem);
-    margin-bottom: 2.5rem;
-    text-align: center;
-  }
-  
-  .heroActions {
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  .heroButton {
-    padding: 14px 28px;
-    font-size: 0.9rem;
-    min-width: 150px;
-  }
-  
-  .heroFeatures {
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-  
-  .featureTag {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.85rem;
-  }
-  
-  .heroDecoration {
-    display: none;
-  }
-  
-  .slideNav {
-    width: 45px;
-    height: 45px;
-    
-    &.prev {
-      left: 20px;
-    }
-    
-    &.next {
-      right: 20px;
-    }
-  }
-  
-  .scrollIndicator {
-    right: 20px;
-    bottom: 20px;
   }
 }
 
@@ -1069,265 +1076,91 @@
   }
 }
 
-/* 移动端优化 - 主要改进 */
+/* 动画定义 */
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+/* 移动端适配 */
 @media (max-width: 768px) {
   .hero {
-    height: 100vh; // 保持全屏高度
-    min-height: 600px; // 确保最小高度
+    height: 90vh;
   }
 
   .heroContent {
-    min-height: 100vh;
-    padding: 0 1.5rem;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 80px; // 为导航栏预留空间
+    min-height: 60vh;
+    padding: 1rem;
   }
 
   .heroText {
     max-width: 100%;
     text-align: center;
-    
-    // 移动端文字前置装饰优化
-    &::before {
-      display: none; // 移动端隐藏侧边装饰线
-    }
-    
-    // 移动端环境光效果调整
-    &::after {
-      top: -10%;
-      left: -5%;
-      width: 110%;
-      height: 120%;
-    }
-  }
-
-  .subtitle {
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-    margin-bottom: 1.5rem;
-    
-    // 移动端下划线优化
-    &::after {
-      width: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
   }
 
   .title {
-    font-size: clamp(2.2rem, 10vw, 3.5rem);
-    margin-bottom: 1.5rem;
-    line-height: 1.1;
-    
-    // 移动端减少文字阴影
-    text-shadow: 
-      0 0 30px rgba(201, 169, 110, 0.2),
-      0 0 60px rgba(255, 255, 255, 0.05);
-      
-    // 移动端hover效果简化
-    &:hover {
-      letter-spacing: -0.01em;
-    }
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 1rem;
   }
 
   .description {
     font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 2.5rem;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    
-    // 移动端隐藏装饰引号
-    &::before {
-      display: none;
-    }
+    margin-bottom: 2rem;
+
+    // 段落装饰
+    // &::before {
+    //   content: '"';
+    //   position: absolute;
+    //   left: -15px;
+    //   top: -10px;
+    //   font-size: 3rem;
+    // }
   }
 
   .heroActions {
     justify-content: center;
     gap: 1rem;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 2rem;
   }
 
-  .heroButton {
-    width: 100%;
-    max-width: 280px;
-    padding: 16px 32px;
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
+  .ctaBtn,
+  .secondaryBtn {
+    padding: 12px 24px;
+    font-size: 0.875rem;
   }
 
-  .heroFeatures {
-    gap: 0.8rem;
-    justify-content: center;
-    margin-bottom: 2rem;
-  }
-
-  .featureTag {
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-  }
-
-  // 移动端导航箭头
-  .slideNav {
-    width: 45px;
-    height: 45px;
-    backdrop-filter: blur(10px);
-
-    &.prev {
-      left: 20px;
-    }
-
-    &.next {
-      right: 20px;
-    }
-    
-    // 移动端简化hover效果
-    &:hover {
-      transform: translateY(-50%) scale(1.02);
-    }
-  }
-
-  .slideIndicators {
-    bottom: 30px;
-    
-    .indicator {
-      width: 10px;
-      height: 10px;
-      margin: 0 5px;
-      
-      // 增加触摸目标大小
-      &::before {
-        content: '';
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        right: -10px;
-        bottom: -10px;
-        background: transparent;
-      }
-    }
-  }
-
-  .scrollHint {
-    display: none; // 移动端隐藏滚动提示
-  }
-
-  // 移动端视频背景优化
-  .videoBackground {
-    object-position: center;
-    filter: grayscale(0.4) contrast(1.0) brightness(0.3);
-    // 移动端性能优化
-    will-change: auto;
-    transform: scale(1.01); // 减少缩放以提升性能
-  }
-
-  // 移动端遮罩优化
-  .heroOverlay {
-    background: 
-      linear-gradient(135deg, 
-        rgba(0, 0, 0, 0.92) 0%, 
-        rgba(15, 15, 15, 0.75) 30%,
-        rgba(26, 26, 26, 0.6) 60%,
-        rgba(10, 10, 10, 0.8) 100%);
-        
-    // 移动端简化纹理效果
-    &::before {
-      opacity: 0.2;
-    }
-    
-    // 移动端光影效果调整
-    &::after {
-      animation: none; // 移动端禁用复杂光影动画
-      opacity: 0.5;
-    }
-  }
-}
-
-/* 平板适配 */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .heroContent {
-    padding: 0 3rem;
-  }
-  
-  .heroText {
-    max-width: 600px;
-  }
-
-  .title {
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
-  }
-
-  .description {
-    font-size: 1.1rem;
-    max-width: 500px;
-  }
-  
-  .heroActions {
-    flex-direction: row;
-    gap: 1.5rem;
-  }
-}
-
-/* 超小屏幕设备优化 (iPhone SE等) */
-@media (max-width: 480px) {
-  .hero {
-    min-height: 580px;
-  }
-  
-  .heroContent {
-    padding: 0 1rem;
-    padding-top: 70px;
-  }
-  
-  .subtitle {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    margin-bottom: 1rem;
-  }
-  
-  .title {
-    font-size: clamp(1.8rem, 12vw, 2.8rem);
-    margin-bottom: 1rem;
-  }
-  
-  .description {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin-bottom: 2rem;
-    max-width: 260px;
-  }
-  
-  .heroActions {
-    gap: 0.8rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .heroButton {
-    max-width: 240px;
-    padding: 14px 28px;
-    font-size: 0.85rem;
-  }
-  
-  .heroFeatures {
-    gap: 0.6rem;
-    flex-wrap: wrap;
-  }
-  
-  .featureTag {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.7rem;
-  }
-  
   .slideNav {
     width: 40px;
     height: 40px;
-    
+
     &.prev {
       left: 15px;
     }
@@ -1336,65 +1169,27 @@
       right: 15px;
     }
   }
-  
+
   .slideIndicators {
-    bottom: 25px;
-    
-    .indicator {
-      width: 8px;
-      height: 8px;
-      margin: 0 4px;
-      
-      // 超小屏幕触摸目标优化
-      &::before {
-        content: '';
-        position: absolute;
-        top: -12px;
-        left: -12px;
-        right: -12px;
-        bottom: -12px;
-        background: transparent;
-      }
-    }
+    bottom: 20px;
+  }
+
+  .scrollHint {
+    display: none;
   }
 }
 
-/* 横屏模式优化 */
-@media (max-width: 768px) and (orientation: landscape) {
-  .hero {
-    height: 100vh;
-    min-height: 500px;
+/* 平板适配 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .heroText {
+    max-width: 500px;
   }
-  
-  .heroContent {
-    padding-top: 60px;
-    min-height: 90vh;
-  }
-  
+
   .title {
-    font-size: clamp(1.8rem, 8vw, 2.5rem);
-    margin-bottom: 1rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
   }
-  
+
   .description {
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    max-width: 400px;
-  }
-  
-  .heroActions {
-    flex-direction: row;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .heroButton {
-    max-width: 200px;
-    padding: 12px 24px;
-    font-size: 0.8rem;
-  }
-  
-  .heroFeatures {
-    margin-bottom: 1rem;
+    font-size: 1.125rem;
   }
 }

@@ -5,7 +5,7 @@ import Icon from '../../components/Icon';
 
 const About = () => {
   const aboutStats = [
-    { number: '15+', label: '年专业经验' },
+    { number: '9+', label: '年专业经验' },
     { number: '500+', label: '企业客户' },
     { number: '50万+', label: '用户信赖' }
   ];
