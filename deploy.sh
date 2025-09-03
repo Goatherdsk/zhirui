@@ -1,262 +1,222 @@
 #!/bin/bash
 
-# 智睿商务车网站 Docker 部署脚本
+# 智睿商务车网站部署脚本 (支持 HTTP/HTTPS 停止/启动/重部署)
+set -euo pipefail
 
-set -e  # 遇到错误时退出
+###############################################################################
+# 基础输出函数
+###############################################################################
+log()  { printf '%b\n' "$1"; }
+ok()   { printf '\033[32m✅ %s\033[0m\n' "$1"; }
+warn() { printf '\033[33m⚠ %s\033[0m\n' "$1"; }
+err()  { printf '\033[31m❌ %s\033[0m\n' "$1" >&2; }
 
-echo "🚗 开始部署智睿商务车网站..."
+trap 'err "执行失败 (行 $LINENO)"' ERR
 
-# 检查是否以root权限运行（生产环境需要）
-check_root_for_production() {
-    if [ "$ENVIRONMENT" = "production" ] && [ "$EUID" -ne 0 ]; then
-        echo "⚠️  生产环境使用80端口需要root权限"
-        echo "🔧 请使用以下命令之一："
-        echo "   sudo ./deploy.sh --prod"
-        echo "   或者设置 HTTP_PORT=8080 ./deploy.sh --prod"
-        exit 1
-    fi
+log "🚗 开始部署智睿商务车网站..."
+
+###############################################################################
+# 可调默认（可被环境变量覆盖）
+###############################################################################
+DEFAULT_DEV_HTTP_PORT=${HOST_PORT:-8080}
+DEFAULT_DEV_HTTPS_PORT=${HTTPS_PORT:-8443}
+DEFAULT_PROD_HTTP_PORT=${HTTP_PORT:-80}
+DEFAULT_PROD_HTTPS_PORT=${HTTPS_PORT:-443}
+
+###############################################################################
+# 检查 Docker 环境
+###############################################################################
+if ! command -v docker >/dev/null 2>&1; then err "Docker 未安装"; exit 1; fi
+if ! docker info >/dev/null 2>&1; then err "Docker daemon 未运行"; exit 1; fi
+
+if command -v docker-compose >/dev/null 2>&1; then
+        COMPOSE_CMD="docker-compose"
+elif docker compose version >/dev/null 2>&1; then
+        COMPOSE_CMD="docker compose"
+else
+        err "未找到 docker compose/docker-compose"; exit 1
+fi
+
+###############################################################################
+# 参数解析 / 变量
+###############################################################################
+ENVIRONMENT=development
+ACTION=redeploy          # redeploy|stop|start|build
+NO_CACHE=false
+SKIP_BUILD=false
+AUTO_PRUNE=false
+FORCE=false
+COMPOSE_FILE="docker-compose.yml"   # 统一使用一个文件
+
+show_usage() {
+cat <<'EOF'
+🚗 智睿商务车网站部署工具
+
+用法: ./deploy.sh [选项]
+
+环境模式:
+        --prod / --production      生产 (默认 80/443)
+        --dev  / --development     开发 (默认 8080/8443)
+
+动作控制:
+        --redeploy   (默认) 停止 + (重)构建 + 启动
+        --stop       仅停止并移除容器
+        --start      仅启动(若未构建会自动构建)
+        --build      仅构建镜像
+
+附加开关:
+        --no-cache   构建不使用缓存
+        --skip-build 跳过构建 (配合 --redeploy 用)
+        --prune      重部署前 prune 未使用镜像
+        --force      跳过交互确认
+        --help       显示本帮助
+
+端口环境变量覆盖:
+        开发: HOST_PORT / HTTPS_PORT (默认 8080/8443)
+        生产: HTTP_PORT / HTTPS_PORT (默认 80/443)
+
+示例:
+        ./deploy.sh --dev --redeploy
+        sudo ./deploy.sh --prod --redeploy
+        HOST_PORT=3000 HTTPS_PORT=3443 ./deploy.sh --dev
+        HTTP_PORT=8080 ./deploy.sh --prod --no-cache --prune
+EOF
 }
 
-# 检查 Docker 是否安装
-if ! command -v docker &> /dev/null; then
-    echo "❌ Docker 未安装，请先安装 Docker"
-    echo "📖 安装指南: https://docs.docker.com/get-docker/"
-    exit 1
-fi
-
-# 检查 Docker daemon 是否运行
-if ! docker info &> /dev/null; then
-    echo "❌ Docker daemon 未运行"
-    echo "🔧 请启动 Docker Desktop 或运行: sudo systemctl start docker"
-    exit 1
-fi
-
-# 检查 Docker Compose 是否安装
-if ! command -v docker-compose &> /dev/null; then
-    echo "❌ Docker Compose 未安装，请先安装 Docker Compose"
-    echo "📖 安装指南: https://docs.docker.com/compose/install/"
-    exit 1
-fi
-
-# 解析命令行参数
-ENVIRONMENT="development"
-COMPOSE_FILE="docker-compose.yml"
-
 while [[ $# -gt 0 ]]; do
-    case $1 in
-        --prod|--production)
-            ENVIRONMENT="production"
-            COMPOSE_FILE="docker-compose.prod.yml"
-            shift
-            ;;
-        --dev|--development)
-            ENVIRONMENT="development"
-            COMPOSE_FILE="docker-compose.yml"
-            shift
-            ;;
-        -h|--help)
-            echo "🚗 智睿商务车网站部署工具"
-            echo ""
-            echo "用法: $0 [选项]"
-            echo ""
-            echo "选项:"
-            echo "  --prod, --production     生产环境部署（需要sudo权限）"
-            echo "  --dev, --development     开发环境部署（默认）"
-            echo "  -h, --help              显示帮助信息"
-            echo ""
-            echo "示例:"
-            echo "  $0                       # 开发环境部署"
-            echo "  sudo $0 --prod           # 生产环境部署（80端口）"
-            echo "  HTTP_PORT=8080 $0 --prod # 生产环境使用8080端口"
-            exit 0
-            ;;
-        *)
-            echo "❌ 未知选项: $1"
-            echo "💡 使用 -h 或 --help 查看帮助"
-            exit 1
-            ;;
-    esac
+        case "$1" in
+                --prod|--production) ENVIRONMENT=production; shift;;
+                --dev|--development) ENVIRONMENT=development; shift;;
+                --redeploy) ACTION=redeploy; shift;;
+                --stop) ACTION=stop; shift;;
+                --start) ACTION=start; shift;;
+                --build) ACTION=build; shift;;
+                --no-cache) NO_CACHE=true; shift;;
+                --skip-build) SKIP_BUILD=true; shift;;
+                --prune) AUTO_PRUNE=true; shift;;
+                --force) FORCE=true; shift;;
+                -h|--help) show_usage; exit 0;;
+                *) err "未知参数: $1"; show_usage; exit 1;;
+        esac
 done
 
-echo "📋 部署环境: $ENVIRONMENT"
-echo "📄 配置文件: $COMPOSE_FILE"
+if [[ $ENVIRONMENT == production ]]; then
+        HOST_PORT=${HTTP_PORT:-$DEFAULT_PROD_HTTP_PORT}
+        HTTPS_PORT=${HTTPS_PORT:-$DEFAULT_PROD_HTTPS_PORT}
+        CONTAINER_NAME=${CONTAINER_NAME:-zhirui-business-website-prod}
+else
+        HOST_PORT=${HOST_PORT:-$DEFAULT_DEV_HTTP_PORT}
+        HTTPS_PORT=${HTTPS_PORT:-$DEFAULT_DEV_HTTPS_PORT}
+        CONTAINER_NAME=${CONTAINER_NAME:-zhirui-business-website}
+fi
 
-# 检查生产环境权限
+check_root_for_production() {
+        if [[ $ENVIRONMENT == production && $HOST_PORT == 80 && $EUID -ne 0 ]]; then
+                err "生产监听 80 需 root。使用 sudo 重新执行或: HTTP_PORT=8080 $0 --prod"
+                exit 1
+        fi
+}
+
 check_root_for_production
 
-# 检查配置文件是否存在
-if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "❌ 配置文件 $COMPOSE_FILE 不存在"
-    exit 1
-fi
+export HOST_PORT HTTPS_PORT CONTAINER_NAME
 
-# 检查环境变量配置
-if [ ! -f ".env" ]; then
-    echo "⚠️  未找到 .env 文件，使用默认配置"
-    echo "💡 建议复制 .env.example 为 .env 来自定义配置"
-    echo "   cp .env.example .env"
+ssl_enabled=false
+if [[ -f ssl/anhuizhirui.com.cn_bundle.crt && -f ssl/anhuizhirui.com.cn.key ]]; then
+        ssl_enabled=true
+        ok "检测到证书，已启用 HTTPS 部署"
 else
-    echo "✅ 找到 .env 配置文件"
-    source .env
+        warn "未检测到完整证书 (ssl/*.crt & *.key)，仅 HTTP"
 fi
 
-# 根据环境设置端口配置
-if [ "$ENVIRONMENT" = "production" ]; then
-    # 生产环境默认使用80端口
-    HOST_PORT=${HTTP_PORT:-80}
-    CONTAINER_NAME=${CONTAINER_NAME:-zhirui-business-website-prod}
-    
-    # 检查80端口是否被占用
-    if [ "$HOST_PORT" = "80" ] && netstat -tuln 2>/dev/null | grep -q ":80 "; then
-        echo "⚠️  端口80已被占用，请检查其他服务："
-        netstat -tuln | grep ":80 " || true
-        echo "💡 您可以："
-        echo "   1. 停止占用80端口的服务"
-        echo "   2. 使用其他端口: HTTP_PORT=8080 sudo $0 --prod"
-        exit 1
-    fi
-    
-    if [ "$HOST_PORT" = "80" ]; then
-        HEALTH_CHECK_URL="http://localhost"
-    else
-        HEALTH_CHECK_URL="http://localhost:${HOST_PORT}"
-    fi
-    
-    echo "🏭 生产环境配置:"
-    echo "   🚪 端口: ${HOST_PORT}"
-    echo "   🏥 健康检查: $HEALTH_CHECK_URL"
-else
-    # 开发环境端口配置
-    HOST_PORT=${HOST_PORT:-8080}
-    CONTAINER_NAME=${CONTAINER_NAME:-zhirui-business-website}
-    HEALTH_CHECK_URL="http://localhost:${HOST_PORT}"
-fi
+log "📋 环境: $ENVIRONMENT"
+log "🌐 端口: HTTP ${HOST_PORT}->80  HTTPS ${HTTPS_PORT}->443"
+log "📄 Compose: ${COMPOSE_FILE} (使用: ${COMPOSE_CMD})"
 
-echo "🔧 端口配置: ${HOST_PORT} -> 80"
+container_running() { ${COMPOSE_CMD} -f "${COMPOSE_FILE}" ps -q | grep -q .; }
 
-# 停止并删除现有容器
-echo "🛑 停止现有服务..."
-docker-compose -f "$COMPOSE_FILE" down
-
-# 清理旧镜像（可选）
-read -p "🗑️  是否清理旧镜像以释放空间？(y/N): " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "🧹 清理旧镜像..."
-    docker image prune -f
-    echo "✅ 清理完成"
-fi
-
-# 设置环境变量
-export HTTP_PORT=$HOST_PORT
-export CONTAINER_NAME=$CONTAINER_NAME
-
-# 构建新镜像
-echo "🔨 构建智睿商务车网站镜像..."
-docker-compose -f "$COMPOSE_FILE" build --no-cache
-
-# 启动服务
-echo "🚀 启动智睿商务车网站服务..."
-docker-compose -f "$COMPOSE_FILE" up -d
-
-# 等待容器启动
-echo "⏳ 等待容器启动..."
-sleep 8
-
-# 检查容器状态
-echo "📋 检查容器状态..."
-CONTAINER_STATUS=$(docker-compose -f "$COMPOSE_FILE" ps --services --filter "status=running" 2>/dev/null || echo "")
-
-if [ -z "$CONTAINER_STATUS" ]; then
-    echo "❌ 容器启动失败"
-    echo "🔍 查看错误日志："
-    docker-compose -f "$COMPOSE_FILE" logs --tail=30
-    exit 1
-fi
-
-# 改进的健康检查
-echo "🏥 执行健康检查..."
-echo "🔗 检查地址: $HEALTH_CHECK_URL"
-HEALTH_CHECK_SUCCESS=false
-
-for i in {1..30}; do
-    # 检查容器是否还在运行
-    if ! docker ps --format "table {{.Names}}" | grep -q "$CONTAINER_NAME"; then
-        echo "❌ 容器已停止运行"
-        break
-    fi
-    
-    # 尝试HTTP健康检查
-    HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_CHECK_URL" 2>/dev/null || echo "000")
-    
-    if [ "$HTTP_STATUS" = "200" ]; then
-        echo "✅ 健康检查通过 (HTTP 200)"
-        HEALTH_CHECK_SUCCESS=true
-        break
-    elif [ "$HTTP_STATUS" = "000" ]; then
-        echo "⏳ 健康检查中... ($i/30) [连接中]"
-    else
-        echo "⏳ 健康检查中... ($i/30) [HTTP $HTTP_STATUS]"
-    fi
-    
-    sleep 2
-done
-
-# 显示最近日志
-echo ""
-echo "📝 最近容器日志："
-docker-compose -f "$COMPOSE_FILE" logs --tail=20
-
-echo ""
-if [ "$HEALTH_CHECK_SUCCESS" = true ]; then
-    echo "🎉 智睿商务车网站部署成功！"
-    echo ""
-    echo "🌐 网站访问地址:"
-    
-    if [ "$HOST_PORT" = "80" ]; then
-        echo "   🏠 本地访问: http://localhost"
-    else
-        echo "   🏠 本地访问: http://localhost:${HOST_PORT}"
-    fi
-    
-    # 尝试获取外网IP
-    EXTERNAL_IP=$(curl -s ifconfig.me 2>/dev/null || echo "")
-    if [ ! -z "$EXTERNAL_IP" ]; then
-        if [ "$HOST_PORT" = "80" ]; then
-            echo "   🌍 外网访问: http://${EXTERNAL_IP}"
+stop_containers() {
+        if container_running; then
+                log "🛑 停止并移除容器..."; ${COMPOSE_CMD} -f "${COMPOSE_FILE}" down --remove-orphans || true
         else
-            echo "   🌍 外网访问: http://${EXTERNAL_IP}:${HOST_PORT}"
+                log "ℹ️ 没有运行中的容器"
         fi
-    fi
-    
-    if [ "$ENVIRONMENT" = "production" ]; then
-        echo ""
-        echo "🏭 生产环境部署完成:"
-        echo "   ✅ 使用端口: ${HOST_PORT}"
-        echo "   🔒 建议下一步："
-        echo "      - 配置域名DNS解析"
-        echo "      - 安装SSL证书启用HTTPS"
-        echo "      - 配置防火墙规则"
-        echo "      - 设置监控和备份"
-    fi
-else
-    echo "⚠️  健康检查未完全通过，但网站可能仍在正常运行"
-    echo "🔍 请手动检查网站是否可访问: $HEALTH_CHECK_URL"
-    echo "🔍 检查容器状态: docker-compose -f $COMPOSE_FILE ps"
-    echo "🔍 查看完整日志: docker-compose -f $COMPOSE_FILE logs"
+}
+
+build_image() {
+        if [[ $SKIP_BUILD == true ]]; then log "⏭  跳过构建"; return; fi
+        log "🔨 构建镜像 (no-cache: $NO_CACHE) ..."
+        if [[ $NO_CACHE == true ]]; then
+                ${COMPOSE_CMD} -f "${COMPOSE_FILE}" build --no-cache
+        else
+                ${COMPOSE_CMD} -f "${COMPOSE_FILE}" build
+        fi
+}
+
+start_containers() {
+        log "🚀 启动容器..."
+        ${COMPOSE_CMD} -f "${COMPOSE_FILE}" up -d
+}
+
+health_check() {
+        local http_url="http://localhost:${HOST_PORT}/health"
+        local https_url="https://localhost:${HTTPS_PORT}/health"
+        log "� HTTP 健康检查..."
+        local ok_http=false
+        for i in {1..25}; do
+                local code=$(curl -s -o /dev/null -w '%{http_code}' "$http_url" || echo 000)
+                if [[ $code == 200 ]]; then ok "HTTP OK"; ok_http=true; break; fi; sleep 2;
+        done
+        [[ $ok_http == false ]] && warn "HTTP 健康检查未通过" || true
+        if $ssl_enabled; then
+                log "🔒 HTTPS 健康检查..."
+                local ok_https=false
+                for i in {1..15}; do
+                        local code=$(curl -k -s -o /dev/null -w '%{http_code}' "$https_url" || echo 000)
+                        if [[ $code == 200 ]]; then ok "HTTPS OK"; ok_https=true; break; fi; sleep 2;
+                done
+                [[ $ok_https == false ]] && warn "HTTPS 健康检查未通过" || true
+        fi
+}
+
+redeploy() {
+        stop_containers
+        [[ $AUTO_PRUNE == true ]] && { log "🧹 清理未使用镜像..."; docker image prune -f || true; }
+        build_image
+        start_containers
+        sleep 5
+        health_check
+}
+
+case "$ACTION" in
+        stop)
+                stop_containers; ok "已停止"; exit 0;;
+        build)
+                build_image; ok "构建完成"; exit 0;;
+        start)
+                if ! container_running; then build_image; start_containers; sleep 4; health_check; else warn "容器已在运行"; fi; exit 0;;
+        redeploy)
+                if [[ $FORCE == false ]]; then read -r -p "确认重部署?(y/N): " ans; [[ $ans =~ ^[Yy]$ ]] || { warn "取消"; exit 0; }; fi
+                redeploy;;
+esac
+
+log "📝 最近日志 (20 行):"
+${COMPOSE_CMD} -f "${COMPOSE_FILE}" logs --tail=20 || true
+
+ok "部署完成"
+echo "\n🌐 访问地址:"
+if [[ $HOST_PORT == 80 ]]; then echo " - http://<服务器IP>"; else echo " - http://<服务器IP>:${HOST_PORT}"; fi
+if $ssl_enabled; then
+        if [[ $HTTPS_PORT == 443 ]]; then echo " - https://<服务器IP>"; else echo " - https://<服务器IP>:${HTTPS_PORT}"; fi
 fi
 
-echo ""
-echo "📋 常用管理命令:"
-echo "   📊 查看实时日志: docker-compose -f $COMPOSE_FILE logs -f"
-echo "   🛑 停止服务: docker-compose -f $COMPOSE_FILE down"
-echo "   🔄 重启服务: docker-compose -f $COMPOSE_FILE restart"
-echo "   🔍 查看状态: docker-compose -f $COMPOSE_FILE ps"
-echo "   💻 进入容器: docker exec -it $CONTAINER_NAME sh"
-echo ""
-echo "🔧 当前配置:"
-echo "   🌍 环境: $ENVIRONMENT"
-echo "   🚪 端口映射: ${HOST_PORT} -> 80"
-echo "   📦 容器名: $CONTAINER_NAME"
-echo "   📁 配置文件: $COMPOSE_FILE"
-echo "   🏥 健康检查: $HEALTH_CHECK_URL"
+echo "\n📌 管理命令:";
+echo "  停止:      $0 --stop"
+echo "  启动:      $0 --start"
+echo "  重部署:    $0 --redeploy"
+echo "  自定义端口: HOST_PORT=3000 HTTPS_PORT=3443 $0 --dev"
+echo "  跳过构建:  $0 --redeploy --skip-build"
+echo "  不用缓存:  $0 --redeploy --no-cache"
+echo "  清理:      $0 --redeploy --prune"
+
+exit 0

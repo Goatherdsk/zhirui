@@ -101,15 +101,16 @@ COPY --from=build /app/dist /usr/share/nginx/html
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
     chmod -R 755 /usr/share/nginx/html
 
-# 切换到 nginx 用户
-USER nginx
+## 为了绑定 443 端口（低于 1024），保持 root；如需最小权限可使用 setcap 授权后再切换
+# COPY --from=build /sbin/setcap /sbin/setcap  # 若需要 setcap
+# 运行阶段暂不切换用户，以便监听 80/443
 
 # 暴露端口
-EXPOSE 80
+EXPOSE 80 443
 
 # 健康检查
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:80/ || exit 1
+    CMD curl -f http://localhost:80/health || exit 1
 
 # 启动命令
 CMD ["nginx", "-g", "daemon off;"]
