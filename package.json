@@ -4,14 +4,22 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "homepage": "https://anhuizhirui.com.cn",
   "keywords": [
     "商务车",
     "高端车辆",
+    "改装车",
+    "欧尔法",
+    "德雷斯顿",
     "React",
     "Vite",
     "MobX"
   ],
-  "author": "智锐商务车有限公司",
+  "author": {
+    "name": "安徽智锐汽车有限公司",
+    "email": "service@zhirui.com",
+    "url": "https://anhuizhirui.com.cn"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "vite",

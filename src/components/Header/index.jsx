@@ -32,18 +32,48 @@ const Header = observer(() => {
   const handleKeyDown = (event) => {
     if (event.key === 'Escape' && appStore.isMobileMenuOpen) {
       appStore.closeMobileMenu();
+      
+      // 恢复背景滚动
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
     }
   };
 
   // 处理移动端菜单切换
   const handleMobileMenuToggle = () => {
     appStore.toggleMobileMenu();
+    
+    // 防止菜单打开时背景滚动
+    if (!appStore.isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
   };
 
   // 处理移动端菜单链接点击
   const handleMobileNavClick = () => {
     appStore.closeMobileMenu();
+    
+    // 恢复背景滚动
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
   };
+
+  // 监听菜单状态变化，确保正确处理滚动锁定
+  useEffect(() => {
+    if (!appStore.isMobileMenuOpen) {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+  }, [appStore.isMobileMenuOpen]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -120,23 +150,25 @@ const Header = observer(() => {
         className={`${styles.mobileMenu} ${appStore.isMobileMenuOpen ? styles.open : ''}`}
         aria-hidden={!appStore.isMobileMenuOpen}
       >
-        <nav aria-label="移动端导航">
-          <ul className={styles.mobileNavList}>
-            {navigation.map(item => (
-              <li key={item.key} className={styles.mobileNavItem}>
-                <Link 
-                  to={item.path}
-                  className={`${styles.mobileNavLink} ${location.pathname === item.path ? styles.active : ''}`}
-                  onClick={handleMobileNavClick}
-                  aria-current={location.pathname === item.path ? 'page' : undefined}
-                  tabIndex={appStore.isMobileMenuOpen ? 0 : -1}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className={styles.mobileMenuContainer}>
+          <nav aria-label="移动端导航">
+            <ul className={styles.mobileNavList}>
+              {navigation.map(item => (
+                <li key={item.key} className={styles.mobileNavItem}>
+                  <Link 
+                    to={item.path}
+                    className={`${styles.mobileNavLink} ${location.pathname === item.path ? styles.active : ''}`}
+                    onClick={handleMobileNavClick}
+                    aria-current={location.pathname === item.path ? 'page' : undefined}
+                    tabIndex={appStore.isMobileMenuOpen ? 0 : -1}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );

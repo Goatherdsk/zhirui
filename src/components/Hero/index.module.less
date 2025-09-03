@@ -60,6 +60,65 @@
   }
 }
 
+/* 备用背景 - 微信环境或视频无法播放时使用 */
+.fallbackBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: linear-gradient(135deg, 
+    #2c2c2c 0%,
+    #1a1a1a 25%,
+    #404040 50%,
+    #1a1a1a 75%,
+    #2c2c2c 100%);
+  
+  /* 添加动态渐变效果 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg,
+      rgba(201, 169, 110, 0.1) 0%,
+      transparent 25%,
+      rgba(201, 169, 110, 0.05) 50%,
+      transparent 75%,
+      rgba(201, 169, 110, 0.1) 100%);
+    animation: gradientShift 8s ease-in-out infinite;
+  }
+  
+  /* 微信环境特殊背景 */
+  &.wechatBackground {
+    background: linear-gradient(135deg,
+      #3a3a3a 0%,
+      #2d2d2d 25%,
+      #4a4a4a 50%,
+      #2d2d2d 75%,
+      #3a3a3a 100%);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 70%,
+        rgba(201, 169, 110, 0.15) 0%,
+        transparent 50%),
+        radial-gradient(circle at 70% 30%,
+        rgba(201, 169, 110, 0.1) 0%,
+        transparent 50%);
+      animation: subtleFloat 12s ease-in-out infinite;
+    }
+  }
+}
+
 /* 简化的遮罩层 */
 .heroOverlay {
   position: absolute;
@@ -72,6 +131,14 @@
     rgba(0, 0, 0, 0.85) 0%, 
     rgba(15, 15, 15, 0.7) 50%,
     rgba(0, 0, 0, 0.85) 100%);
+    
+  /* 移动端遮罩 - 降低透明度让背景更明显 */
+  &.mobileOverlay {
+    background: linear-gradient(135deg, 
+      rgba(0, 0, 0, 0.65) 0%, 
+      rgba(15, 15, 15, 0.45) 50%,
+      rgba(0, 0, 0, 0.65) 100%);
+  }
 }
 
 .heroContent {
@@ -366,7 +433,57 @@
     bottom: 20px;
     gap: 8px;
   }
+}
 
+/* 动画效果 */
+@keyframes gradientShift {
+  0%, 100% {
+    transform: translateX(-10%) translateY(-10%) rotate(0deg);
+    opacity: 0.6;
+  }
+  33% {
+    transform: translateX(10%) translateY(-5%) rotate(120deg);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translateX(-5%) translateY(10%) rotate(240deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.4;
+  }
+  33% {
+    transform: translateY(-15px) scale(1.05);
+    opacity: 0.6;
+  }
+  66% {
+    transform: translateY(10px) scale(0.95);
+    opacity: 0.5;
+  }
+}
+
+/* 减少动画的用户偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .fallbackBackground::before,
+  .fallbackBackground::after {
+    animation: none !important;
+  }
+  
+  .heroSlide {
+    transition: none !important;
+  }
+  
+  .title,
+  .subtitle,
+  .description,
+  .heroButton {
+    animation: none !important;
+  }
+  
   .indicator {
     width: 10px;
     height: 10px;

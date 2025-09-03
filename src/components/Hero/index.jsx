@@ -7,6 +7,33 @@ const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoCanPlay, setVideoCanPlay] = useState(true);
+  const [isWeChat, setIsWeChat] = useState(false);
+  
+  // 检测微信环境和视频播放能力
+  useEffect(() => {
+    const ua = navigator.userAgent.toLowerCase();
+    const weChatEnv = ua.includes('micromessenger');
+    setIsWeChat(weChatEnv);
+    
+    // 在微信环境中检测视频播放能力
+    if (weChatEnv) {
+      const video = document.createElement('video');
+      video.muted = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      
+      // 检测是否支持自动播放
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          setVideoCanPlay(false);
+        });
+      } else {
+        setVideoCanPlay(false);
+      }
+    }
+  }, []);
   
   // 检测移动端和动画偏好设置
   useEffect(() => {
@@ -26,6 +53,11 @@ const Hero = () => {
   // 视频加载处理
   const handleVideoLoad = useCallback(() => {
     setVideoLoaded(true);
+  }, []);
+
+  // 视频播放错误处理
+  const handleVideoError = useCallback(() => {
+    setVideoCanPlay(false);
   }, []);
 
   const slides = useMemo(() => [
@@ -72,27 +104,33 @@ const Hero = () => {
 
   return (
     <section className={styles.hero}>
-      {/* 优化的视频背景 - 全设备支持 */}
-      <video 
-        className={styles.videoBackground}
-        autoPlay 
-        muted 
-        loop 
-        playsInline
-        preload={isMobile ? "none" : "metadata"}
-        poster="/images/hero-poster.jpg"
-        onLoadedData={handleVideoLoad}
-        style={{
-          filter: isMobile ? 'brightness(0.3) contrast(1.2)' : 'grayscale(0.3) contrast(1.1) brightness(0.4)',
-          opacity: videoLoaded ? 1 : 0.8
-        }}
-      >
-        <source src="/videos/7.mp4" type="video/mp4" />
-        您的浏览器不支持视频播放。
-      </video>
+      {/* 视频背景或备用背景 */}
+      {videoCanPlay && !isWeChat ? (
+        <video 
+          className={styles.videoBackground}
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+          preload={isMobile ? "none" : "metadata"}
+          poster="/images/placeholder.jpg"
+          onLoadedData={handleVideoLoad}
+          onError={handleVideoError}
+          style={{
+            filter: isMobile ? 'brightness(0.3) contrast(1.2)' : 'grayscale(0.3) contrast(1.1) brightness(0.4)',
+            opacity: videoLoaded ? 1 : 0.8
+          }}
+        >
+          <source src="/videos/7.mp4" type="video/mp4" />
+          您的浏览器不支持视频播放。
+        </video>
+      ) : (
+        // 微信环境或视频无法播放时的备用背景
+        <div className={`${styles.fallbackBackground} ${isWeChat ? styles.wechatBackground : ''}`}></div>
+      )}
       
-      {/* 简化的遮罩层 */}
-      <div className={styles.heroOverlay}></div>
+      {/* 遮罩层 - 移动端调高透明度 */}
+      <div className={`${styles.heroOverlay} ${isMobile ? styles.mobileOverlay : ''}`}></div>
       
       <div className={styles.heroSlider}>
         {slides.map((slide, index) => (

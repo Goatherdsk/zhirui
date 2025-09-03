@@ -2,12 +2,13 @@ import React from 'react';
 import PageHeader from '../../components/PageHeader';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
+import { COMPANY_INFO } from '../../constants/companyInfo';
 
 const Contact = () => {
   const contactStats = [
-    { number: '100+', label: '服务网点' },
+    { number: '4大', label: '销售区域' },
     { number: '24h', label: '在线客服' },
-    { number: '2h', label: '响应时间' }
+    { number: '1h', label: '快速响应' }
   ];
 
   const contactMethods = [
@@ -15,7 +16,7 @@ const Contact = () => {
       id: 1,
       title: '客服热线',
       subtitle: 'Service Hotline',
-      content: '400-888-9999',
+      content: COMPANY_INFO.phone,
       description: '7×24小时专业客服，随时为您解答疑问',
       icon: 'phone',
       type: 'phone'
@@ -24,7 +25,7 @@ const Contact = () => {
       id: 2,
       title: '官方邮箱',
       subtitle: 'Official Email',
-      content: 'service@zhirui.com',
+      content: COMPANY_INFO.email,
       description: '专业客服团队，1个工作日内回复您的邮件',
       icon: 'email',
       type: 'email'
@@ -42,37 +43,67 @@ const Contact = () => {
       id: 4,
       title: '总部地址',
       subtitle: 'Headquarters',
-      content: '上海市浦东新区陆家嘴环路1000号',
+      content: COMPANY_INFO.address.full,
       description: '欢迎您莅临我们的总部参观交流',
       icon: 'location',
       type: 'address'
     }
   ];
 
-  const offices = [
+  // 销售网点信息
+  const salesNetworks = [
     {
-      city: '北京',
-      address: '北京市朝阳区建国门外大街1号',
-      phone: '010-8888-9999',
-      manager: '张经理'
+      region: '华东区域',
+      cities: ['合肥', '南京', '杭州', '上海'],
+      manager: '华东销售总监',
+      phone: '138-xxxx-1001',
+      email: 'east@zhirui.com'
     },
     {
-      city: '上海',
-      address: '上海市浦东新区陆家嘴环路1000号',
-      phone: '021-8888-9999',
-      manager: '李经理'
+      region: '华北区域', 
+      cities: ['北京', '天津', '石家庄', '济南'],
+      manager: '华北销售总监',
+      phone: '138-xxxx-1002',
+      email: 'north@zhirui.com'
     },
     {
-      city: '广州',
-      address: '广州市天河区珠江新城花城大道85号',
-      phone: '020-8888-9999',
-      manager: '王经理'
+      region: '华南区域',
+      cities: ['广州', '深圳', '厦门', '海口'],
+      manager: '华南销售总监',
+      phone: '138-xxxx-1003',
+      email: 'south@zhirui.com'
     },
     {
-      city: '深圳',
-      address: '深圳市福田区深南大道7088号',
-      phone: '0755-8888-9999',
-      manager: '陈经理'
+      region: '西南区域',
+      cities: ['成都', '重庆', '昆明', '贵阳'],
+      manager: '西南销售总监',
+      phone: '138-xxxx-1004',
+      email: 'southwest@zhirui.com'
+    }
+  ];
+
+  // 服务支持信息
+  const serviceSupports = [
+    {
+      title: '技术支持',
+      description: '专业技术团队提供7×24小时技术支持',
+      phone: '400-888-6688转1',
+      email: 'tech@zhirui.com',
+      icon: 'wrench'
+    },
+    {
+      title: '售后服务',
+      description: '全国联保，就近服务，快速响应',
+      phone: '400-888-6688转2', 
+      email: 'service@zhirui.com',
+      icon: 'shield'
+    },
+    {
+      title: '配件供应',
+      description: '原厂配件保障，全国物流配送',
+      phone: '400-888-6688转3',
+      email: 'parts@zhirui.com', 
+      icon: 'package'
     }
   ];
 
@@ -140,12 +171,10 @@ const Contact = () => {
                   cursor: 'pointer'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px)';
                   e.currentTarget.style.borderColor = 'var(--accent-gold)';
-                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(201, 169, 110, 0.2)';
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(201, 169, 110, 0.2)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
                   e.currentTarget.style.boxShadow = 'none';
                 }}
@@ -213,8 +242,8 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* 分公司信息 */}
-        <section className="office-locations" style={{ padding: '4rem 0' }}>
+        {/* 销售网点区域 */}
+        <section className="sales-networks" style={{ padding: '4rem 0' }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{
               fontSize: '2.5rem',
@@ -226,7 +255,7 @@ const Contact = () => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
-              全国服务网点
+              <Icon type="network" size="24px" color="var(--accent-gold)" /> 销售网络
             </h2>
             <p style={{
               fontSize: '1.2rem',
@@ -236,95 +265,237 @@ const Contact = () => {
               maxWidth: '600px',
               margin: '0 auto'
             }}>
-              遍布全国的服务网点，为您提供就近的专业服务
+              覆盖全国主要城市的销售网络，为您提供就近的专业销售与咨询服务
             </p>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '2rem',
             marginBottom: '4rem'
           }}>
-            {offices.map((office, index) => (
+            {salesNetworks.map((network, index) => (
               <div
                 key={index}
                 style={{
                   background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '15px',
-                  padding: '2rem',
-                  transition: 'all 0.3s ease'
+                  border: '1px solid rgba(201, 169, 110, 0.2)',
+                  borderRadius: '16px',
+                  padding: '2.5rem',
+                  transition: 'all 0.3s ease',
+                  textAlign: 'center'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                  e.currentTarget.style.background = 'rgba(201, 169, 110, 0.08)';
                   e.currentTarget.style.borderColor = 'var(--accent-gold)';
-                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = 'rgba(201, 169, 110, 0.2)';
+                  e.currentTarget.style.boxShadow = 'none';
                 }}
               >
                 <h3 style={{
-                  fontSize: '1.5rem',
+                  fontSize: '1.6rem',
                   fontWeight: '600',
                   color: 'var(--accent-gold)',
-                  marginBottom: '1rem',
-                  textAlign: 'center'
+                  marginBottom: '1.5rem'
                 }}>
-                  {office.city}分公司
+                  {network.region}
                 </h3>
+
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '0.5rem',
+                  justifyContent: 'center',
+                  marginBottom: '2rem'
+                }}>
+                  {network.cities.map((city, cityIndex) => (
+                    <span
+                      key={cityIndex}
+                      style={{
+                        background: 'rgba(201, 169, 110, 0.15)',
+                        color: 'var(--accent-light-gold)',
+                        padding: '0.4rem 1rem',
+                        borderRadius: '20px',
+                        fontSize: '0.9rem',
+                        border: '1px solid rgba(201, 169, 110, 0.3)'
+                      }}
+                    >
+                      {city}
+                    </span>
+                  ))}
+                </div>
 
                 <div style={{ marginBottom: '1rem' }}>
                   <div style={{
                     display: 'flex',
-                    alignItems: 'flex-start',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     gap: '0.5rem',
                     marginBottom: '0.8rem'
-                  }}>
-                    <span style={{ color: 'var(--accent-gold)', fontSize: '0.9rem' }}>
-                      <Icon type="location" size="16px" color="var(--accent-gold)" />
-                    </span>
-                    <span style={{
-                      color: 'var(--accent-light-gold)',
-                      fontSize: '0.9rem',
-                      lineHeight: '1.4'
-                    }}>
-                      {office.address}
-                    </span>
-                  </div>
-
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    marginBottom: '0.8rem'
-                  }}>
-                    <span style={{ color: 'var(--accent-gold)', fontSize: '0.9rem' }}>
-                      <Icon type="phone" size="16px" color="var(--accent-gold)" />
-                    </span>
-                    <span style={{
-                      color: 'var(--accent-light-gold)',
-                      fontSize: '0.9rem',
-                      fontFamily: 'monospace'
-                    }}>
-                      {office.phone}
-                    </span>
-                  </div>
-
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
                   }}>
                     <Icon type="business" size="16px" color="var(--accent-gold)" />
                     <span style={{
                       color: 'var(--accent-light-gold)',
-                      fontSize: '0.9rem'
+                      fontSize: '1rem',
+                      fontWeight: '500'
                     }}>
-                      负责人：{office.manager}
+                      {network.manager}
+                    </span>
+                  </div>
+
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    marginBottom: '0.8rem'
+                  }}>
+                    <Icon type="phone" size="16px" color="var(--accent-gold)" />
+                    <span style={{
+                      color: 'var(--accent-light-gold)',
+                      fontSize: '1rem',
+                      fontFamily: 'monospace'
+                    }}>
+                      {network.phone}
+                    </span>
+                  </div>
+
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem'
+                  }}>
+                    <Icon type="email" size="16px" color="var(--accent-gold)" />
+                    <span style={{
+                      color: 'var(--accent-light-gold)',
+                      fontSize: '1rem'
+                    }}>
+                      {network.email}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 服务支持区域 */}
+        <section className="service-support" style={{ padding: '4rem 0' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: '600',
+              color: 'var(--accent-light-gold)',
+              marginBottom: '1rem',
+              background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-light-gold) 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>
+              <Icon type="shield" size="24px" color="var(--accent-gold)" /> 服务支持
+            </h2>
+            <p style={{
+              fontSize: '1.2rem',
+              color: 'var(--accent-light-gold)',
+              opacity: '0.8',
+              lineHeight: '1.8',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}>
+              全方位的服务支持体系，确保您的每一次出行都安心无忧
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '2rem',
+            marginBottom: '4rem'
+          }}>
+            {serviceSupports.map((support, index) => (
+              <div
+                key={index}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(45, 45, 45, 0.6) 100%)',
+                  border: '1px solid rgba(201, 169, 110, 0.2)',
+                  borderRadius: '16px',
+                  padding: '2.5rem',
+                  transition: 'all 0.3s ease',
+                  textAlign: 'center'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(201, 169, 110, 0.1) 0%, rgba(26, 26, 26, 0.9) 100%)';
+                  e.currentTarget.style.borderColor = 'var(--accent-gold)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(45, 45, 45, 0.6) 100%)';
+                  e.currentTarget.style.borderColor = 'rgba(201, 169, 110, 0.2)';
+                }}
+              >
+                <div style={{
+                  fontSize: '3rem',
+                  marginBottom: '1.5rem',
+                  display: 'flex',
+                  justifyContent: 'center'
+                }}>
+                  <Icon type={support.icon} size="48px" color="var(--accent-gold)" />
+                </div>
+
+                <h3 style={{
+                  fontSize: '1.6rem',
+                  fontWeight: '600',
+                  color: 'var(--accent-gold)',
+                  marginBottom: '1rem'
+                }}>
+                  {support.title}
+                </h3>
+
+                <p style={{
+                  fontSize: '1rem',
+                  color: 'var(--accent-light-gold)',
+                  opacity: '0.8',
+                  lineHeight: '1.6',
+                  marginBottom: '1.5rem'
+                }}>
+                  {support.description}
+                </p>
+
+                <div style={{ marginBottom: '1rem' }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    marginBottom: '0.8rem'
+                  }}>
+                    <Icon type="phone" size="16px" color="var(--accent-gold)" />
+                    <span style={{
+                      color: 'var(--accent-light-gold)',
+                      fontSize: '1rem',
+                      fontFamily: 'monospace'
+                    }}>
+                      {support.phone}
+                    </span>
+                  </div>
+
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem'
+                  }}>
+                    <Icon type="email" size="16px" color="var(--accent-gold)" />
+                    <span style={{
+                      color: 'var(--accent-light-gold)',
+                      fontSize: '1rem'
+                    }}>
+                      {support.email}
                     </span>
                   </div>
                 </div>

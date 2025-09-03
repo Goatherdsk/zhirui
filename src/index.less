@@ -61,6 +61,24 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* 移除移动端点击时的蓝色高亮 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* 允许文本选择的元素 */
+p, span, div, h1, h2, h3, h4, h5, h6, 
+input, textarea, [contenteditable] {
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 html, body {
@@ -84,8 +102,18 @@ a {
   color: @accent-gold;
   text-decoration: none;
   .transition(color);
+  /* 移除移动端点击效果 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none;
+  touch-action: manipulation;
   
   &:hover {
+    color: @accent-light-gold;
+  }
+  
+  &:focus {
+    outline: none;
     color: @accent-light-gold;
   }
 }
@@ -131,6 +159,14 @@ button {
   .transition();
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  /* 移除移动端点击效果 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  touch-action: manipulation;
   
   &:hover {
     background-color: @accent-gold;
@@ -140,6 +176,11 @@ button {
   
   &:active {
     transform: translateY(0);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.3);
   }
   
   &.primary {
@@ -193,20 +234,60 @@ img {
 }
 
 /* 滚动条样式 */
-::-webkit-scrollbar {
-  width: 8px;
+/* 桌面端显示自定义滚动条 */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: @primary-dark;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: @accent-gold;
+    border-radius: 4px;
+    
+    &:hover {
+      background: @accent-light-gold;
+    }
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: @primary-dark;
-}
-
-::-webkit-scrollbar-thumb {
-  background: @accent-gold;
-  border-radius: 4px;
+/* 移动端隐藏滚动条 */
+@media (max-width: 767px) {
+  /* WebKit浏览器隐藏滚动条 */
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+  }
   
-  &:hover {
-    background: @accent-light-gold;
+  /* Firefox隐藏滚动条 */
+  html {
+    scrollbar-width: none;
+  }
+  
+  /* IE/Edge隐藏滚动条 */
+  body {
+    -ms-overflow-style: none;
+  }
+  
+  /* 移动端触摸优化 */
+  * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+  }
+  
+  /* 移动端按钮和链接优化 */
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    touch-action: manipulation !important;
   }
 }
 

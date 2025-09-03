@@ -402,6 +402,21 @@
 .certification {
   color: @text-gray;
   font-size: 0.875rem;
+  
+  a {
+    color: @text-gray;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: @accent-gold;
+    }
+    
+    &:focus {
+      outline: none;
+      color: @accent-gold;
+    }
+  }
 }
 
 /* 响应式设计 */

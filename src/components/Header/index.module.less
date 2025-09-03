@@ -45,6 +45,12 @@
 
 /* Logo 样式 */
 .logo {
+  /* 移除移动端点击效果 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none;
+  touch-action: manipulation;
+  
   h2 {
     color: @accent-gold;
     font-weight: 300;
@@ -76,6 +82,18 @@
       width: 100%;
     }
   }
+  
+  &:focus {
+    outline: none;
+    
+    h2 {
+      color: @accent-light-gold;
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
 }
 
 /* 桌面端导航 */
@@ -94,6 +112,7 @@
   white-space: nowrap;
 }
 
+/* 链接样式 */
 .navLink {
   color: @text-light;
   font-weight: 300;
@@ -103,6 +122,11 @@
   transition: color 0.3s ease;
   white-space: nowrap;
   font-size: 0.95rem;
+  /* 移除移动端点击效果 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none;
+  touch-action: manipulation;
 
   &:hover,
   &.active {
@@ -123,6 +147,11 @@
   &:hover::after,
   &.active::after {
     width: 100%;
+  }
+  
+  &:focus {
+    outline: none;
+    color: @accent-gold;
   }
 }
 
@@ -150,6 +179,14 @@
   text-transform: none;
   letter-spacing: normal;
   transition: all 0.3s ease;
+  /* 移除移动端点击效果 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  touch-action: manipulation;
 
   &:hover,
   &.active {
@@ -157,6 +194,11 @@
     color: @accent-gold;
     background-color: rgba(201, 169, 110, 0.1);
     transform: none;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.3);
   }
 }
 
@@ -176,6 +218,11 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  // 提升性能
+  will-change: transform, background-color;
+  // 优化触摸体验
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 
   &:hover {
     background-color: rgba(201, 169, 110, 0.1);
@@ -198,6 +245,8 @@
     transform-origin: center center;
     position: relative;
     box-shadow: 0 1px 2px rgba(201, 169, 110, 0.2);
+    // GPU加速
+    will-change: transform, opacity;
 
     &:nth-child(1) {
       transform: translateY(0) rotate(0deg);
@@ -280,17 +329,24 @@
     rgba(0, 0, 0, 0.98) 100%
   );
   backdrop-filter: blur(20px);
-  // border-top: 1px solid rgba(201, 169, 110, 0.2);
-  transform: translateY(-100%);
+  // 使用GPU加速的transform属性优化性能
+  transform: translateY(-100%) translateZ(0);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  // 简化过渡动画，只处理必要的属性
+  transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              visibility 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   padding: 0;
-  min-height: 100vh;
-  overflow-y: auto;
+  // 限制最大高度为视口高度减去header高度
+  max-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
+  overflow: hidden;
   z-index: 999;
+  // 开启硬件加速
+  will-change: transform, opacity;
 
-  /* 添加装饰性背景元素 */
+  /* 优化装饰性背景元素 - 简化动画 */
   &::before {
     content: '';
     position: absolute;
@@ -303,7 +359,8 @@
       @accent-gold 50%, 
       transparent 100%
     );
-    animation: shimmer 3s ease-in-out infinite;
+    // 移除复杂动画，提升性能
+    opacity: 0.6;
   }
 
   &::after {
@@ -315,28 +372,88 @@
     height: 100px;
     background: radial-gradient(circle, rgba(201, 169, 110, 0.05) 0%, transparent 70%);
     border-radius: 50%;
-    animation: float 6s ease-in-out infinite;
+    // 移除复杂动画，提升性能
+    opacity: 0.3;
   }
 
   &.open {
-    transform: translateY(0);
+    // 使用简单的浮现动画
+    transform: translateY(0) translateZ(0);
     opacity: 1;
     visibility: visible;
 
+    // 简化子元素动画，统一处理
     .mobileNavList {
-      .mobileNavItem {
-        &:nth-child(1) { animation-delay: 0.1s; }
-        &:nth-child(2) { animation-delay: 0.2s; }
-        &:nth-child(3) { animation-delay: 0.3s; }
-        &:nth-child(4) { animation-delay: 0.4s; }
-        &:nth-child(5) { animation-delay: 0.5s; }
-        &:nth-child(6) { animation-delay: 0.6s; }
-        
-        opacity: 1;
-        transform: translateX(0);
-        animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      }
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
+}
+
+// 添加滚动容器
+.mobileMenuContainer {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  // 启用平滑滚动
+  -webkit-overflow-scrolling: touch;
+  // 优化滚动性能
+  scroll-behavior: smooth;
+  // 防止滚动时的弹跳效果
+  overscroll-behavior: contain;
+  
+  // 隐藏滚动条但保持滚动功能
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+  }
+  
+  // Firefox 隐藏滚动条
+  scrollbar-width: none;
+  
+  // IE/Edge 隐藏滚动条
+  -ms-overflow-style: none;
+}
+
+/* 移动端优化 */
+@media (max-width: 767px) {
+  .mobileMenu {
+    // 在小屏幕上进一步优化高度
+    max-height: calc(100vh - 70px);
+    height: calc(100vh - 70px);
+  }
+  
+  .mobileNavLink {
+    // 在小屏幕上增加触摸区域
+    padding: 2rem 1.5rem;
+    font-size: 1.1rem;
+    
+    // 增强触摸反馈
+    &:active {
+      background-color: rgba(201, 169, 110, 0.15);
+      transform: translateX(4px) scale(0.98);
+    }
+  }
+  
+  .mobileNavList {
+    padding: 1.5rem 0;
+  }
+}
+
+/* 横屏模式优化 */
+@media (orientation: landscape) and (max-height: 500px) {
+  .mobileMenu {
+    max-height: calc(100vh - 60px);
+    height: calc(100vh - 60px);
+  }
+  
+  .mobileNavLink {
+    padding: 1.2rem 2rem;
+    font-size: 1rem;
+  }
+  
+  .mobileNavList {
+    padding: 1rem 0;
   }
 }
 
@@ -346,13 +463,17 @@
   padding: 2rem 0;
   position: relative;
   z-index: 2;
+  // 优化动画性能
+  opacity: 0;
+  transform: translateY(10px) translateZ(0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  will-change: opacity, transform;
 }
 
 .mobileNavItem {
   border-bottom: 1px solid rgba(201, 169, 110, 0.1);
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: all 0.3s ease;
+  // 移除复杂的动画状态，提升性能
+  transition: background-color 0.2s ease;
   position: relative;
   overflow: hidden;
 
@@ -367,7 +488,7 @@
       rgba(201, 169, 110, 0.1) 0%, 
       rgba(201, 169, 110, 0.05) 100%
     );
-    transition: width 0.4s ease;
+    transition: width 0.3s ease;
   }
 
   &:hover::before {
@@ -387,11 +508,19 @@
   font-size: 1.2rem;
   font-weight: 300;
   letter-spacing: 0.05em;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  // 简化过渡动画，只处理必要属性
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
   position: relative;
   overflow: hidden;
+  // GPU加速
+  will-change: transform;
+  /* 移除移动端点击效果 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none;
+  touch-action: manipulation;
 
-  /* 添加图标 */
+  /* 添加图标 - 简化动画 */
   &::before {
     content: '';
     width: 6px;
@@ -399,12 +528,12 @@
     background: @accent-gold;
     border-radius: 50%;
     margin-right: 1rem;
-    transition: all 0.4s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     transform: scale(0);
     opacity: 0;
   }
 
-  /* 添加右侧箭头 */
+  /* 添加右侧箭头 - 简化动画 */
   &::after {
     content: '→';
     position: absolute;
@@ -413,7 +542,7 @@
     color: @accent-gold;
     opacity: 0;
     transform: translateX(-10px);
-    transition: all 0.4s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
   &:hover,
@@ -421,19 +550,23 @@
     color: @accent-gold;
     background-color: rgba(201, 169, 110, 0.08);
     transform: translateX(8px);
-    padding-left: 2.5rem;
-    text-shadow: 0 0 10px rgba(201, 169, 110, 0.3);
+    // 移除复杂的阴影效果，提升性能
 
     &::before {
       transform: scale(1);
       opacity: 1;
-      box-shadow: 0 0 8px @accent-gold;
     }
 
     &::after {
       opacity: 1;
       transform: translateX(0);
     }
+  }
+  
+  &:focus {
+    outline: none;
+    color: @accent-gold;
+    background-color: rgba(201, 169, 110, 0.08);
   }
 
   &.active {
@@ -444,8 +577,8 @@
     );
 
     &::before {
-      background: linear-gradient(45deg, @accent-gold, @accent-light-gold);
-      animation: pulse 2s ease-in-out infinite;
+      background: @accent-gold;
+      // 移除复杂动画
     }
   }
 }
@@ -528,48 +661,15 @@
   }
 }
 
-/* 动画关键帧 */
-@keyframes slideInLeft {
+/* 简化动画关键帧 - 移除不必要的动画 */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes shimmer {
-  0%, 100% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  50% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateY(-20px) rotate(180deg);
-    opacity: 0.6;
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.8;
+    transform: translateY(0);
   }
 }
 
@@ -577,6 +677,7 @@
 @media (prefers-reduced-motion: reduce) {
   .mobileMenuBtn span,
   .mobileMenu,
+  .mobileNavList,
   .mobileNavItem,
   .mobileNavLink {
     transition: none !important;

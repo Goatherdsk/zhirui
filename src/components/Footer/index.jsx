@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
+import { COMPANY_INFO } from "../../constants/companyInfo";
 import styles from "./index.module.less";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -51,8 +52,8 @@ const Footer = () => {
             {/* 品牌信息 */}
             <div className={styles.footerBrand}>
               <div className={styles.footerLogo}>
-                <h3>智锐商务车</h3>
-                <p className={styles.footerTagline}>ZHIRUI BUSINESS VEHICLES</p>
+                <h3>{COMPANY_INFO.brandName}</h3>
+                <p className={styles.footerTagline}>{COMPANY_INFO.englishName}</p>
                 <p className={styles.brandDescription}>
                   定义商务出行新标准，为精英人士打造的奢华移动空间
                 </p>
@@ -61,11 +62,15 @@ const Footer = () => {
               <div className={styles.footerContact}>
                 <p>
                   <Icon type="phone" size="16px" color="var(--accent-gold)" />
-                  <span>客服热线：400-888-6688</span>
+                  <span>客服热线：{COMPANY_INFO.phone}</span>
                 </p>
                 <p>
                   <Icon type="mobile" size="16px" color="var(--accent-gold)" />
-                  <span>服务时间：周一至周日 8:00-22:00</span>
+                  <span>服务时间：{COMPANY_INFO.serviceHours}</span>
+                </p>
+                <p>
+                  <Icon type="location" size="16px" color="var(--accent-gold)" />
+                  <span>公司地址：{COMPANY_INFO.address.full}</span>
                 </p>
               </div>
               
@@ -151,7 +156,7 @@ const Footer = () => {
           <div className={styles.footerBottom}>
             <div className={styles.footerBottomContent}>
               <div className={styles.footerLegal}>
-                <p>&copy; {currentYear} 智锐商务车有限公司. 保留所有权利.</p>
+                <p>&copy; {currentYear} {COMPANY_INFO.name}. 保留所有权利.</p>
                 <div className={styles.legalLinks}>
                   <Link to="/privacy" className={styles.legalLink}>隐私政策</Link>
                   <Link to="/terms" className={styles.legalLink}>使用条款</Link>
@@ -160,7 +165,9 @@ const Footer = () => {
               </div>
               <div className={styles.footerCertifications}>
                 <span className={styles.certification}>
-                  ICP备案号：京ICP备xxxxxxxx号
+                  <a href={COMPANY_INFO.icpUrl} target="_blank" rel="noopener noreferrer">
+                    {COMPANY_INFO.icp}
+                  </a>
                 </span>
               </div>
             </div>
