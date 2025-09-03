@@ -9,37 +9,26 @@ const Footer = () => {
     {
       title: "产品中心",
       links: [
-        { label: "智锐·行政版", path: "/products/executive" },
-        { label: "智锐·尊享版", path: "/products/premium" },
-        { label: "智锐·科技版", path: "/products/tech" },
-        { label: "产品对比", path: "/products/compare" },
+        { label: "商务车产品", path: "/products" },
       ],
     },
     {
       title: "服务支持",
       links: [
-        { label: "个性化定制", path: "/services/customization" },
-        { label: "专业维护", path: "/services/maintenance" },
-        { label: "VIP服务", path: "/services/vip" },
-        { label: "智能互联", path: "/services/connectivity" },
+        { label: "专属服务", path: "/services" },
       ],
     },
     {
       title: "公司信息",
       links: [
         { label: "关于我们", path: "/about" },
-        { label: "品牌故事", path: "/about/story" },
-        { label: "新闻动态", path: "/news" },
-        { label: "招贤纳士", path: "/careers" },
+        { label: "公司动态", path: "/news" },
       ],
     },
     {
       title: "联系我们",
       links: [
         { label: "联系方式", path: "/contact" },
-        { label: "经销商查询", path: "/dealers" },
-        { label: "预约试驾", path: "/test-drive" },
-        { label: "在线咨询", path: "/consultation" },
       ],
     },
   ];
@@ -157,11 +146,6 @@ const Footer = () => {
             <div className={styles.footerBottomContent}>
               <div className={styles.footerLegal}>
                 <p>&copy; {currentYear} {COMPANY_INFO.name}. 保留所有权利.</p>
-                <div className={styles.legalLinks}>
-                  <Link to="/privacy" className={styles.legalLink}>隐私政策</Link>
-                  <Link to="/terms" className={styles.legalLink}>使用条款</Link>
-                  <Link to="/sitemap" className={styles.legalLink}>网站地图</Link>
-                </div>
               </div>
               <div className={styles.footerCertifications}>
                 <span className={styles.certification}>

@@ -148,8 +148,8 @@ const Hero = () => {
                   <Link to={slide.buttonLink} className={`${styles.heroButton} ${styles.primary}`}>
                     <span>{slide.buttonText}</span>
                   </Link>
-                  <Link to="/test-drive" className={`${styles.heroButton} ${styles.secondary}`}>
-                    <span>预约试驾</span>
+                  <Link to="/contact" className={`${styles.heroButton} ${styles.secondary}`}>
+                    <span>联系我们</span>
                   </Link>
                 </div>
                 
